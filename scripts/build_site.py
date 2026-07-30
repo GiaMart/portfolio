@@ -607,6 +607,8 @@ def build_contact() -> str:
     phone = CONTENT.get("phone", "")
     linkedin = CONTENT.get("linkedin", "")
     resume = CONTENT.get("resume", "")
+    formspree_id = (CONTENT.get("formspreeId") or "").strip()
+    site_url = (CONTENT.get("siteUrl") or "").rstrip("/")
 
     contact_items = []
     if email:
@@ -624,6 +626,29 @@ def build_contact() -> str:
     if resume:
         contact_items.append(f'<li><a href="{esc(resume)}" download>Download Resume (PDF)</a></li>')
 
+    if formspree_id:
+        next_url = f"{site_url}/contact.html?sent=1" if site_url else "contact.html?sent=1"
+        form_html = f"""
+      <p class="form-success" id="form-success" hidden>Thanks — your message was sent. I&#x27;ll get back to you soon.</p>
+      <form class="contact-form" action="https://formspree.io/f/{esc(formspree_id)}" method="POST">
+        <input type="hidden" name="_subject" value="Portfolio contact form">
+        <input type="hidden" name="_next" value="{esc(next_url)}">
+        <input type="text" name="_gotcha" class="contact-form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label>Name *<input type="text" name="name" required autocomplete="name"></label>
+        <label>Email Address *<input type="email" name="email" required autocomplete="email"></label>
+        <label>Message *<textarea name="message" rows="6" required></textarea></label>
+        <button type="submit">Submit</button>
+      </form>"""
+    else:
+        form_html = f"""
+      <form class="contact-form contact-form--disabled">
+        <label>Name *<input type="text" name="name" disabled></label>
+        <label>Email Address *<input type="email" name="email" disabled></label>
+        <label>Message *<textarea name="message" rows="6" disabled></textarea></label>
+        <button type="submit" disabled>Submit</button>
+      </form>
+      <p class="form-note">Email me directly at <a href="mailto:{esc(email)}">{esc(email)}</a>.</p>"""
+
     body = f"""
   <section class="page-header page-header-stacked">
     <h1>Contact</h1>
@@ -636,14 +661,7 @@ def build_contact() -> str:
         {"".join(contact_items)}
       </ul>
     </aside>
-    <section class="contact-form-section">
-      <form class="contact-form" action="https://formspree.io/f/xplaceholder" method="POST">
-        <label>Name *<input type="text" name="name" required></label>
-        <label>Email Address *<input type="email" name="email" required></label>
-        <label>Message *<textarea name="message" rows="6" required></textarea></label>
-        <button type="submit">Submit</button>
-      </form>
-      <p class="form-note">Form placeholder — connect Formspree or your email when ready to launch.</p>
+    <section class="contact-form-section">{form_html}
     </section>
   </div>"""
     return layout("Contact", "contact", body)

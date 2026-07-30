@@ -979,10 +979,6 @@ main.main--with-demo {
   padding: 0.85rem 1rem;
 }
 
-.contact-form-honeypot {
-  display: none;
-}
-
 .contact-form--disabled {
   opacity: 0.65;
   pointer-events: none;

@@ -633,7 +633,6 @@ def build_contact() -> str:
       <form class="contact-form" action="https://formspree.io/f/{esc(formspree_id)}" method="POST">
         <input type="hidden" name="_subject" value="Portfolio contact form">
         <input type="hidden" name="_next" value="{esc(next_url)}">
-        <input type="text" name="_gotcha" class="contact-form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
         <label>Name *<input type="text" name="name" required autocomplete="name"></label>
         <label>Email Address *<input type="email" name="email" required autocomplete="email"></label>
         <label>Message *<textarea name="message" rows="6" required></textarea></label>

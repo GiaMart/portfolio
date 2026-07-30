@@ -178,7 +178,13 @@ def nav(active: str = "") -> str:
     return "\n".join(items)
 
 
-def head(title: str) -> str:
+def favicon_tags(asset_prefix: str = "") -> str:
+    return f"""  <link rel="icon" href="{asset_prefix}favicon.ico" sizes="any">
+  <link rel="icon" href="{asset_prefix}favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="{asset_prefix}apple-touch-icon.png">"""
+
+
+def head(title: str, asset_prefix: str = "") -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -186,30 +192,43 @@ def head(title: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>{esc(title)} — Gia Martini</title>
+{favicon_tags(asset_prefix)}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="{asset_prefix}css/style.css">
 </head>"""
 
 
-def layout(title: str, active: str, body: str, main_class: str = "") -> str:
+def layout(
+    title: str,
+    active: str,
+    body: str,
+    main_class: str = "",
+    asset_prefix: str = "",
+    nav_prefix: str = "",
+) -> str:
     main_attr = f' class="{esc(main_class)}"' if main_class else ""
-    return f"""{head(title)}
+    profile_src = f"{asset_prefix}{CONTENT['profilePhoto']}"
+    nav_html = nav(active)
+    if nav_prefix:
+        for page in ("index.html", "about.html", "design.html", "systems.html", "contact.html"):
+            nav_html = nav_html.replace(f'href="{page}"', f'href="{nav_prefix}{page}"')
+    return f"""{head(title, asset_prefix)}
 <body>
   <header class="site-header">
-    <a href="index.html" class="logo">
-      <img src="{CONTENT['profilePhoto']}" alt="Gia Martini" class="logo-img">
+    <a href="{nav_prefix}index.html" class="logo">
+      <img src="{profile_src}" alt="Gia Martini" class="logo-img">
       <span>Gia Martini</span>
     </a>
-    <nav class="site-nav">{nav(active)}</nav>
+    <nav class="site-nav">{nav_html}</nav>
     <button class="nav-toggle" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
   </header>
   <main{main_attr}>{body}</main>
   <footer class="site-footer">
     <p>&copy; {CONTENT['name']}</p>
   </footer>
-  <script src="js/main.js"></script>
+  <script src="{asset_prefix}js/main.js"></script>
 </body>
 </html>"""
 
@@ -448,7 +467,14 @@ def build_project(p: dict) -> str:
   <section class="{gallery_cls}">{images_html}
   </section>"""
     main_class = "main--with-demo" if slug in PROJECT_DEMOS else ""
-    return layout(p["title"], p["category"], body, main_class=main_class).replace('href="css/', 'href="../css/').replace('src="js/', 'src="../js/').replace('href="index.html"', 'href="../index.html"').replace('href="about.html"', 'href="../about.html"').replace('href="design.html"', 'href="../design.html"').replace('href="systems.html"', 'href="../systems.html"').replace('href="contact.html"', 'href="../contact.html"').replace(f'src="{CONTENT["profilePhoto"]}"', f'src="../{CONTENT["profilePhoto"]}"')
+    return layout(
+        p["title"],
+        p["category"],
+        body,
+        main_class=main_class,
+        asset_prefix="../",
+        nav_prefix="../",
+    )
 
 
 def build_about() -> str:

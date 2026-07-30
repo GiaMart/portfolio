@@ -1,0 +1,57 @@
+:root {
+  --sterling-navy: #0a1628;
+  --sterling-navy-mid: #1e3a5f;
+  --sterling-navy-soft: #2d4a6f;
+  --sterling-cyan: #38bdf8;
+  --sterling-cyan-bright: #7dd3fc;
+  --sterling-bg: #eef2f7;
+  --sterling-card: #ffffff;
+  --sterling-text: #0f172a;
+  --sterling-muted: #64748b;
+  --sterling-border: rgba(30, 58, 95, 0.12);
+  --sterling-shadow: 0 4px 24px rgba(10, 22, 40, 0.08);
+  --font-serif: "Libre Baskerville", "Times New Roman", serif;
+  --font-sans: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #f8fafc 0%, var(--sterling-bg) 100%);
+  color: var(--sterling-text);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--sterling-navy);
+  --bs-btn-border-color: var(--sterling-navy);
+  --bs-btn-hover-bg: var(--sterling-navy-mid);
+  --bs-btn-hover-border-color: var(--sterling-navy-mid);
+  --bs-btn-active-bg: var(--sterling-navy-soft);
+  --bs-btn-active-border-color: var(--sterling-navy-soft);
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.brand-diamond {
+  height: 48px;
+  width: auto;
+}
+
+.brand-subtitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}

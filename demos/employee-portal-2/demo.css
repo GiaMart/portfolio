@@ -1,0 +1,59 @@
+.demo-banner {
+  background: #fef3c7;
+  border-bottom: 1px solid #fcd34d;
+  color: #92400e;
+  font-size: 0.72rem;
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  line-height: 1.4;
+}
+
+.view {
+  display: none;
+  animation: fadeIn 0.2s ease;
+}
+
+.view.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.demo-masked {
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+
+.demo-disclaimer {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  color: #1e40af;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.footer-demo {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.text-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--sterling-navy-mid);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
+
+.text-link-btn:hover {
+  color: var(--sterling-navy);
+}

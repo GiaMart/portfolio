@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" role="img" aria-label="Sterling Securities">
+  <defs>
+    <linearGradient id="diamondTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="45%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="diamondLeft" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0a2540"/>
+    </linearGradient>
+    <linearGradient id="diamondRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="diamondBottom" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#075985"/>
+      <stop offset="100%" stop-color="#0a1628"/>
+    </linearGradient>
+  </defs>
+  <polygon points="60,4 94,28 60,52 26,28" fill="url(#diamondTop)"/>
+  <polygon points="26,28 60,52 60,82 26,58" fill="url(#diamondLeft)"/>
+  <polygon points="60,52 94,28 94,58 60,82" fill="url(#diamondRight)"/>
+  <polygon points="26,58 60,82 94,58 60,52" fill="url(#diamondBottom)"/>
+  <polygon points="60,4 26,28 60,52 94,28" fill="none" stroke="#e0f2fe" stroke-opacity="0.35" stroke-width="0.6"/>
+</svg>

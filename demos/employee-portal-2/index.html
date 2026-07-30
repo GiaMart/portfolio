@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Portal Demo · Sterling Securities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css?v=3">
+  <link rel="stylesheet" href="portal.css?v=5">
+  <link rel="stylesheet" href="demo.css?v=4">
+</head>
+<body class="portal-body">
+  <div class="demo-banner">Portfolio demo — submissions are simulated. Phone numbers and external links are disabled.</div>
+
+  <header class="portal-header">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-xl">
+        <a class="navbar-brand portal-brand brand-lockup" href="#" onclick="showView('home'); return false;">
+          <img src="img/sterling-diamond.svg" alt="Sterling Securities" class="brand-diamond">
+          <span class="brand-subtitle d-none d-sm-inline">Employee Portal</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#portalNav" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse portal-nav" id="portalNav">
+          <ul class="navbar-nav ms-auto gap-1">
+            <li class="nav-item"><button type="button" class="nav-link active" data-view="home">Home</button></li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="forms">Forms</button></li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="faq">FAQs</button></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container-xl portal-main">
+    <!-- HOME -->
+    <div id="view-home" class="view active">
+      <section class="portal-hero">
+        <div class="text-center">
+          <h1>Welcome to the Sterling Employee Portal</h1>
+          <p class="lead text-muted mb-0">Pay calendar, quick answers, and request forms — all in one place.</p>
+        </div>
+        <div class="portal-quick-links" id="quick-links"></div>
+      </section>
+
+      <div class="row g-4 mb-4 align-items-lg-stretch portal-home-row">
+        <div class="col-lg-7 d-flex">
+          <div class="card portal-card portal-card-fill w-100">
+            <div class="card-body d-flex flex-column">
+              <h2 class="h5 mb-3">Pay Schedule Calendar</h2>
+              <p class="text-muted small mb-3">Tap arrows to browse months. Matches the Sterling pay schedule calendar.</p>
+              <div class="pay-month-calendar d-flex flex-column flex-lg-grow-1">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                  <h3 class="h5 mb-0" id="pay-month-title"></h3>
+                  <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-secondary" id="cal-prev">←</button>
+                    <button type="button" class="btn btn-outline-secondary" id="cal-today">Today</button>
+                    <button type="button" class="btn btn-outline-secondary" id="cal-next">→</button>
+                  </div>
+                </div>
+                <div class="pay-month-grid flex-lg-grow-1" id="pay-month-grid"></div>
+                <div class="pay-calendar-legend mt-3">
+                  <span><i class="legend-swatch in-period"></i> Pay period</span>
+                  <span><i class="legend-swatch period-start"></i> Period start (Sat)</span>
+                  <span><i class="legend-swatch period-end"></i> Period end (Fri)</span>
+                  <span><i class="legend-swatch payday"></i> Pay day (Fri)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card portal-card mb-4">
+            <div class="card-body">
+              <h2 class="h5">Need to Request Something?</h2>
+              <p class="text-muted">Choose a form below to submit your request.</p>
+              <ul class="mb-3" id="form-type-list"></ul>
+              <button type="button" class="btn btn-primary" data-go="forms">Go to forms</button>
+            </div>
+          </div>
+          <div class="card portal-card">
+            <div class="card-body">
+              <h2 class="h5 mb-3">Upcoming Pay Dates</h2>
+              <p class="text-muted small">Biweekly periods — Saturday start through Friday end, paid the following Friday.</p>
+              <div class="pay-calendar">
+                <table class="table table-sm table-borderless align-middle mb-0">
+                  <thead>
+                    <tr class="text-muted small">
+                      <th>Pay period</th>
+                      <th>Payday</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="pay-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="card portal-card">
+        <div class="card-body">
+          <h2 class="h5 mb-3">Office Location</h2>
+          <p class="text-muted mb-3">
+            Pick up uniforms and paper checks at the main office, Monday–Friday, 9:00 AM – 4:00 PM.
+            Saturday &amp; Sunday: Closed.
+            Have questions? See our <button type="button" class="text-link-btn" data-go="faq">FAQs</button>.
+          </p>
+          <div class="office-block">
+            <div class="office-layout">
+              <div class="office-info">
+                <div class="office-info-title">Office Location</div>
+                <div class="office-info-address">
+                  155 Pompton Avenue, Suite 106<br>
+                  Verona, NJ 07044
+                </div>
+                <div class="office-hours-panel">
+                  <div class="office-hours-heading">Hours:</div>
+                  <div id="office-hours-rows"></div>
+                </div>
+                <p class="mb-0"><strong>Phone:</strong> <span class="demo-masked">(555) 010-0200 · demo</span></p>
+              </div>
+              <div class="office-map-side">
+                <div class="office-map">
+                  <iframe
+                    title="Sterling Securities office on Google Maps"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3020.2634567890123!2d-74.2284006!3d40.829801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c254fe9f246e3b%3A0xdae5d9f71c81818c!2sSterling%20Securities%20LLC!5e0!3m2!1sen!2sus!4v1710000000000!5m2!1sen!2sus"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen></iframe>
+                </div>
+                <p class="office-map-link mb-0">
+                  <a href="https://maps.app.goo.gl/STyd7Gxn8B4MrTw97" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FORMS -->
+    <div id="view-forms" class="view">
+      <section class="portal-hero">
+        <h1>Request Forms</h1>
+        <p class="lead text-muted mb-0">Choose a form below to submit your request.</p>
+      </section>
+      <p class="demo-disclaimer">
+        <strong>Demo note:</strong> All form types are shown below. Only <strong>Uniform Request</strong> is interactive — the others open in the full production portal.
+      </p>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-4">
+          <div class="card portal-card h-100 form-card-active" data-go="uniform-form" role="button" tabindex="0">
+            <div class="card-body">
+              <div class="card-icon mb-2">👔</div>
+              <h2 class="h5">Uniform Request</h2>
+              <p class="text-muted small mb-0">Request shirts, pants, and hats. Please read the instructions before submitting.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card portal-card h-100 form-card-locked">
+            <div class="card-body">
+              <div class="card-icon mb-2">🪪</div>
+              <h2 class="h5">ID Card Request</h2>
+              <p class="text-muted small mb-2">Request a new Sterling company ID card.</p>
+              <span class="form-preview-badge">Preview only</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card portal-card h-100 form-card-locked">
+            <div class="card-body">
+              <div class="card-icon mb-2">📬</div>
+              <h2 class="h5">Updated Contact / Address</h2>
+              <p class="text-muted small mb-2">Submit your updated home address, email, or phone number.</p>
+              <span class="form-preview-badge">Preview only</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card portal-card h-100 form-card-locked">
+            <div class="card-body">
+              <div class="card-icon mb-2">🆘</div>
+              <h2 class="h5">Emergency Contact Update</h2>
+              <p class="text-muted small mb-2">Submit or update up to three emergency contacts on file.</p>
+              <span class="form-preview-badge">Preview only</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card portal-card h-100 form-card-locked">
+            <div class="card-body">
+              <div class="card-icon mb-2">⏰</div>
+              <h2 class="h5">Request More Hours</h2>
+              <p class="text-muted small mb-2">Request extra hours outside of your scheduled shift.</p>
+              <span class="form-preview-badge">Preview only</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card portal-card h-100 form-card-locked">
+            <div class="card-body">
+              <div class="card-icon mb-2">📋</div>
+              <h2 class="h5">SORA License Update</h2>
+              <p class="text-muted small mb-2">Submit your renewed or updated SORA certification.</p>
+              <span class="form-preview-badge">Preview only</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card portal-card h-100 form-card-locked">
+            <div class="card-body">
+              <div class="card-icon mb-2">🚗</div>
+              <h2 class="h5">Driver's License / Carry Permit</h2>
+              <p class="text-muted small mb-2">Submit your updated driver's license or carrying permit.</p>
+              <span class="form-preview-badge">Preview only</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNIFORM FORM -->
+    <div id="view-uniform-form" class="view">
+      <div class="portal-form-card portal-form-wide">
+        <div class="card portal-card">
+          <div class="card-body p-4">
+            <p class="text-muted mb-1"><button type="button" class="text-link-btn" data-go="forms">← All forms</button></p>
+            <h1 class="h3 mb-1">👔 Uniform Request</h1>
+            <p class="text-muted mb-4">Request shirts, pants, and hats. Please read the instructions before submitting.</p>
+
+            <div class="uniform-instructions mb-4">
+              <h2 class="h6 mb-3">Before You Submit</h2>
+              <ul class="mb-3">
+                <li>Uniforms are issued in <strong>limited quantities</strong>. If our records show you have already received 2–3 sets, additional requests may not be fulfilled.</li>
+                <li><strong>Incorrect sizes or damaged items</strong> must be returned before a replacement is issued.</li>
+                <li>If you are unsure of your size, <strong>do not request multiple sizes</strong>. You must visit the Verona office to try items on.</li>
+                <li>Please <strong>do not submit duplicate requests</strong>. Only the first will be processed.</li>
+                <li>Out-of-stock items will be sent when available — <strong>do not resubmit requests</strong>.</li>
+              </ul>
+              <p class="mb-0">Thank you for your patience and understanding!</p>
+            </div>
+
+            <form id="uniform-form-el" class="vstack gap-4">
+              <div>
+                <h2 class="form-section-title">Your Info</h2>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="first-name">First Name *</label>
+                    <input class="form-control" id="first-name" name="first_name" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="last-name">Last Name *</label>
+                    <input class="form-control" id="last-name" name="last_name" required>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label" for="site">Assigned Site</label>
+                    <input class="form-control" id="site" name="site_name" placeholder="Start typing to search…">
+                    <div class="form-text">Supervisors and certain sites require custom uniforms and may receive deliveries directly at site.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="form-section-title">Armed or Unarmed?</h2>
+                <label class="form-label" for="armed-status">Are you currently working as armed or unarmed? *</label>
+                <select class="form-select" id="armed-status" name="armed_status" required>
+                  <option value="">Select…</option>
+                  <option value="armed">Armed</option>
+                  <option value="unarmed">Unarmed</option>
+                </select>
+                <div class="form-text">If you hold an Armed SORA but are working unarmed, select <strong>Unarmed</strong>.</div>
+              </div>
+
+              <div>
+                <h2 class="form-section-title">Reason for Uniform Request *</h2>
+                <div class="uniform-reason-list" id="uniform-reasons"></div>
+              </div>
+
+              <div>
+                <h2 class="form-section-title">Uniform Items</h2>
+                <p class="form-text mb-3">Select at least one item to submit. You do not need to request every item.</p>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="short-sleeve">Short Sleeve Shirt</label>
+                    <select class="form-select" id="short-sleeve" name="short_sleeve_size"></select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="long-sleeve">Long Sleeve Shirt</label>
+                    <select class="form-select" id="long-sleeve" name="long_sleeve_size"></select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="pants">Pants Size</label>
+                    <select class="form-select" id="pants" name="pants_size"></select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="hat">Hat</label>
+                    <select class="form-select" id="hat" name="hat">
+                      <option value="">No hat</option>
+                      <option value="baseball_cap">Baseball cap</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-text mt-2">Baseball cap available now. Winter hats are not offered on this form during summer.</div>
+              </div>
+
+              <div>
+                <label class="form-label" for="notes">Additional Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Optional"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div id="view-faq" class="view">
+      <section class="portal-hero">
+        <h1>Frequently Asked Questions</h1>
+        <p class="lead text-muted mb-0">Payroll, pay stubs, uniforms, and office info.</p>
+      </section>
+      <section class="card portal-card faq-section">
+        <div class="card-body">
+          <div class="faq-item">
+            <h3>💵 When Do We Get Paid?</h3>
+            <p>You get paid <strong>every other week</strong> (biweekly). Each paycheck covers a <strong>2-week period</strong> of work, paid <strong>the following Friday</strong>.</p>
+            <p>📅 Look at the pay calendar on the <button type="button" class="text-link-btn" data-go="home">Home page</button> for period start, end, and payday dates.</p>
+          </div>
+          <div class="faq-item">
+            <h3>📄 Where Can I Find My Pay Stubs?</h3>
+            <p>Pay stubs are available through the <strong>ADP mobile app</strong> or <strong>workforcenow.adp.com</strong>. You should have received an email invitation when you were hired.</p>
+          </div>
+          <div class="faq-item">
+            <h3>💳 Payroll Issues &amp; Direct Deposit Changes</h3>
+            <p>Direct deposit changes must be made <strong>in person at the Verona office</strong> (Mon–Fri, 9 AM – 4 PM). This cannot be done through the portal.</p>
+            <p>For payroll questions, contact the office during business hours.</p>
+          </div>
+          <div class="faq-item">
+            <h3>📞 What Is the Supervisor Hotline?</h3>
+            <p>The Supervisor Hotline connects you with a Sterling supervisor when you need help on short notice. <span class="demo-masked">Demo: (555) 010-0200</span></p>
+          </div>
+          <div class="faq-item">
+            <h3>🛟 Need Help With the Portal?</h3>
+            <p>Email the tech desk with your name and a short description of the issue. Screenshots are helpful if you can attach them.</p>
+          </div>
+          <div class="faq-item">
+            <h3>🏢 Where Can I Pick Up My Uniform or Paycheck?</h3>
+            <p>Uniforms and paper checks can be picked up at the main office during weekday hours. Paper paychecks are ready on <strong>Fridays</strong>.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- THANK YOU -->
+    <div id="view-thank-you" class="view">
+      <div class="portal-form-card">
+        <div class="card portal-card">
+          <div class="card-body p-4 text-center">
+            <div class="thank-you-icon">✅</div>
+            <h1 class="h3 mb-2">Thank You<span id="thank-name"></span>!</h1>
+            <p class="text-muted mb-4">Your request has been received. In production, submissions feed into the Sterling admin dashboard for review.</p>
+            <div class="d-flex gap-2 justify-content-center flex-wrap">
+              <button type="button" class="btn btn-primary" id="thank-another">Submit another form</button>
+              <button type="button" class="btn btn-outline-secondary" id="thank-home">Back to home</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="portal-footer">
+    <div class="container-xl d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <span>Sterling Securities LLC</span>
+      <span>155 Pompton Avenue, Suite 106 · Verona, NJ 07044</span>
+      <span class="footer-demo">Portfolio demo</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="demo.js?v=4"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Operations Portal — Gia Martini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="../index.html" class="logo">
+      <img src="../images/profile.png" alt="Gia Martini" class="logo-img">
+      <span>Gia Martini</span>
+    </a>
+    <nav class="site-nav"><a href="../index.html">Welcome</a>
+<a href="../about.html">About</a>
+<a href="../systems.html" class="active">Digital Systems</a>
+<a href="../design.html">Graphic Design</a>
+<a href="../contact.html">Contact</a></nav>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
+  </header>
+  <main class="main--with-demo">
+  <section class="project-header">
+    <a href="../systems.html" class="back-link">← Back</a>
+    <h1>Operations Portal</h1>
+    <span class="year">2026</span>
+  </section>
+  <div class="project-text"><p>Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render</p><p>The problem: Sterling ran on spreadsheets and disconnected tools — guards, client sites, billing, SORA certifications, uniforms, and employee requests had no single source of truth.</p><p>My approach: I mapped the ops workflow with leadership, then built the admin app iteratively in Cursor with AI — database schema, Flask routes, Bootstrap UI, and production deployment on Render.</p><p>What&#x27;s included: Operations dashboard with live KPIs, client and site management, guard roster, SORA compliance tracking, uniform inventory, billing, shift assignments, exportable reports, and an employee portal submission queue — all in one database.</p><p>Access control: I set up multiple operations sign-in accounts with role-based access — IT full admin, HR for portal submissions, and Finance for invoices and billing.</p><p>Deployment: Live on Render with Gunicorn and persistent storage. Email notifications fire when employees submit portal requests.</p><p>How I used AI: Cursor helped me scaffold routes, debug SQL, refine templates, and iterate quickly. I owned the requirements, UX, and testing — AI accelerated the build.</p></div>
+  <p class="project-related">Related: <a href="employee-portal-2.html">Employee Portal 2.0 — guard-facing portal</a></p>
+  
+  
+  <section class="project-demo">
+    <h2 class="demo-heading">Try the operations portal</h2>
+    <p class="demo-note">Interactive preview — use the nav to explore the dashboard, clients, guards, SORA, invoices, reports, portal submissions, and login accounts. Sample data only; changes are simulated.</p>
+    <div class="demo-frame-wrap">
+      <iframe src="../demos/operations-portal/index.html" title="Try the operations portal" loading="lazy"></iframe>
+    </div>
+  </section>
+  <section class="project-gallery">
+  </section></main>
+  <footer class="site-footer">
+    <p>&copy; Gia Martini</p>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>

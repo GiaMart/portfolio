@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Contact — Gia Martini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="logo">
+      <img src="images/profile.png" alt="Gia Martini" class="logo-img">
+      <span>Gia Martini</span>
+    </a>
+    <nav class="site-nav"><a href="index.html">Welcome</a>
+<a href="about.html">About</a>
+<a href="systems.html">Digital Systems</a>
+<a href="design.html">Graphic Design</a>
+<a href="contact.html" class="active">Contact</a></nav>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
+  </header>
+  <main>
+  <section class="page-header page-header-stacked">
+    <h1>Contact</h1>
+    <p class="page-subtitle">Interested in working together? Send me a message.</p>
+  </section>
+  <div class="contact-layout">
+    <aside class="contact-info-card">
+      <h2 class="contact-info-title">Contact info</h2>
+      <ul class="contact-info-list">
+        <li><a href="mailto:giavanna.martini@outlook.com">giavanna.martini@outlook.com</a></li><li><a href="tel:9738091464">(973) 809-1464</a></li><li class="contact-info-linkedin"><a class="contact-linkedin" href="https://www.linkedin.com/in/gia-martini/" target="_blank" rel="noopener" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg></a></li><li><a href="resume/Giavanna-Martini-Resume.pdf" download>Download Resume (PDF)</a></li>
+      </ul>
+    </aside>
+    <section class="contact-form-section">
+      <form class="contact-form" action="https://formspree.io/f/xplaceholder" method="POST">
+        <label>Name *<input type="text" name="name" required></label>
+        <label>Email Address *<input type="email" name="email" required></label>
+        <label>Message *<textarea name="message" rows="6" required></textarea></label>
+        <button type="submit">Submit</button>
+      </form>
+      <p class="form-note">Form placeholder — connect Formspree or your email when ready to launch.</p>
+    </section>
+  </div></main>
+  <footer class="site-footer">
+    <p>&copy; Gia Martini</p>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

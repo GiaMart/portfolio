@@ -2,7 +2,7 @@
 
 Personal portfolio showcasing graphic design work and digital systems projects.
 
-**Live site:** [giamart.github.io/giamartini-portfolio](https://giamart.github.io/giamartini-portfolio/)
+**Live site:** [giamart.github.io/giamartini-portfolio](https://giamart.github.io/portfolio/index.html).
 
 ## About
 

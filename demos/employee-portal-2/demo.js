@@ -7,7 +7,7 @@ const PAY_ANCHOR_PERIOD_END = dateOnly(2025, 6, 6);
 const PAY_ANCHOR_PAYDAY = dateOnly(2025, 6, 13);
 
 const FORM_TYPES = [
-  { key: "uniform", icon: "👔", title: "Uniform Request", description: "Request shirts, pants, and hats. Please read the instructions before submitting.", fullForm: true },
+  { key: "uniform", icon: "👔", title: "Uniform Request", description: "Request shirts, pants, and hats. Please read the instructions before submitting." },
   { key: "id_card", icon: "🪪", title: "ID Card Request", description: "Request a new Sterling company ID card." },
   { key: "contact_update", icon: "📬", title: "Updated Contact / Address", description: "Submit your updated home address, email, or phone number." },
   { key: "emergency_contact", icon: "🆘", title: "Emergency Contact Update", description: "Submit or update up to three emergency contacts on file." },
@@ -173,7 +173,13 @@ function monthGrid(year, month, today = startOfDay()) {
 }
 
 function quickLink(title, subtitle, opts = {}) {
-  const classes = ["portal-quick-link", opts.clickable ? "is-clickable" : "is-disabled"].join(" ");
+  const classes = [
+    "portal-quick-link",
+    opts.featured ? "portal-quick-link--featured" : "",
+    opts.clickable ? "is-clickable" : "is-disabled",
+  ]
+    .filter(Boolean)
+    .join(" ");
   const attrs = opts.go ? ` data-go="${opts.go}" role="button" tabindex="0"` : "";
   return `
     <div class="${classes}"${attrs}>
@@ -191,7 +197,7 @@ function renderQuickLinks() {
   const el = document.getElementById("quick-links");
   if (!el) return;
   el.innerHTML = [
-    quickLink("Incident Report", "File an incident from the field", { clickable: true, go: "incident-report" }),
+    quickLink("Incident Report", "File a report now", { clickable: true, go: "incident-report", featured: true }),
     quickLink("Supervisor Hotline", "(555) 010-0200 · demo only"),
     quickLink("Verona Office", "Mon–Fri 9 AM – 4 PM"),
     quickLink("ADP Pay Stubs", "workforcenow.adp.com"),
@@ -332,11 +338,19 @@ function renderFormCards() {
   ).join("");
 }
 
+const DEDICATED_FORM_VIEWS = {
+  uniform: "uniform-form",
+  sora_update: "sora-form",
+  license_update: "license-form",
+  emergency_contact: "emergency-form",
+};
+
 function openForm(key) {
   const form = FORM_TYPES.find((f) => f.key === key);
   if (!form) return;
-  if (form.fullForm) {
-    showView("uniform-form");
+  const dedicatedView = DEDICATED_FORM_VIEWS[key];
+  if (dedicatedView) {
+    showView(dedicatedView);
     return;
   }
   activeGenericForm = form;
@@ -355,13 +369,21 @@ function showView(name) {
   document.querySelectorAll(".view").forEach((el) => el.classList.remove("active"));
   document.getElementById(`view-${name}`)?.classList.add("active");
   document.querySelectorAll(".portal-nav .nav-link[data-view]").forEach((btn) => {
-    const formViews = ["uniform-form", "generic-form", "thank-you"];
+    const formViews = [
+      "uniform-form",
+      "generic-form",
+      "sora-form",
+      "license-form",
+      "emergency-form",
+      "thank-you",
+    ];
     const match =
       btn.dataset.view === name ||
       (formViews.includes(name) && btn.dataset.view === "forms") ||
       (name === "incident-report" && btn.dataset.view === "incident-report");
     btn.classList.toggle("active", match);
   });
+  document.querySelector("#portalNav.show")?.classList.remove("show");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -379,6 +401,17 @@ function resetCalendarToToday() {
 function bindNavigation() {
   document.querySelectorAll(".portal-nav .nav-link[data-view]").forEach((btn) => {
     btn.addEventListener("click", () => showView(btn.dataset.view));
+  });
+
+  document.getElementById("incident-date")?.addEventListener("change", syncIncidentDay);
+  document.getElementById("incident-date")?.addEventListener("input", syncIncidentDay);
+
+  ["sora-form-el", "license-form-el", "emergency-form-el"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const first = e.target.querySelector('[name="first_name"]');
+      showThankYou(first?.value.trim());
+    });
   });
 
   document.body.addEventListener("click", (e) => {
@@ -410,7 +443,7 @@ function bindNavigation() {
 
   document.getElementById("incident-form-el")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    showThankYou(document.getElementById("incident-first")?.value.trim());
+    showThankYou(document.getElementById("incident-officer")?.value.trim());
   });
 
   document.getElementById("stock-room-form-el")?.addEventListener("submit", (e) => {
@@ -442,6 +475,18 @@ function bindNavigation() {
   });
 
   document.getElementById("thank-another")?.addEventListener("click", () => showView("forms"));
+}
+
+function syncIncidentDay() {
+  const dateInput = document.getElementById("incident-date");
+  const dayInput = document.getElementById("incident-day");
+  if (!dateInput?.value || !dayInput) return;
+  const d = new Date(`${dateInput.value}T12:00:00`);
+  if (Number.isNaN(d.getTime())) {
+    dayInput.value = "";
+    return;
+  }
+  dayInput.value = d.toLocaleDateString("en-US", { weekday: "long" });
 }
 
 function handleHashRoute() {

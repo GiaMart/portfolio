@@ -36,7 +36,7 @@ PROJECT_TEXT = {
         "Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render",
         "The challenge: The original Google Sites portal couldn't support a dynamic pay calendar, guard-facing incident reporting, structured form routing with file uploads, or an admin review queue tied to company data.",
         "My approach: I'm not a traditional developer — I use AI as a build partner. I scoped requirements with HR and ops, designed the UX, and iteratively built Employee Portal 2.0 in Cursor — then deployed it on its own live domain alongside the operations admin.",
-        "What's included: Biweekly pay calendar, office map and FAQs, 7 employee request forms (uniform, ID card, contact updates, emergency contacts, more hours, SORA and license uploads), guard-facing incident reports, and email notifications on every submission — all connected to the same database as SORA, uniforms, and billing.",
+        "What's included: Biweekly pay calendar, office map and FAQs, 7 employee request forms (uniform, ID card, contact updates, emergency contacts, more hours, SORA and license uploads with file attachments), guard-facing incident reports, QR stock-room takeout (secret link), and email notifications on every submission — all connected to the same database as SORA, uniforms, and billing.",
         "Why this matters: This project shows how someone with operations and IT knowledge can ship production software by combining clear problem-solving with AI-assisted development — not by writing every line of code from scratch.",
     ],
     "operations-portal": [
@@ -62,7 +62,7 @@ PROJECT_DEMOS = {
         {
             "path": "demos/employee-portal-2/index.html",
             "heading": "Try the employee portal",
-            "note": "Interactive preview — explore the pay calendar, incident report form, all 7 request forms, stock-room QR takeout (secret link), and FAQs. Submissions are simulated.",
+            "note": "Interactive preview — explore the pay calendar, full incident report form, all 7 request forms (including SORA/license uploads and emergency contacts), stock-room QR takeout, and FAQs. Submissions are simulated.",
         },
     ],
     "operations-portal": [

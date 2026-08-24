@@ -8,6 +8,66 @@
   line-height: 1.4;
 }
 
+.demo-banner-link {
+  color: #92400e;
+  font-weight: 600;
+  margin-left: 0.35rem;
+}
+
+.footer-demo-link {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.footer-demo-link:hover {
+  color: #fff;
+}
+
+.portal-quick-link--featured {
+  grid-column: 1 / -1;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--sterling-navy) 0%, #0f2744 100%);
+  border-color: transparent;
+  color: #fff;
+}
+
+.portal-quick-link--featured:hover {
+  color: #fff;
+  border-color: rgba(125, 211, 252, 0.45);
+  background: linear-gradient(135deg, #123056 0%, var(--sterling-navy) 100%);
+  box-shadow: 0 10px 28px rgba(10, 22, 40, 0.22);
+}
+
+.portal-quick-link--featured .portal-quick-link-text {
+  text-align: center;
+}
+
+.portal-quick-link--featured .portal-quick-link-text strong,
+.portal-quick-link--featured .portal-quick-link-subtitle {
+  color: #fff;
+}
+
+.portal-quick-link--featured .portal-quick-link-subtitle {
+  text-align: center;
+}
+
+.supervisor-report-form .supervisor-form-section {
+  margin-top: 0.35rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--sterling-border);
+}
+
+.supervisor-report-form .supervisor-form-section-title {
+  font-weight: 700;
+  color: var(--sterling-navy);
+  letter-spacing: 0.02em;
+}
+
+.supervisor-report-form .supervisor-form-footer-block {
+  margin-top: 0.35rem;
+  padding-top: 0.85rem;
+}
+
 .view {
   display: none;
   animation: fadeIn 0.2s ease;

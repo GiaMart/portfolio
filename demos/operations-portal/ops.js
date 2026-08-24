@@ -99,6 +99,101 @@ const SUBMISSIONS = [
   },
 ];
 
+const REPORT_TABLES = {
+  roster: {
+    head: ["Employee ID", "Last", "First", "Status", "Site", "Armed", "SORA expiry"],
+    rows: [
+      ["1042", "Santos", "Maria", "Active", "ShopRite Verona", "No", "04/02/2027"],
+      ["1038", "Rivera", "James", "Active", "Citizens Bank Newark", "Yes", "08/15/2026"],
+      ["1031", "Brooks", "Tyler", "Active", "Essex Green", "No", "09/28/2026"],
+      ["1024", "Patel", "Aisha", "Active", "Newark Academy", "No", "02/14/2027"],
+    ],
+  },
+  sora: {
+    head: ["Empl #", "Last", "First", "SORA #", "Expiry", "Type", "Status"],
+    rows: [
+      ["1019", "Mendez", "Carlos", "SR-812004", "05/01/2025", "Armed", "Expired"],
+      ["1038", "Rivera", "James", "SR-882104", "08/15/2026", "Armed", "Active"],
+      ["1031", "Brooks", "Tyler", "SR-877331", "09/28/2026", "Unarmed", "Active"],
+    ],
+  },
+  incidents: {
+    head: ["Date", "Site", "Guard", "Summary", "Status"],
+    rows: [
+      ["Jul 28, 2026", "ShopRite Verona", "Maria Santos", "Customer altercation — supervisor notified", "Open"],
+      ["Jul 25, 2026", "Citizens Bank Newark", "James Rivera", "Broken lock on rear entrance", "Closed"],
+      ["Jul 22, 2026", "Essex Green", "Tyler Brooks", "Medical assist — EMS called", "Closed"],
+    ],
+  },
+  writeups: {
+    head: ["Date", "Site", "Guard", "Violation", "Status"],
+    rows: [
+      ["Jul 20, 2026", "Home Depot East Hanover", "Carlos Mendez", "Late arrival — documented", "Closed"],
+      ["Jul 15, 2026", "Kean University", "Aisha Patel", "Uniform policy reminder", "Open"],
+    ],
+  },
+  logsheets: {
+    head: ["Date", "Site", "Supervisor", "Shift", "Status"],
+    rows: [
+      ["Jul 29, 2026", "Citizens Bank Newark", "Vinny R.", "Overnight", "Filed"],
+      ["Jul 28, 2026", "ShopRite Verona", "Ronnie M.", "Day", "Filed"],
+    ],
+  },
+  shiftchanges: {
+    head: ["Date", "Site", "Guard", "Change", "Status"],
+    rows: [
+      ["Jul 30, 2026", "Essex Green", "Tyler Brooks", "Coverage swap approved", "Completed"],
+      ["Jul 27, 2026", "Newark Academy", "Maria Santos", "Extra shift added", "Pending"],
+    ],
+  },
+};
+
+function statusBadge(label) {
+  const map = {
+    Open: "warning",
+    Closed: "success",
+    Active: "success",
+    Expired: "danger",
+    Filed: "success",
+    Completed: "success",
+    Pending: "warning",
+  };
+  const tone = map[label] || "secondary";
+  return `<span class="badge text-bg-${tone}">${esc(label)}</span>`;
+}
+
+function renderReportTable(key) {
+  const table = REPORT_TABLES[key];
+  const head = document.getElementById("report-table-head");
+  const body = document.getElementById("report-table-body");
+  if (!table || !head || !body) return;
+
+  head.innerHTML = `<tr>${table.head.map((col, i) => `<th${i === 0 ? ' class="ps-3"' : ""}>${esc(col)}</th>`).join("")}</tr>`;
+  body.innerHTML = table.rows
+    .map(
+      (row) =>
+        `<tr>${row
+          .map((cell, i) => {
+            const isStatus = table.head[i] === "Status";
+            const content = isStatus ? statusBadge(cell) : esc(cell);
+            return `<td${i === 0 ? ' class="ps-3"' : ""}>${content}</td>`;
+          })
+          .join("")}</tr>`
+    )
+    .join("");
+}
+
+function bindReportPills() {
+  document.querySelectorAll("#report-pills [data-report]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#report-pills .nav-link").forEach((pill) => pill.classList.remove("active"));
+      btn.classList.add("active");
+      renderReportTable(btn.dataset.report);
+    });
+  });
+  renderReportTable("incidents");
+}
+
 let filters = { form_type: "", status: "", site_name: "" };
 let activeId = null;
 
@@ -129,8 +224,13 @@ function siteOptions() {
 
 function setNavActive(view) {
   const navView = view === "detail" ? "list" : view;
-  document.querySelectorAll(".ops-nav [data-view]").forEach((btn) => {
+  document.querySelectorAll(".ops-nav .nav-link[data-view], .ops-nav .dropdown-item[data-view]").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.view === navView);
+  });
+  document.querySelectorAll(".ops-nav .dropdown-toggle").forEach((toggle) => {
+    const group = toggle.closest(".dropdown");
+    const childActive = group?.querySelector(`[data-view="${navView}"]`);
+    toggle.classList.toggle("active", !!childActive);
   });
 }
 
@@ -293,9 +393,24 @@ function bindDetail() {
     if (!row) return;
     row.status = document.getElementById("status-select").value;
     row.admin_notes = document.getElementById("admin-notes").value.trim();
-    showToast("Submission updated (demo only — not saved).");
+    showToast("Submission updated for this demo session.");
     showDetail(activeId);
     renderDashboardPortal();
+  });
+}
+
+function bindUniformTabs() {
+  document.querySelectorAll("[data-uniform-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tab = btn.dataset.uniformTab;
+      document.querySelectorAll("[data-uniform-tab]").forEach((b) => {
+        b.classList.toggle("btn-primary", b.dataset.uniformTab === tab);
+        b.classList.toggle("btn-outline-primary", b.dataset.uniformTab !== tab);
+      });
+      document.querySelectorAll(".uniform-panel").forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `uniform-panel-${tab}`);
+      });
+    });
   });
 }
 
@@ -309,6 +424,7 @@ function bindNav() {
         renderList();
       }
       showView(view);
+      document.querySelector("#opsNav.show")?.classList.remove("show");
     });
   });
 }
@@ -316,6 +432,8 @@ function bindNav() {
 bindNav();
 bindFilters();
 bindDetail();
+bindReportPills();
+bindUniformTabs();
 renderDashboardPortal();
 renderList();
 showView("dashboard");

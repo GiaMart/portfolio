@@ -227,6 +227,62 @@ h1, h2, h3 {
   row-gap: 0.35rem;
 }
 
+.ops-nav-dropdown .dropdown-menu {
+  background: #0f2744;
+  border: 1px solid rgba(125, 211, 252, 0.15);
+  box-shadow: 0 12px 32px rgba(10, 22, 40, 0.35);
+}
+
+.ops-nav-dropdown .dropdown-item {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ops-nav-dropdown .dropdown-item:hover,
+.ops-nav-dropdown .dropdown-item:focus,
+.ops-nav-dropdown .dropdown-item.active {
+  background: rgba(56, 189, 248, 0.18);
+  color: #fff;
+}
+
+.ops-nav .dropdown-toggle.active {
+  color: #fff;
+  background: rgba(56, 189, 248, 0.18);
+}
+
+.uniform-subnav .btn {
+  font-size: 0.85rem;
+}
+
+.uniform-panel {
+  display: none;
+}
+
+.uniform-panel.active {
+  display: block;
+}
+
+.doc-folder-list li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--sterling-border);
+}
+
+.doc-folder-list li:last-child {
+  border-bottom: none;
+}
+
+.stock-room-qr-box {
+  width: 160px;
+  height: 160px;
+  border: 2px dashed rgba(15, 39, 68, 0.2);
+  border-radius: 0.5rem;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  background: #f8fafc;
+}
+
 .demo-disabled {
   pointer-events: none;
 }

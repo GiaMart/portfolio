@@ -33,19 +33,19 @@ PROJECT_TEXT = {
         "One for employees to request additional hours",
     ],
     "employee-portal-2": [
-        "Skills: Cursor · ChatGPT · Prompt Engineering · Google Workspace · Render",
-        "The challenge: The original Google Sites portal worked at first, but couldn't support a dynamic pay calendar, structured form routing, or an admin review queue tied to company data.",
-        "My approach: I'm not a traditional developer — I use AI as a build partner. I scoped the requirements, designed the UX, and worked iteratively in Cursor with AI to build, test, and deploy Employee Portal 2.0 on a live domain.",
-        "What's included: Biweekly pay schedule calendar, 7 employee request forms, email notifications on submission, and an admin submissions queue — all connected to the same company database as scheduling, uniforms, and SORA tracking.",
+        "Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render",
+        "The challenge: The original Google Sites portal couldn't support a dynamic pay calendar, guard-facing incident reporting, structured form routing with file uploads, or an admin review queue tied to company data.",
+        "My approach: I'm not a traditional developer — I use AI as a build partner. I scoped requirements with HR and ops, designed the UX, and iteratively built Employee Portal 2.0 in Cursor — then deployed it on its own live domain alongside the operations admin.",
+        "What's included: Biweekly pay calendar, office map and FAQs, 7 employee request forms (uniform, ID card, contact updates, emergency contacts, more hours, SORA and license uploads), guard-facing incident reports, and email notifications on every submission — all connected to the same database as SORA, uniforms, and billing.",
         "Why this matters: This project shows how someone with operations and IT knowledge can ship production software by combining clear problem-solving with AI-assisted development — not by writing every line of code from scratch.",
     ],
     "operations-portal": [
         "Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render",
-        "The problem: Sterling ran on spreadsheets and disconnected tools — guards, client sites, billing, SORA certifications, uniforms, and employee requests had no single source of truth.",
-        "My approach: I mapped the ops workflow with leadership, then built the admin app iteratively in Cursor with AI — database schema, Flask routes, Bootstrap UI, and production deployment on Render.",
-        "What's included: Operations dashboard with live KPIs, client and site management, guard roster, SORA compliance tracking, uniform inventory, billing, shift assignments, exportable reports, and an employee portal submission queue — all in one database.",
-        "Access control: I set up multiple operations sign-in accounts with role-based access — IT full admin, HR for portal submissions, and Finance for invoices and billing.",
-        "Deployment: Live on Render with Gunicorn and persistent storage. Email notifications fire when employees submit portal requests.",
+        "The problem: Sterling ran on spreadsheets and disconnected tools — guards, client sites, billing, SORA certifications, uniforms, supervisor reports, and employee requests had no single source of truth.",
+        "My approach: I mapped the ops workflow with leadership, then built the admin app iteratively in Cursor with AI — database schema, Flask routes, Bootstrap UI, role-based permissions, and production deployment on Render with separate employee and admin domains.",
+        "What's included: Operations dashboard with KPIs and SORA watch, client and site management, guard roster, SORA compliance tracking with color-coded expiry alerts, uniform inventory with QR stock-room checkout, billing and deposits, supervisor incident/write-up/log/shift-change reports, documents library, equipment registry, exportable printables, and an employee portal submission queue with workflow automation.",
+        "Access control: Role-based sign-in accounts — IT full admin, HR for portal submissions, Finance for invoices and billing, supervisors for field reports, and view-only access where needed.",
+        "Deployment: Live on Render with Gunicorn and persistent storage. Email notifications fire when employees submit portal requests or incident reports.",
         "How I used AI: Cursor helped me scaffold routes, debug SQL, refine templates, and iterate quickly. I owned the requirements, UX, and testing — AI accelerated the build.",
     ],
     "sterling-website": [
@@ -62,14 +62,14 @@ PROJECT_DEMOS = {
         {
             "path": "demos/employee-portal-2/index.html",
             "heading": "Try the employee portal",
-            "note": "Interactive preview — navigate the portal, open a form, and submit a simulated request.",
+            "note": "Interactive preview — explore the pay calendar, incident report form, all 7 request forms, stock-room QR takeout (secret link), and FAQs. Submissions are simulated.",
         },
     ],
     "operations-portal": [
         {
             "path": "demos/operations-portal/index.html",
             "heading": "Try the operations portal",
-            "note": "Interactive preview — use the nav to explore the dashboard, clients, guards, SORA, invoices, reports, portal submissions, and login accounts. Sample data only; changes are simulated.",
+            "note": "Interactive preview — explore the dashboard, clients, sites, guards, SORA, uniforms (inventory, logs, stock-room QR), billing, supervisor reports, equipment, documents, printables, portal submissions, and login accounts. Sample data only.",
         },
     ],
 }

@@ -7,14 +7,16 @@ const PAY_ANCHOR_PERIOD_END = dateOnly(2025, 6, 6);
 const PAY_ANCHOR_PAYDAY = dateOnly(2025, 6, 13);
 
 const FORM_TYPES = [
-  { key: "uniform", icon: "👔", title: "Uniform Request", description: "Request shirts, pants, and hats. Please read the instructions before submitting.", demo: true },
-  { key: "id_card", icon: "🪪", title: "ID Card Request", description: "Request a new Sterling company ID card.", demo: false },
-  { key: "contact_update", icon: "📬", title: "Updated Contact / Address", description: "Submit your updated home address, email, or phone number.", demo: false },
-  { key: "emergency_contact", icon: "🆘", title: "Emergency Contact Update", description: "Submit or update up to three emergency contacts on file.", demo: false },
-  { key: "more_hours", icon: "⏰", title: "Request More Hours", description: "Request extra hours outside of your scheduled shift.", demo: false },
-  { key: "sora_update", icon: "📋", title: "SORA License Update", description: "Submit your renewed or updated SORA certification.", demo: false },
-  { key: "license_update", icon: "🚗", title: "Driver's License / Carry Permit", description: "Submit your updated driver's license or carrying permit.", demo: false },
+  { key: "uniform", icon: "👔", title: "Uniform Request", description: "Request shirts, pants, and hats. Please read the instructions before submitting.", fullForm: true },
+  { key: "id_card", icon: "🪪", title: "ID Card Request", description: "Request a new Sterling company ID card." },
+  { key: "contact_update", icon: "📬", title: "Updated Contact / Address", description: "Submit your updated home address, email, or phone number." },
+  { key: "emergency_contact", icon: "🆘", title: "Emergency Contact Update", description: "Submit or update up to three emergency contacts on file." },
+  { key: "more_hours", icon: "⏰", title: "Request More Hours", description: "Request extra hours outside of your scheduled shift." },
+  { key: "sora_update", icon: "📋", title: "SORA License Update", description: "Submit your renewed or updated SORA certification." },
+  { key: "license_update", icon: "🚗", title: "Driver's License / Carry Permit", description: "Submit your updated driver's license or carrying permit." },
 ];
+
+let activeGenericForm = null;
 
 const UNIFORM_SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"];
 const UNIFORM_REASONS = ["Weather Change", "New Hire", "Damaged items", "Wrong Size", "Extra Set"];
@@ -189,6 +191,7 @@ function renderQuickLinks() {
   const el = document.getElementById("quick-links");
   if (!el) return;
   el.innerHTML = [
+    quickLink("Incident Report", "File an incident from the field", { clickable: true, go: "incident-report" }),
     quickLink("Supervisor Hotline", "(555) 010-0200 · demo only"),
     quickLink("Verona Office", "Mon–Fri 9 AM – 4 PM"),
     quickLink("ADP Pay Stubs", "workforcenow.adp.com"),
@@ -312,11 +315,51 @@ function renderUniformForm() {
   });
 }
 
+function renderFormCards() {
+  const grid = document.getElementById("form-cards");
+  if (!grid) return;
+  grid.innerHTML = FORM_TYPES.map(
+    (f) => `
+    <div class="col-md-6 col-lg-4">
+      <div class="card portal-card h-100 form-card-active" data-form-key="${f.key}" role="button" tabindex="0">
+        <div class="card-body">
+          <div class="card-icon mb-2">${f.icon}</div>
+          <h2 class="h5">${f.title}</h2>
+          <p class="text-muted small mb-0">${f.description}</p>
+        </div>
+      </div>
+    </div>`
+  ).join("");
+}
+
+function openForm(key) {
+  const form = FORM_TYPES.find((f) => f.key === key);
+  if (!form) return;
+  if (form.fullForm) {
+    showView("uniform-form");
+    return;
+  }
+  activeGenericForm = form;
+  document.getElementById("generic-form-title").textContent = `${form.icon} ${form.title}`;
+  document.getElementById("generic-form-desc").textContent = form.description;
+  document.getElementById("generic-form-el")?.reset();
+  showView("generic-form");
+}
+
+function showThankYou(firstName) {
+  document.getElementById("thank-name").textContent = firstName ? `, ${firstName}` : "";
+  showView("thank-you");
+}
+
 function showView(name) {
   document.querySelectorAll(".view").forEach((el) => el.classList.remove("active"));
   document.getElementById(`view-${name}`)?.classList.add("active");
   document.querySelectorAll(".portal-nav .nav-link[data-view]").forEach((btn) => {
-    const match = btn.dataset.view === name || (name === "uniform-form" && btn.dataset.view === "forms") || (name === "thank-you" && btn.dataset.view === "forms");
+    const formViews = ["uniform-form", "generic-form", "thank-you"];
+    const match =
+      btn.dataset.view === name ||
+      (formViews.includes(name) && btn.dataset.view === "forms") ||
+      (name === "incident-report" && btn.dataset.view === "incident-report");
     btn.classList.toggle("active", match);
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -357,9 +400,40 @@ function bindNavigation() {
 
   document.getElementById("uniform-form-el")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    const first = document.getElementById("first-name")?.value.trim();
-    document.getElementById("thank-name").textContent = first ? `, ${first}` : "";
-    showView("thank-you");
+    showThankYou(document.getElementById("first-name")?.value.trim());
+  });
+
+  document.getElementById("generic-form-el")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    showThankYou(document.getElementById("generic-first")?.value.trim());
+  });
+
+  document.getElementById("incident-form-el")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    showThankYou(document.getElementById("incident-first")?.value.trim());
+  });
+
+  document.getElementById("stock-room-form-el")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    showThankYou(document.getElementById("stock-room-name")?.value.trim());
+  });
+
+  document.getElementById("stock-room-generic")?.addEventListener("click", () => {
+    document.getElementById("stock-room-prefill")?.setAttribute("hidden", "");
+    document.getElementById("stock-room-catalog")?.removeAttribute("hidden");
+  });
+
+  document.getElementById("form-cards")?.addEventListener("click", (e) => {
+    const card = e.target.closest("[data-form-key]");
+    if (card) openForm(card.dataset.formKey);
+  });
+
+  document.getElementById("form-cards")?.addEventListener("keydown", (e) => {
+    const card = e.target.closest("[data-form-key]");
+    if (card && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      openForm(card.dataset.formKey);
+    }
   });
 
   document.getElementById("thank-home")?.addEventListener("click", () => {
@@ -370,12 +444,18 @@ function bindNavigation() {
   document.getElementById("thank-another")?.addEventListener("click", () => showView("forms"));
 }
 
+function handleHashRoute() {
+  if (window.location.hash === "#stock-room") showView("stock-room");
+}
+
 renderQuickLinks();
 renderPayCalendar();
 renderPayTable();
 renderOfficeHours();
 renderFormList();
+renderFormCards();
 renderUniformForm();
 bindNavigation();
-showView("home");
+window.addEventListener("hashchange", handleHashRoute);
+showView(window.location.hash === "#stock-room" ? "stock-room" : "home");
 window.showView = showView;

@@ -10,10 +10,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="tokens.css?v=3">
   <link rel="stylesheet" href="portal.css?v=5">
-  <link rel="stylesheet" href="demo.css?v=4">
+  <link rel="stylesheet" href="demo.css?v=5">
 </head>
 <body class="portal-body">
-  <div class="demo-banner">Portfolio demo — submissions are simulated. Phone numbers and external links are disabled.</div>
+  <div class="demo-banner">Portfolio demo — submissions are simulated. Phone numbers are masked for privacy.</div>
 
   <header class="portal-header">
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -28,6 +28,7 @@
         <div class="collapse navbar-collapse portal-nav" id="portalNav">
           <ul class="navbar-nav ms-auto gap-1">
             <li class="nav-item"><button type="button" class="nav-link active" data-view="home">Home</button></li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="incident-report">Incident Reports</button></li>
             <li class="nav-item"><button type="button" class="nav-link" data-view="forms">Forms</button></li>
             <li class="nav-item"><button type="button" class="nav-link" data-view="faq">FAQs</button></li>
           </ul>
@@ -151,76 +152,82 @@
         <p class="lead text-muted mb-0">Choose a form below to submit your request.</p>
       </section>
       <p class="demo-disclaimer">
-        <strong>Demo note:</strong> All form types are shown below. Only <strong>Uniform Request</strong> is interactive — the others open in the full production portal.
+        <strong>Demo note:</strong> All form types are interactive. Submissions are simulated and feed into the operations portal demo for review.
       </p>
-      <div class="row g-3">
-        <div class="col-md-6 col-lg-4">
-          <div class="card portal-card h-100 form-card-active" data-go="uniform-form" role="button" tabindex="0">
-            <div class="card-body">
-              <div class="card-icon mb-2">👔</div>
-              <h2 class="h5">Uniform Request</h2>
-              <p class="text-muted small mb-0">Request shirts, pants, and hats. Please read the instructions before submitting.</p>
-            </div>
+      <div class="row g-3" id="form-cards"></div>
+    </div>
+
+    <!-- INCIDENT REPORT -->
+    <div id="view-incident-report" class="view">
+      <div class="portal-form-card portal-form-wide">
+        <div class="card portal-card">
+          <div class="card-body p-4">
+            <p class="text-muted mb-1"><button type="button" class="text-link-btn" data-go="home">← Home</button></p>
+            <h1 class="h3 mb-1">Incident Report</h1>
+            <p class="text-muted mb-4">File a report for incidents, accidents, or unusual events at your assigned site. Submissions go directly to the office queue.</p>
+            <form id="incident-form-el" class="vstack gap-4">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="incident-first">First Name *</label>
+                  <input class="form-control" id="incident-first" name="first_name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="incident-last">Last Name *</label>
+                  <input class="form-control" id="incident-last" name="last_name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="incident-site">Site *</label>
+                  <input class="form-control" id="incident-site" name="site_name" required placeholder="Assigned site">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="incident-date">Date of Incident *</label>
+                  <input class="form-control" id="incident-date" name="incident_date" type="date" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="incident-summary">Incident Summary *</label>
+                  <textarea class="form-control" id="incident-summary" name="summary" rows="5" required placeholder="Describe what happened, who was involved, and any actions taken."></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">Submit Incident Report</button>
+            </form>
           </div>
         </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card portal-card h-100 form-card-locked">
-            <div class="card-body">
-              <div class="card-icon mb-2">🪪</div>
-              <h2 class="h5">ID Card Request</h2>
-              <p class="text-muted small mb-2">Request a new Sterling company ID card.</p>
-              <span class="form-preview-badge">Preview only</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card portal-card h-100 form-card-locked">
-            <div class="card-body">
-              <div class="card-icon mb-2">📬</div>
-              <h2 class="h5">Updated Contact / Address</h2>
-              <p class="text-muted small mb-2">Submit your updated home address, email, or phone number.</p>
-              <span class="form-preview-badge">Preview only</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card portal-card h-100 form-card-locked">
-            <div class="card-body">
-              <div class="card-icon mb-2">🆘</div>
-              <h2 class="h5">Emergency Contact Update</h2>
-              <p class="text-muted small mb-2">Submit or update up to three emergency contacts on file.</p>
-              <span class="form-preview-badge">Preview only</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card portal-card h-100 form-card-locked">
-            <div class="card-body">
-              <div class="card-icon mb-2">⏰</div>
-              <h2 class="h5">Request More Hours</h2>
-              <p class="text-muted small mb-2">Request extra hours outside of your scheduled shift.</p>
-              <span class="form-preview-badge">Preview only</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card portal-card h-100 form-card-locked">
-            <div class="card-body">
-              <div class="card-icon mb-2">📋</div>
-              <h2 class="h5">SORA License Update</h2>
-              <p class="text-muted small mb-2">Submit your renewed or updated SORA certification.</p>
-              <span class="form-preview-badge">Preview only</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card portal-card h-100 form-card-locked">
-            <div class="card-body">
-              <div class="card-icon mb-2">🚗</div>
-              <h2 class="h5">Driver's License / Carry Permit</h2>
-              <p class="text-muted small mb-2">Submit your updated driver's license or carrying permit.</p>
-              <span class="form-preview-badge">Preview only</span>
-            </div>
+      </div>
+    </div>
+
+    <!-- GENERIC FORM -->
+    <div id="view-generic-form" class="view">
+      <div class="portal-form-card portal-form-wide">
+        <div class="card portal-card">
+          <div class="card-body p-4">
+            <p class="text-muted mb-1"><button type="button" class="text-link-btn" data-go="forms">← All forms</button></p>
+            <h1 class="h3 mb-1" id="generic-form-title"></h1>
+            <p class="text-muted mb-4" id="generic-form-desc"></p>
+            <form id="generic-form-el" class="vstack gap-4">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="generic-first">First Name *</label>
+                  <input class="form-control" id="generic-first" name="first_name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="generic-last">Last Name *</label>
+                  <input class="form-control" id="generic-last" name="last_name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="generic-site">Assigned Site</label>
+                  <input class="form-control" id="generic-site" name="site_name" placeholder="Site name">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="generic-phone">Phone</label>
+                  <input class="form-control" id="generic-phone" name="phone" placeholder="(973) 555-0100">
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="generic-notes">Details *</label>
+                  <textarea class="form-control" id="generic-notes" name="notes" rows="4" required placeholder="Provide the information needed for this request."></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
+            </form>
           </div>
         </div>
       </div>
@@ -322,6 +329,77 @@
       </div>
     </div>
 
+    <!-- STOCK ROOM (secret QR link — not on portal nav) -->
+    <div id="view-stock-room" class="view">
+      <div class="portal-form-card stock-room-form portal-form-wide">
+        <div class="card portal-card">
+          <div class="card-body p-4">
+            <p class="text-muted small mb-2"><span class="badge text-bg-secondary">Demo · secret QR link</span> Not listed on the employee portal — opened by scanning a shelf QR in the stock room.</p>
+            <h1 class="h3 mb-1">Log uniform takeout</h1>
+            <p class="text-muted mb-4">Record what you took from the stock room. Inventory updates as soon as you submit.</p>
+            <form id="stock-room-form-el" class="vstack gap-4">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="stock-room-name">Your name *</label>
+                  <input class="form-control" id="stock-room-name" name="recipient_name" required autocomplete="name">
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="stock-room-notes">Notes</label>
+                  <input class="form-control" id="stock-room-notes" name="notes" placeholder="Optional">
+                </div>
+              </div>
+              <div id="stock-room-prefill">
+                <label class="form-label mb-1">Item</label>
+                <div class="stock-room-lines mb-2">
+                  <div class="stock-room-line stock-room-line-prefill">
+                    <div class="stock-room-line-title">Short sleeve shirt — L</div>
+                    <div class="stock-room-field stock-room-field-qty stock-room-prefill-qty">
+                      <label class="form-label stock-room-field-label">Qty</label>
+                      <input class="form-control" type="number" min="1" value="1" required>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-muted small mb-0"><button type="button" class="text-link-btn" id="stock-room-generic">Need to log a different item?</button></p>
+              </div>
+              <div id="stock-room-catalog" hidden>
+                <label class="form-label mb-1">Items taken</label>
+                <p class="text-muted small mb-3">Enter a quantity for each item you took. Sizes show how many are on hand.</p>
+                <div class="stock-room-lines">
+                  <div class="stock-room-line takeout-line">
+                    <div class="stock-room-line-title">Short sleeve shirt</div>
+                    <div class="stock-room-line-fields">
+                      <div class="stock-room-field stock-room-field-size">
+                        <label class="form-label stock-room-field-label">Size</label>
+                        <select class="form-select"><option value="">Select size</option><option>L (4 on hand)</option><option>XL (8 on hand)</option></select>
+                      </div>
+                      <div class="stock-room-field stock-room-field-qty">
+                        <label class="form-label stock-room-field-label">Qty</label>
+                        <input class="form-control" type="number" min="0" value="0">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="stock-room-line takeout-line">
+                    <div class="stock-room-line-title">Pants</div>
+                    <div class="stock-room-line-fields">
+                      <div class="stock-room-field stock-room-field-size">
+                        <label class="form-label stock-room-field-label">Size</label>
+                        <select class="form-select"><option value="">Select size</option><option>34 (12 on hand)</option><option>36 (6 on hand)</option></select>
+                      </div>
+                      <div class="stock-room-field stock-room-field-qty">
+                        <label class="form-label stock-room-field-label">Qty</label>
+                        <input class="form-control" type="number" min="0" value="0">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">Log takeout</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- FAQ -->
     <div id="view-faq" class="view">
       <section class="portal-hero">
@@ -387,6 +465,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="demo.js?v=4"></script>
+  <script src="demo.js?v=6"></script>
 </body>
 </html>

@@ -57,3 +57,46 @@
 .text-link-btn:hover {
   color: var(--sterling-navy);
 }
+
+.stock-room-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stock-room-line {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: #f8fafc;
+}
+
+.stock-room-line-title {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.stock-room-line-fields {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.stock-room-field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--sterling-muted);
+}
+
+.stock-room-prefill-qty {
+  max-width: 6rem;
+}
+
+@media (max-width: 575.98px) {
+  .stock-room-line-fields {
+    grid-template-columns: 1fr;
+  }
+}

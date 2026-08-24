@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="ops.css?v=4">
+  <link rel="stylesheet" href="ops.css?v=6">
 </head>
 <body>
-  <div class="demo-banner">Portfolio demo — sample operations data only. Changes are simulated and not saved.</div>
+  <div class="demo-banner">Portfolio demo — sample operations data only. Status changes apply for this session only.</div>
 
   <header class="ops-header">
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -26,13 +26,53 @@
         <div class="collapse navbar-collapse ops-nav" id="opsNav">
           <ul class="navbar-nav ms-auto gap-1 ops-nav-list">
             <li class="nav-item"><button type="button" class="nav-link active" data-view="dashboard">Dashboard</button></li>
-            <li class="nav-item"><button type="button" class="nav-link" data-view="clients">Clients</button></li>
-            <li class="nav-item"><button type="button" class="nav-link" data-view="guards">Guards</button></li>
-            <li class="nav-item"><button type="button" class="nav-link" data-view="sora">SORA</button></li>
-            <li class="nav-item"><button type="button" class="nav-link" data-view="invoices">Invoices</button></li>
-            <li class="nav-item"><button type="button" class="nav-link" data-view="reports">Reports</button></li>
+            <li class="nav-item dropdown ops-nav-dropdown">
+              <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Clients</button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><button type="button" class="dropdown-item" data-view="clients">Clients</button></li>
+                <li><button type="button" class="dropdown-item" data-view="sites">Sites</button></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown ops-nav-dropdown">
+              <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Staff</button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><button type="button" class="dropdown-item" data-view="guards">Guards</button></li>
+                <li><button type="button" class="dropdown-item" data-view="sora">SORA</button></li>
+                <li><button type="button" class="dropdown-item" data-view="uniforms">Uniforms</button></li>
+                <li><button type="button" class="dropdown-item" data-view="assignments">Assignments</button></li>
+                <li><button type="button" class="dropdown-item" data-view="shifts">Shifts</button></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown ops-nav-dropdown">
+              <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Billing</button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><button type="button" class="dropdown-item" data-view="invoices">Invoices</button></li>
+                <li><button type="button" class="dropdown-item" data-view="deposits">Deposits</button></li>
+              </ul>
+            </li>
             <li class="nav-item"><button type="button" class="nav-link" data-view="list">Portal</button></li>
+            <li class="nav-item dropdown ops-nav-dropdown">
+              <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Reports</button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><button type="button" class="dropdown-item" data-view="incidents">Incidents</button></li>
+                <li><button type="button" class="dropdown-item" data-view="writeups">Write Ups</button></li>
+                <li><button type="button" class="dropdown-item" data-view="log-sheets">Log Sheets</button></li>
+                <li><button type="button" class="dropdown-item" data-view="shift-changes">Shift Changes</button></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown ops-nav-dropdown">
+              <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Equipment</button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><button type="button" class="dropdown-item" data-view="equipment-vehicles">Vehicles</button></li>
+                <li><button type="button" class="dropdown-item" data-view="equipment-cameras">Cameras</button></li>
+                <li><button type="button" class="dropdown-item" data-view="equipment-ports">Ports</button></li>
+              </ul>
+            </li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="unemployment">Unemployment</button></li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="documents">Documents</button></li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="reports">Printables</button></li>
             <li class="nav-item"><button type="button" class="nav-link" data-view="accounts">Accounts</button></li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="backups">Backups</button></li>
           </ul>
         </div>
       </div>
@@ -136,6 +176,36 @@
           </div>
         </div>
       </div>
+
+      <div class="row g-3 mt-0">
+        <div class="col-lg-6">
+          <div class="card h-100">
+            <div class="card-header-brand d-flex justify-content-between align-items-center">
+              <div>
+                <h2 class="h5 mb-0">SORA Watch</h2>
+                <p class="small text-muted mb-0">Certifications expiring within 60 days</p>
+              </div>
+              <button type="button" class="btn btn-link btn-sm p-0" data-view="sora">View all</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-sm table-hover mb-0 align-middle sora-table">
+                <thead>
+                  <tr>
+                    <th class="ps-3">Guard</th>
+                    <th>Expiry</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="sora-expired"><td class="ps-3">Carlos Mendez</td><td><strong>05/01/2025</strong></td><td><span class="badge text-bg-danger">Expired</span></td></tr>
+                  <tr class="sora-expiring-soon"><td class="ps-3">James Rivera</td><td><strong>08/15/2026</strong></td><td><span class="badge text-bg-success">Active</span></td></tr>
+                  <tr class="sora-expiring-warning"><td class="ps-3">Tyler Brooks</td><td><strong>09/28/2026</strong></td><td><span class="badge text-bg-success">Active</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="view-clients" class="view">
@@ -162,6 +232,28 @@
             <tr><td class="ps-3 fw-semibold">ShopRite Verona</td><td>1</td><td>L. Chen</td><td><span class="demo-masked">(973) 555-0188</span></td><td><span class="badge text-bg-success">Active</span></td></tr>
             <tr><td class="ps-3 fw-semibold">Citizens Bank Newark</td><td>4</td><td>A. Williams</td><td><span class="demo-masked">(973) 555-0120</span></td><td><span class="badge text-bg-success">Active</span></td></tr>
             <tr><td class="ps-3 fw-semibold">Newark Academy</td><td>1</td><td>P. DiMarco</td><td><span class="demo-masked">(973) 555-0162</span></td><td><span class="badge text-bg-secondary">Inactive</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-sites" class="view">
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+          <h1 class="h3 mb-0">Sites</h1>
+          <p class="text-muted small mb-0">Client locations, assignments, and site contacts</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm demo-disabled">Add site</button>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Site</th><th>Client</th><th>City</th><th>Guards</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3 fw-semibold">ShopRite Verona</td><td>ShopRite Verona</td><td>Verona</td><td>4</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">Citizens Bank Newark</td><td>Citizens Bank Newark</td><td>Newark</td><td>6</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">Home Depot East Hanover</td><td>Home Depot East Hanover</td><td>East Hanover</td><td>8</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">Kean University Main Campus</td><td>Kean University</td><td>Union</td><td>5</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">Essex Green</td><td>Essex Green</td><td>West Orange</td><td>3</td><td><span class="badge text-bg-success">Active</span></td></tr>
           </tbody>
         </table>
       </div></div>
@@ -240,18 +332,352 @@
       </div></div>
     </div>
 
+    <div id="view-deposits" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Deposits</h1>
+        <p class="text-muted small mb-0">Client payments applied to open invoices</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Date</th><th>Client</th><th>Method</th><th class="text-end">Amount</th><th>Applied to</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Jul 29, 2026</td><td>ShopRite Verona</td><td>ACH</td><td class="text-end fw-semibold">$6,120.00</td><td>INV-2026-0412</td><td><span class="badge text-bg-success">Applied</span></td></tr>
+            <tr><td>Jul 26, 2026</td><td>Kean University</td><td>Check</td><td class="text-end fw-semibold">$4,500.00</td><td>Partial — 2 invoices</td><td><span class="badge text-bg-success">Applied</span></td></tr>
+            <tr><td>Jul 22, 2026</td><td>Citizens Bank Newark</td><td>Wire</td><td class="text-end fw-semibold">$8,200.00</td><td>INV-2026-0398</td><td><span class="badge text-bg-warning">Unapplied</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-uniforms" class="view">
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+          <h1 class="h3 mb-0">Uniform Inventory</h1>
+          <p class="text-muted small mb-0">Stock levels, portal requests, and QR stock-room checkout</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm demo-disabled">Issue uniform</button>
+      </div>
+      <nav class="uniform-subnav d-flex flex-wrap gap-2 mb-3" aria-label="Uniform sections">
+        <button type="button" class="btn btn-primary btn-sm" data-uniform-tab="inventory">Inventory</button>
+        <button type="button" class="btn btn-outline-primary btn-sm demo-disabled">Portal requests (3)</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="restock-log">Restock log</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="takeout-log">Takeout log</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="stock-room">Stock room QR</button>
+      </nav>
+
+      <div id="uniform-panel-inventory" class="uniform-panel active">
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Low stock alerts</div><div class="fs-4 fw-semibold text-danger">6</div></div></div></div>
+        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Portal requests open</div><div class="fs-4 fw-semibold">3</div></div></div></div>
+        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Takeouts this week</div><div class="fs-4 fw-semibold">18</div></div></div></div>
+        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Stock room QR</div><div class="small fw-semibold">Active · Verona</div></div></div></div>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Item</th><th>Size</th><th>On hand</th><th>Reorder at</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Short sleeve shirt</td><td>L</td><td>4</td><td>8</td><td><span class="badge text-bg-danger">Low</span></td></tr>
+            <tr><td class="ps-3">Pants</td><td>34</td><td>12</td><td>6</td><td><span class="badge text-bg-success">OK</span></td></tr>
+            <tr><td class="ps-3">Baseball cap</td><td>One size</td><td>22</td><td>10</td><td><span class="badge text-bg-success">OK</span></td></tr>
+            <tr class="table-warning"><td class="ps-3">Long sleeve shirt</td><td>2XL</td><td>0</td><td>5</td><td><span class="badge text-bg-danger">Out</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+      </div>
+
+      <div id="uniform-panel-restock-log" class="uniform-panel">
+        <div class="card"><div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead><tr><th class="ps-3">Date</th><th>Item</th><th>Size</th><th>Qty added</th><th>By</th></tr></thead>
+            <tbody>
+              <tr><td class="ps-3">Jul 28, 2026</td><td>Short sleeve shirt</td><td>L</td><td>24</td><td>HR</td></tr>
+              <tr><td>Jul 22, 2026</td><td>Pants</td><td>34</td><td>18</td><td>HR</td></tr>
+              <tr><td>Jul 15, 2026</td><td>Baseball cap</td><td>One size</td><td>30</td><td>HR</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <div id="uniform-panel-takeout-log" class="uniform-panel">
+        <div class="card"><div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead><tr><th class="ps-3">Date</th><th>Recipient</th><th>Item</th><th>Size</th><th>Qty</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr><td class="ps-3">Jul 29, 2026</td><td>Maria Santos</td><td>Short sleeve shirt</td><td>L</td><td>1</td><td>Stock room QR</td></tr>
+              <tr><td>Jul 28, 2026</td><td>Tyler Brooks</td><td>Pants</td><td>34</td><td>1</td><td>Office issue</td></tr>
+              <tr><td>Jul 27, 2026</td><td>James Rivera</td><td>Long sleeve shirt</td><td>XL</td><td>1</td><td>Stock room QR</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <div id="uniform-panel-stock-room" class="uniform-panel">
+        <div class="row g-3">
+          <div class="col-lg-5">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5">Stock room QR</h2>
+                <p class="text-muted small">Secret link for the Verona stock room — not listed on the employee portal nav. Scanning opens a no-login takeout form.</p>
+                <div class="stock-room-qr-box mb-3" aria-hidden="true">▦</div>
+                <p class="small font-monospace text-muted mb-3">…/stock-room/issue?k=••••••••&amp;item=short_sleeve&amp;size=L</p>
+                <a class="btn btn-outline-primary btn-sm" href="../employee-portal-2/index.html#stock-room" target="_blank" rel="noopener">Preview takeout form ↗</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="card h-100"><div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead><tr><th class="ps-3">Shelf label</th><th>Size</th><th>On hand</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td class="ps-3">Short sleeve shirt</td><td>L</td><td>4</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
+                  <tr><td>Pants</td><td>34</td><td>12</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
+                  <tr><td>Baseball cap</td><td>One size</td><td>22</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
+                </tbody>
+              </table>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-assignments" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Assignments</h1>
+        <p class="text-muted small mb-0">Guard-to-site placement and armed status</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Guard</th><th>Site</th><th>Client</th><th>Armed</th><th>Start</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3 fw-semibold">Maria Santos</td><td>ShopRite Verona</td><td>ShopRite Verona</td><td>No</td><td>03/12/2024</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">James Rivera</td><td>Citizens Bank Newark</td><td>Citizens Bank Newark</td><td>Yes</td><td>11/04/2022</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">Tyler Brooks</td><td>Essex Green</td><td>Essex Green</td><td>No</td><td>08/19/2023</td><td><span class="badge text-bg-success">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-shifts" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Shifts</h1>
+        <p class="text-muted small mb-0">Scheduled shift templates by site</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Site</th><th>Shift</th><th>Days</th><th>Guards assigned</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Citizens Bank Newark</td><td>Overnight · 10 PM – 6 AM</td><td>Mon–Sun</td><td>2</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3">ShopRite Verona</td><td>Day · 8 AM – 4 PM</td><td>Mon–Sat</td><td>1</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3">Home Depot East Hanover</td><td>Evening · 2 PM – 10 PM</td><td>Mon–Fri</td><td>3</td><td><span class="badge text-bg-success">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-incidents" class="view">
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+          <h1 class="h3 mb-0">Incident Reports</h1>
+          <p class="text-muted small mb-0">Office queue — portal and supervisor submissions</p>
+        </div>
+        <button type="button" class="btn btn-outline-primary btn-sm demo-disabled">Print selected</button>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Date</th><th>Site</th><th>Guard</th><th>Source</th><th>Summary</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Jul 28, 2026</td><td>ShopRite Verona</td><td>Maria Santos</td><td>Portal</td><td>Customer altercation — supervisor notified</td><td><span class="badge text-bg-warning">Open</span></td></tr>
+            <tr><td>Jul 25, 2026</td><td>Citizens Bank Newark</td><td>James Rivera</td><td>Supervisor</td><td>Broken lock on rear entrance</td><td><span class="badge text-bg-success">Closed</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-writeups" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Write Ups</h1>
+        <p class="text-muted small mb-0">Disciplinary reports filed by supervisors</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Date</th><th>Site</th><th>Guard</th><th>Violation</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Jul 20, 2026</td><td>Home Depot East Hanover</td><td>Carlos Mendez</td><td>Late arrival — documented</td><td><span class="badge text-bg-success">Closed</span></td></tr>
+            <tr><td>Jul 15, 2026</td><td>Kean University</td><td>Aisha Patel</td><td>Uniform policy reminder</td><td><span class="badge text-bg-warning">Open</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-log-sheets" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Log Sheets</h1>
+        <p class="text-muted small mb-0">Supervisor shift logs and patrol notes</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Date</th><th>Site</th><th>Supervisor</th><th>Shift</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Jul 29, 2026</td><td>Citizens Bank Newark</td><td>Vinny R.</td><td>Overnight</td><td><span class="badge text-bg-success">Filed</span></td></tr>
+            <tr><td>Jul 28, 2026</td><td>ShopRite Verona</td><td>Ronnie M.</td><td>Day</td><td><span class="badge text-bg-success">Filed</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-shift-changes" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Shift Changes</h1>
+        <p class="text-muted small mb-0">Coverage swaps and extra shift requests</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Date</th><th>Site</th><th>Guard</th><th>Change</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Jul 30, 2026</td><td>Essex Green</td><td>Tyler Brooks</td><td>Coverage swap approved</td><td><span class="badge text-bg-success">Completed</span></td></tr>
+            <tr><td>Jul 27, 2026</td><td>Newark Academy</td><td>Maria Santos</td><td>Extra shift added</td><td><span class="badge text-bg-warning">Pending</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-equipment-vehicles" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Vehicles</h1>
+        <p class="text-muted small mb-0">Company fleet inventory</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Unit</th><th>Make / Model</th><th>Plate</th><th>Assigned to</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3 fw-semibold">SS-01</td><td>Ford Transit 2022</td><td>NJ · S82 SEC</td><td>Ops — Verona</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">SS-02</td><td>Chevy Tahoe 2020</td><td>NJ · S41 SEC</td><td>Supervisor pool</td><td><span class="badge text-bg-success">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-equipment-cameras" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Cameras</h1>
+        <p class="text-muted small mb-0">Reolink inventory and site camera directory</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Model</th><th>Serial</th><th>Site</th><th>Location</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Reolink RLC-810A</td><td><code>RLC-88201</code></td><td>ShopRite Verona</td><td>Loading dock</td><td><span class="badge text-bg-success">Online</span></td></tr>
+            <tr><td>Reolink RLC-810A</td><td><code>RLC-88219</code></td><td>Citizens Bank Newark</td><td>Main entrance</td><td><span class="badge text-bg-success">Online</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-equipment-ports" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Ports</h1>
+        <p class="text-muted small mb-0">Network and data port inventory by site</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Site</th><th>Port ID</th><th>Room / Area</th><th>Type</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3">Kean University Main Campus</td><td>P-104</td><td>Security office</td><td>Ethernet</td><td><span class="badge text-bg-success">Active</span></td></tr>
+            <tr><td>Home Depot East Hanover</td><td>P-22A</td><td>Guard shack</td><td>Ethernet</td><td><span class="badge text-bg-success">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-unemployment" class="view">
+      <div class="page-header mb-3">
+        <h1 class="h3 mb-0">Unemployment Claims</h1>
+        <p class="text-muted small mb-0">NJ Form B187Q tracking linked to guard records</p>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Guard</th><th>Claim date</th><th>Last day worked</th><th>Form B187Q</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3 fw-semibold">Carlos Mendez</td><td>Jun 02, 2026</td><td>May 28, 2026</td><td>Filed</td><td><span class="badge text-bg-warning">Pending</span></td></tr>
+            <tr><td class="ps-3 fw-semibold">Former guard · ID 1008</td><td>Mar 14, 2026</td><td>Mar 01, 2026</td><td>On file</td><td><span class="badge text-bg-success">Closed</span></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <div id="view-documents" class="view">
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+          <h1 class="h3 mb-0">Documents</h1>
+          <p class="text-muted small mb-0">Company files, BC10 forms, employee info sheets, and invoice tracking</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm demo-disabled">Upload</button>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="card h-100"><div class="card-body">
+            <h2 class="h6 text-muted text-uppercase small">Folders</h2>
+            <ul class="list-unstyled mb-0 doc-folder-list">
+              <li class="fw-semibold">HR &amp; Compliance</li>
+              <li>Client Contracts</li>
+              <li>Employee Files</li>
+              <li>Invoice Tracking</li>
+              <li>SORA &amp; Licensing</li>
+            </ul>
+          </div></div>
+        </div>
+        <div class="col-md-8">
+          <div class="card"><div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+              <thead><tr><th class="ps-3">File</th><th>Type</th><th>Updated</th></tr></thead>
+              <tbody>
+                <tr><td class="ps-3">BC10 — Blank form.pdf</td><td>PDF</td><td>Jul 10, 2026</td></tr>
+                <tr><td class="ps-3">Employee Information Sheet template.pdf</td><td>PDF</td><td>Jun 22, 2026</td></tr>
+                <tr><td class="ps-3">Invoice Tracking Report — Q2.xlsx</td><td>Excel</td><td>Jul 01, 2026</td></tr>
+              </tbody>
+            </table>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-backups" class="view">
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+          <h1 class="h3 mb-0">Database Backups</h1>
+          <p class="text-muted small mb-0">Snapshot and restore — admin only</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm demo-disabled">Create snapshot</button>
+      </div>
+      <div class="card"><div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead><tr><th class="ps-3">Snapshot</th><th>Created</th><th>Size</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="ps-3 fw-semibold">auto-2026-07-30-0600</td><td>Jul 30, 2026 6:00 AM</td><td>48 MB</td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Restore</button></td></tr>
+            <tr><td class="ps-3 fw-semibold">auto-2026-07-29-0600</td><td>Jul 29, 2026 6:00 AM</td><td>47 MB</td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Restore</button></td></tr>
+            <tr><td class="ps-3 fw-semibold">manual-pre-migration-063</td><td>Jul 28, 2026 2:15 PM</td><td>46 MB</td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Restore</button></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
     <div id="view-reports" class="view">
       <div class="page-header mb-3">
-        <h1 class="h3 mb-0">Reports</h1>
-        <p class="text-muted small mb-0">Export or print filtered data from clients, sites, roster, SORA, invoices, and portal submissions</p>
+        <h1 class="h3 mb-0">Printables</h1>
+        <p class="text-muted small mb-0">Export or print filtered data — roster, SORA, incidents, write-ups, log sheets, and more</p>
       </div>
-      <ul class="nav nav-pills mb-3 report-pills">
+      <ul class="nav nav-pills mb-3 report-pills flex-wrap" id="report-pills">
         <li class="nav-item"><button type="button" class="nav-link demo-disabled">Client Reports</button></li>
         <li class="nav-item"><button type="button" class="nav-link demo-disabled">Site Reports</button></li>
-        <li class="nav-item"><button type="button" class="nav-link active">Employee Roster</button></li>
-        <li class="nav-item"><button type="button" class="nav-link demo-disabled">Invoices</button></li>
+        <li class="nav-item"><button type="button" class="nav-link" data-report="roster">Employee Roster</button></li>
+        <li class="nav-item"><button type="button" class="nav-link" data-report="sora">SORA</button></li>
+        <li class="nav-item"><button type="button" class="nav-link active" data-report="incidents">Incidents</button></li>
+        <li class="nav-item"><button type="button" class="nav-link" data-report="writeups">Write Ups</button></li>
+        <li class="nav-item"><button type="button" class="nav-link" data-report="logsheets">Log Sheets</button></li>
+        <li class="nav-item"><button type="button" class="nav-link" data-report="shiftchanges">Shift Changes</button></li>
+        <li class="nav-item"><button type="button" class="nav-link demo-disabled">Vehicles</button></li>
+        <li class="nav-item"><button type="button" class="nav-link demo-disabled">Statement of Accounts</button></li>
         <li class="nav-item"><button type="button" class="nav-link demo-disabled">Portal</button></li>
-        <li class="nav-item"><button type="button" class="nav-link demo-disabled">SORA</button></li>
       </ul>
       <div class="d-flex flex-wrap gap-2 mb-3">
         <button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Export CSV</button>
@@ -259,12 +685,11 @@
       </div>
       <div class="card"><div class="table-responsive">
         <table class="table table-sm table-hover mb-0 align-middle">
-          <thead><tr><th class="ps-3">Employee ID</th><th>Last</th><th>First</th><th>Status</th><th>Site</th><th>Armed</th><th>SORA expiry</th></tr></thead>
-          <tbody>
-            <tr><td class="ps-3">1042</td><td>Santos</td><td>Maria</td><td>Active</td><td>ShopRite Verona</td><td>No</td><td>04/02/2027</td></tr>
-            <tr><td>1038</td><td>Rivera</td><td>James</td><td>Active</td><td>Citizens Bank Newark</td><td>Yes</td><td>08/15/2026</td></tr>
-            <tr><td>1031</td><td>Brooks</td><td>Tyler</td><td>Active</td><td>Essex Green</td><td>No</td><td>09/28/2026</td></tr>
-            <tr><td>1024</td><td>Patel</td><td>Aisha</td><td>Active</td><td>Newark Academy</td><td>No</td><td>02/14/2027</td></tr>
+          <thead id="report-table-head"><tr><th class="ps-3">Date</th><th>Site</th><th>Guard</th><th>Summary</th><th>Status</th></tr></thead>
+          <tbody id="report-table-body">
+            <tr><td class="ps-3">Jul 28, 2026</td><td>ShopRite Verona</td><td>Maria Santos</td><td>Customer altercation — supervisor notified</td><td><span class="badge text-bg-warning">Open</span></td></tr>
+            <tr><td>Jul 25, 2026</td><td>Citizens Bank Newark</td><td>James Rivera</td><td>Broken lock on rear entrance</td><td><span class="badge text-bg-success">Closed</span></td></tr>
+            <tr><td>Jul 22, 2026</td><td>Essex Green</td><td>Tyler Brooks</td><td>Medical assist — EMS called</td><td><span class="badge text-bg-success">Closed</span></td></tr>
           </tbody>
         </table>
       </div></div>
@@ -279,7 +704,7 @@
         <button type="button" class="btn btn-primary btn-sm demo-disabled">Add account</button>
       </div>
       <div class="alert alert-info py-2 px-3 small mb-3 demo-access-note">
-        Role-based access: each account is scoped to what that team needs — IT maintains the system, HR reviews portal submissions, and Finance works with invoices.
+        Role-based access: IT maintains the system, HR reviews portal submissions, Finance works with invoices, and supervisors file field reports.
       </div>
       <div class="card"><div class="table-responsive">
         <table class="table table-hover mb-0 align-middle">
@@ -289,6 +714,7 @@
             <tr><td class="fw-semibold">Gia</td><td>IT · Full admin</td><td><span class="badge text-bg-success">Active</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Edit</button></td></tr>
             <tr><td class="fw-semibold">HR</td><td>Portal Submissions</td><td><span class="badge text-bg-success">Active</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Edit</button></td></tr>
             <tr><td class="fw-semibold">Finance</td><td>Invoices &amp; Billing</td><td><span class="badge text-bg-success">Active</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Edit</button></td></tr>
+            <tr><td class="fw-semibold">Supervisor</td><td>Field reports · Incidents &amp; log sheets</td><td><span class="badge text-bg-success">Active</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Edit</button></td></tr>
           </tbody>
         </table>
       </div></div>
@@ -428,6 +854,6 @@
   <div class="demo-toast" id="demo-toast" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="ops.js?v=2"></script>
+  <script src="ops.js?v=4"></script>
 </body>
 </html>

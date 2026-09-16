@@ -52,9 +52,9 @@ PROJECT_TEXT = {
     ],
     "operations-portal": [
         "Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render",
-        "The problem: Sterling ran on spreadsheets and disconnected tools — and supervisors still filed incident reports, disciplinary write-ups, and log sheets on pen and paper. Guards, client sites, billing, SORA certifications, uniforms, and employee requests had no single source of truth.",
+        "The problem: Sterling ran on spreadsheets and disconnected tools — and supervisors still filled out incident reports, disciplinary write-ups, and log sheets on pen and paper. Guards, client sites, billing, SORA certifications, uniforms, and employee requests had no single source of truth.",
         "My approach: I mapped the ops workflow with leadership, then built the admin app iteratively in Cursor with AI — database schema, Flask routes, Bootstrap UI, role-based permissions, and production deployment on Render with separate employee and admin domains.",
-        "Field reporting: Supervisors now file incident reports, write-ups, and log sheets from their phones in the field instead of paper forms. For sites that require daily logs, we set up site-specific log types and scheduled email times so completed logs go automatically to the property manager — no manual forwarding.",
+        "Field reporting: Supervisors now fill out incident reports, write-ups, and log sheets from their phones in the field instead of paper forms. For sites that require daily logs, we set up site-specific log types and scheduled email times so completed logs go automatically to the property manager — no manual forwarding.",
         "What's included: Operations dashboard with pay calendar, SORA watch, billing snapshot, and portal queue (armed status, special-uniform sites, sweater/jacket flags), client and site management, guard roster, SORA compliance tracking, uniform inventory with QR stock-room checkout, billing (invoices, oldest open, deposits, all payments), supervisor mobile reporting, site-specific log queues with auto-email to property managers (e.g. Wayne Mall, Castle Ridge), documents and printables, equipment registry, and an employee portal submission queue with workflow automation.",
         "Access control: Role-based sign-in accounts — IT full admin, HR for portal submissions, Finance for invoices and billing, supervisors for field reports, and view-only access where needed.",
         "Deployment: Live on Render with Gunicorn and persistent storage. Email notifications fire when employees submit portal requests or incident reports.",
@@ -77,9 +77,10 @@ PROJECT_DEMOS = {
             "note": "Interactive preview — pay calendar, incident report, all 7 production-style request forms, stock-room QR takeout, and FAQs. Submissions are simulated.",
         },
         {
-            "path": "demos/employee-portal-2/index.html#uniform-form",
+            "path": "demos/employee-portal-2/index.html?view=uniform-form",
             "heading": "Uniform request form",
             "note": "Site picker includes Essex Green (regular) and Newark Academy (sweater-eligible). Select Newark Academy to reveal the sweater size field.",
+            "lazy": False,
         },
     ],
     "operations-portal": [
@@ -91,24 +92,30 @@ PROJECT_DEMOS = {
     ],
     "uniform-inventory-tracking-2": [
         {
-            "path": "demos/operations-portal/index.html#uniforms/dashboard",
+            "path": "demos/operations-portal/index.html?view=uniforms&uniformTab=dashboard",
             "heading": "Uniforms dashboard",
             "note": "Staff → Uniforms → Dashboard. Overview stats, low/out-of-stock watch, pending requests with pack chips, recent takeouts, and size charts. Sample data only.",
+            "lazy": False,
+            "demo_class": "project-demo--dashboard",
         },
         {
-            "path": "demos/operations-portal/index.html#uniforms/inventory",
+            "path": "demos/operations-portal/index.html?view=uniforms&uniformTab=inventory",
             "heading": "Inventory table",
             "note": "Full SKU grid with filters, on-hand vs requests vs current, and adjust buttons — same layout as production.",
+            "lazy": False,
+            "demo_class": "project-demo--inventory",
         },
         {
-            "path": "demos/operations-portal/index.html#uniforms/portal-requests",
-            "heading": "Portal uniform requests",
-            "note": "Admin queue for employee submissions. Purple = special-uniform sites. Red = sweater or jacket already issued. Pending vs on-hand chips at the top.",
+            "path": "demos/operations-portal/index.html?view=list&form_type=uniform",
+            "heading": "Portal submissions queue",
+            "note": "Staff → Portal — where HR reviews employee uniform requests. Purple rows = special-uniform sites. Red rows = sweater or jacket already issued.",
+            "lazy": False,
         },
         {
-            "path": "demos/employee-portal-2/index.html#uniform-form",
+            "path": "demos/employee-portal-2/index.html?view=uniform-form",
             "heading": "Employee uniform request form",
             "note": "Guard-facing form with Before You Submit copy and a demo site picker: Essex Green (regular) or Newark Academy (sweater-eligible — select it to reveal the sweater field). Submissions are simulated.",
+            "lazy": False,
         },
     ],
 }
@@ -158,12 +165,19 @@ GALLERY_POLISH = {
 }
 
 GALLERY_GRID = {
+    "seton-hall",
+    "2021",
+    "art-work-1",
+    "commissions",
+    "sterling",
     "ariannas-angels",
+    "misc",
 }
 
 
 def uniform_inventory_2_gallery() -> str:
     return """
+    <div class="gallery-sections-row">
     <div class="gallery-section">
       <h2 class="gallery-section-title">Low &amp; out-of-stock email alerts</h2>
       <figure class="project-image project-image--email">
@@ -279,6 +293,7 @@ def uniform_inventory_2_gallery() -> str:
         </div>
         <figcaption>Purple = special-uniform site. Red = guard already received a one-time item — prevents double-issuing sweaters.</figcaption>
       </figure>
+    </div>
     </div>"""
 
 
@@ -307,11 +322,11 @@ IMAGE_CAPTIONS = {
     "ariannas-angels": [
         "2026 Logo",
         "2024 Gift — Phone Wallet",
-        "2024 Sticker",
+        "2024 Matchbox",
         "2023 Gift — Keychain",
         "10th Anniversary Mint Label",
-        "Bucco's Rising Stars Christmas Lunch — Banner",
         "Bucco's Rising Stars Christmas Lunch — Poster",
+        "Bucco's Rising Stars Christmas Lunch — Banner",
     ],
     "uniform-inventory-tracking": [
         "Live inventory dashboard with color-coded sizes and low-stock alerts",
@@ -394,7 +409,7 @@ def layout(
     nav_prefix: str = "",
 ) -> str:
     main_attr = f' class="{esc(main_class)}"' if main_class else ""
-    profile_src = f"{asset_prefix}{CONTENT['profilePhoto']}"
+    logo_src = f"{asset_prefix}{CONTENT.get('siteLogo', CONTENT['profilePhoto'])}"
     nav_html = nav(active)
     if nav_prefix:
         for page in ("index.html", "about.html", "design.html", "systems.html", "contact.html"):
@@ -403,7 +418,7 @@ def layout(
 <body>
   <header class="site-header">
     <a href="{nav_prefix}index.html" class="logo">
-      <img src="{profile_src}" alt="Gia Martini" class="logo-img">
+      <img src="{logo_src}" alt="{esc(CONTENT['name'])}" class="logo-img">
       <span>Gia Martini</span>
     </a>
     <nav class="site-nav">{nav_html}</nav>
@@ -470,12 +485,15 @@ def build_gallery_page(title: str, active: str, category: str) -> str:
 
 
 def grid_figure_html(src: str, alt: str, title: str) -> str:
+    label = title.strip()
+    label_html = f'<span class="project-image-label">{esc(label)}</span>' if label else ""
+    caption = label or alt
     return f"""
     <figure class="project-image project-image--grid-card">
-      <div class="project-image-card">
-        <img src="../{src}" alt="{esc(alt)}" loading="lazy">
-        <span class="project-image-label">{esc(title)}</span>
-      </div>
+      <button type="button" class="project-image-card project-image-card--zoom" data-lightbox-src="../{esc(src)}" data-lightbox-caption="{esc(caption)}" aria-label="View larger: {esc(caption)}">
+        <img src="../{esc(src)}" alt="{esc(alt)}" loading="lazy">
+        {label_html}
+      </button>
     </figure>"""
 
 
@@ -632,11 +650,11 @@ def build_project(p: dict) -> str:
             }]
         demo_html = "".join(
             f"""
-  <section class="project-demo">
+  <section class="project-demo{(" " + esc(d["demo_class"])) if d.get("demo_class") else ""}">
     <h2 class="demo-heading">{esc(d["heading"])}</h2>
     <p class="demo-note">{esc(d["note"])}</p>
     <div class="demo-frame-wrap">
-      <iframe src="../{d["path"]}" title="{esc(d["heading"])}" loading="lazy"></iframe>
+      <iframe src="../{esc(d["path"])}" title="{esc(d["heading"])}" loading="{"lazy" if d.get("lazy", True) else "eager"}"></iframe>
     </div>
   </section>"""
             for d in demos
@@ -676,6 +694,8 @@ def build_project(p: dict) -> str:
   <section class="{gallery_cls}">{images_html}{gallery_extra_html}
   </section>"""
     main_class = "main--with-demo" if slug in PROJECT_DEMOS else ""
+    if slug == "uniform-inventory-tracking-2":
+        main_class = "main--with-demo main--wide-demo"
     return layout(
         p["title"],
         p["category"],

@@ -609,6 +609,27 @@ h1, h2, h3 {
   background: rgba(56, 189, 248, 0.18);
 }
 
+.uniform-inventory-table-card .table {
+  font-size: 0.88rem;
+}
+
+.uniform-inventory-table-card .table thead th {
+  background: #f8fafc;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.uniform-panel .stat-card::before {
+  background: var(--sterling-cyan, #2563eb);
+}
+
+.uniforms-dashboard-main .card {
+  box-shadow: 0 1px 3px rgba(10, 22, 40, 0.06);
+}
+
 .uniform-subnav {
   gap: 0.55rem !important;
 }

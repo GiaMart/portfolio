@@ -117,8 +117,12 @@ def cover_employee_portal() -> Image.Image:
 
 
 def cover_sterling_website() -> Image.Image:
-    img = screenshot_url(STERLING_SITE, window="1440,1200")
-    return crop_square(img, left=0, top=0, side=min(img.width, img.height))
+    img = screenshot_url(STERLING_SITE, window="1440,2000")
+    # Skip nav + phone banner; crop the fleet hero photo only.
+    top = min(270, int(img.height * 0.135))
+    side = min(img.width, img.height - top, 920)
+    left = max(0, (img.width - side) // 2)
+    return crop_square(img, left=left, top=top, side=side)
 
 
 def save_sterling_gallery() -> None:

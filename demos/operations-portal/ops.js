@@ -533,18 +533,54 @@ function showView(name) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function applyViewHash() {
-  const hash = (window.location.hash || "").replace(/^#/, "").trim();
-  if (!hash) return;
-  const [view, sub] = hash.split("/");
+function syncFilterForm() {
+  const form = document.getElementById("filter-form");
+  if (!form) return;
+  if (form.form_type) form.form_type.value = filters.form_type;
+  if (form.status) form.status.value = filters.status;
+  if (form.site_name) form.site_name.value = filters.site_name;
+}
+
+function applyRouteParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("form_type")) filters.form_type = params.get("form_type") || "";
+  if (params.has("status")) filters.status = params.get("status") || "";
+  if (params.has("site_name")) filters.site_name = params.get("site_name") || "";
+  syncFilterForm();
+}
+
+function applyRoute() {
+  applyRouteParams();
+  const params = new URLSearchParams(window.location.search);
+  let view = params.get("view");
+  let uniformTab = params.get("tab") || params.get("uniformTab");
+
+  if (!view) {
+    const hash = (window.location.hash || "").replace(/^#/, "").trim();
+    if (hash) {
+      const [hashView, sub] = hash.split("/");
+      view = hashView;
+      if (hashView === "uniforms") uniformTab = sub || "dashboard";
+    }
+  }
+
   if (view === "uniforms") {
     showView("uniforms");
-    activateUniformTab(sub || "dashboard");
+    activateUniformTab(uniformTab || "dashboard");
+    window.requestAnimationFrame(() => activateUniformTab(uniformTab || "dashboard"));
     return;
   }
-  if (document.getElementById(`view-${view}`)) {
+
+  if (view && document.getElementById(`view-${view}`)) {
+    if (view === "list") {
+      activeId = null;
+      renderList();
+    }
     showView(view);
+    return;
   }
+
+  if (!view) showView("dashboard");
 }
 
 function showToast(message) {
@@ -774,11 +810,13 @@ renderOpsPayCalendar();
 renderOpsPayTable();
 renderDashboardPortal();
 renderList();
-if (window.location.hash) {
-  applyViewHash();
-} else {
-  showView("dashboard");
+function bootRoute() {
+  applyRoute();
 }
-window.addEventListener("hashchange", applyViewHash);
+
+bootRoute();
+document.addEventListener("DOMContentLoaded", bootRoute);
+window.addEventListener("load", bootRoute);
+window.addEventListener("hashchange", applyRoute);
 window.showDetail = showDetail;
 window.showView = showView;

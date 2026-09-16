@@ -536,17 +536,23 @@ function syncIncidentDay() {
   dayInput.value = d.toLocaleDateString("en-US", { weekday: "long" });
 }
 
-function handleHashRoute() {
-  const hash = window.location.hash;
-  if (hash === "#stock-room") showView("stock-room");
-  else if (hash === "#uniform-form" || hash === "#uniform") showView("uniform-form");
+function routeFromLocation() {
+  const params = new URLSearchParams(window.location.search);
+  const viewParam = params.get("view");
+  if (viewParam && document.getElementById(`view-${viewParam}`)) return viewParam;
+
+  const hash = window.location.hash.replace(/^#/, "");
+  if (hash === "stock-room") return "stock-room";
+  if (hash === "uniform-form" || hash === "uniform") return "uniform-form";
+  return "home";
 }
 
-function initialPortalView() {
-  const hash = window.location.hash;
-  if (hash === "#stock-room") return "stock-room";
-  if (hash === "#uniform-form" || hash === "#uniform") return "uniform-form";
-  return "home";
+function applyRoute() {
+  showView(routeFromLocation());
+}
+
+function handleHashRoute() {
+  applyRoute();
 }
 
 renderQuickLinks();
@@ -559,5 +565,6 @@ renderUniformForm();
 bindUniformSweaterField();
 bindNavigation();
 window.addEventListener("hashchange", handleHashRoute);
-showView(initialPortalView());
+applyRoute();
+window.addEventListener("load", applyRoute);
 window.showView = showView;

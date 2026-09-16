@@ -16,7 +16,7 @@
 <body>
   <header class="site-header">
     <a href="../index.html" class="logo">
-      <img src="../images/profile.png" alt="Gia Martini" class="logo-img">
+      <img src="../images/gm-logo.svg" alt="Gia Martini" class="logo-img">
       <span>Gia Martini</span>
     </a>
     <nav class="site-nav"><a href="../index.html">Welcome</a>
@@ -26,7 +26,7 @@
 <a href="../contact.html">Contact</a></nav>
     <button class="nav-toggle" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
   </header>
-  <main class="main--with-demo">
+  <main class="main--with-demo main--wide-demo">
   <section class="project-header">
     <a href="../systems.html" class="back-link">← Back</a>
     <h1>Uniform Inventory Tracking 2.0</h1>
@@ -36,35 +36,36 @@
   <p class="project-related">Related: <a href="uniform-inventory-tracking.html">Uniform Inventory Tracking (v1) — Google Sheets &amp; AppSheet</a></p>
   
   
-  <section class="project-demo">
+  <section class="project-demo project-demo--dashboard">
     <h2 class="demo-heading">Uniforms dashboard</h2>
     <p class="demo-note">Staff → Uniforms → Dashboard. Overview stats, low/out-of-stock watch, pending requests with pack chips, recent takeouts, and size charts. Sample data only.</p>
     <div class="demo-frame-wrap">
-      <iframe src="../demos/operations-portal/index.html#uniforms/dashboard" title="Uniforms dashboard" loading="lazy"></iframe>
+      <iframe src="../demos/operations-portal/index.html?view=uniforms&amp;uniformTab=dashboard" title="Uniforms dashboard" loading="eager"></iframe>
     </div>
   </section>
-  <section class="project-demo">
+  <section class="project-demo project-demo--inventory">
     <h2 class="demo-heading">Inventory table</h2>
     <p class="demo-note">Full SKU grid with filters, on-hand vs requests vs current, and adjust buttons — same layout as production.</p>
     <div class="demo-frame-wrap">
-      <iframe src="../demos/operations-portal/index.html#uniforms/inventory" title="Inventory table" loading="lazy"></iframe>
+      <iframe src="../demos/operations-portal/index.html?view=uniforms&amp;uniformTab=inventory" title="Inventory table" loading="eager"></iframe>
     </div>
   </section>
   <section class="project-demo">
-    <h2 class="demo-heading">Portal uniform requests</h2>
-    <p class="demo-note">Admin queue for employee submissions. Purple = special-uniform sites. Red = sweater or jacket already issued. Pending vs on-hand chips at the top.</p>
+    <h2 class="demo-heading">Portal submissions queue</h2>
+    <p class="demo-note">Staff → Portal — where HR reviews employee uniform requests. Purple rows = special-uniform sites. Red rows = sweater or jacket already issued.</p>
     <div class="demo-frame-wrap">
-      <iframe src="../demos/operations-portal/index.html#uniforms/portal-requests" title="Portal uniform requests" loading="lazy"></iframe>
+      <iframe src="../demos/operations-portal/index.html?view=list&amp;form_type=uniform" title="Portal submissions queue" loading="eager"></iframe>
     </div>
   </section>
   <section class="project-demo">
     <h2 class="demo-heading">Employee uniform request form</h2>
     <p class="demo-note">Guard-facing form with Before You Submit copy and a demo site picker: Essex Green (regular) or Newark Academy (sweater-eligible — select it to reveal the sweater field). Submissions are simulated.</p>
     <div class="demo-frame-wrap">
-      <iframe src="../demos/employee-portal-2/index.html#uniform-form" title="Employee uniform request form" loading="lazy"></iframe>
+      <iframe src="../demos/employee-portal-2/index.html?view=uniform-form" title="Employee uniform request form" loading="eager"></iframe>
     </div>
   </section>
   <section class="project-gallery project-gallery--systems">
+    <div class="gallery-sections-row">
     <div class="gallery-section">
       <h2 class="gallery-section-title">Low &amp; out-of-stock email alerts</h2>
       <figure class="project-image project-image--email">
@@ -180,6 +181,7 @@
         </div>
         <figcaption>Purple = special-uniform site. Red = guard already received a one-time item — prevents double-issuing sweaters.</figcaption>
       </figure>
+    </div>
     </div>
   </section></main>
   <footer class="site-footer">

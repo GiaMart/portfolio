@@ -303,17 +303,18 @@ PROJECT_GALLERY_EXTRA = {
 
 IMAGE_CAPTIONS = {
     "seton-hall": [
-        "Locker Room", "Men's Next Game", "Locker Room", "Women's Next Game", "Locker Room",
+        "Recruits", "Men's Next Game", "Recruits", "Women's Next Game", "Recruits",
         "Wounded Warrior Project",
         "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room",
         "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room",
     ],
     "2021": [
         "Lakers Poster", "Luka", "Lamelo", "LA Bron", "Mamba Out", "KD To NYC",
-        "CP3 To Houston", "LeBron NBA Logoman", "LeBron Lakers Logoman", "Kyrie NBA Logoman",
-        "Kyrie Celtics Logoman", "Kyries Celtics Logoman Alt", "Porzingus NBA Logoman",
-        "Porzingus Knicks Logoman", "Kemba Record", "", "",
-        "", "Derozan Trade", "Jimmy Butler Top 3 Trade",
+        "", "", "CP3 To Houston", "LeBron NBA Logoman", "LeBron Lakers Logoman", "Kyrie NBA Logoman",
+        "Kyrie Celtics Logoman",
+        "Kyrie Celtics Logoman Alt", "Porzingus NBA Logoman", "Porzingus Knicks Logoman",
+        "Kemba Record", "",
+        "Derozan Trade", "Jimmy Butler Top 3 Trade",
     ],
     "art-work-1": [
         "Brotherhood", "Matthew Hurt Commitment", "Kyree Walker Top Schools", "March Madness",

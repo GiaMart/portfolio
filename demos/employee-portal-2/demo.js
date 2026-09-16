@@ -176,13 +176,18 @@ function quickLink(title, subtitle, opts = {}) {
   const classes = [
     "portal-quick-link",
     opts.featured ? "portal-quick-link--featured" : "",
-    opts.clickable ? "is-clickable" : "is-disabled",
+    opts.clickable || opts.href ? "is-clickable" : "is-disabled",
   ]
     .filter(Boolean)
     .join(" ");
-  const attrs = opts.go ? ` data-go="${opts.go}" role="button" tabindex="0"` : "";
+  const attrs = opts.href
+    ? ` href="${opts.href}"${opts.external ? ' target="_blank" rel="noopener noreferrer"' : ""}`
+    : opts.go
+      ? ` data-go="${opts.go}" role="button" tabindex="0"`
+      : "";
+  const tag = opts.href ? "a" : "div";
   return `
-    <div class="${classes}"${attrs}>
+    <${tag} class="${classes}"${attrs}>
       <span class="portal-quick-link-icon" aria-hidden="true">
         <img src="${DIAMOND}" alt="" class="portal-quick-link-diamond">
       </span>
@@ -190,7 +195,7 @@ function quickLink(title, subtitle, opts = {}) {
         <strong>${title}</strong>
         <span class="portal-quick-link-subtitle">${subtitle}</span>
       </span>
-    </div>`;
+    </${tag}>`;
 }
 
 function renderQuickLinks() {
@@ -340,6 +345,9 @@ function renderFormCards() {
 
 const DEDICATED_FORM_VIEWS = {
   uniform: "uniform-form",
+  id_card: "id-card-form",
+  contact_update: "contact-form",
+  more_hours: "more-hours-form",
   sora_update: "sora-form",
   license_update: "license-form",
   emergency_contact: "emergency-form",
@@ -360,8 +368,17 @@ function openForm(key) {
   showView("generic-form");
 }
 
-function showThankYou(firstName) {
+const THANK_YOU_MESSAGES = {
+  uniform: "Your uniform request has been received. If approved, items may ship to your site or be ready for pickup at the Verona office.",
+  id_card: "Your ID card request has been received. HR will verify your SORA number before printing.",
+  more_hours: "Your availability has been received. If additional hours open up, the office will reach out.",
+  default: "Your request has been received. In production, submissions feed into the Sterling admin dashboard for review.",
+};
+
+function showThankYou(firstName, formKey) {
   document.getElementById("thank-name").textContent = firstName ? `, ${firstName}` : "";
+  const message = document.getElementById("thank-message");
+  if (message) message.textContent = THANK_YOU_MESSAGES[formKey] || THANK_YOU_MESSAGES.default;
   showView("thank-you");
 }
 
@@ -372,6 +389,9 @@ function showView(name) {
     const formViews = [
       "uniform-form",
       "generic-form",
+      "id-card-form",
+      "contact-form",
+      "more-hours-form",
       "sora-form",
       "license-form",
       "emergency-form",
@@ -406,11 +426,15 @@ function bindNavigation() {
   document.getElementById("incident-date")?.addEventListener("change", syncIncidentDay);
   document.getElementById("incident-date")?.addEventListener("input", syncIncidentDay);
 
-  ["sora-form-el", "license-form-el", "emergency-form-el"].forEach((id) => {
+  const dedicatedFormKeys = {
+    "id-card-form-el": "id_card",
+    "more-hours-form-el": "more_hours",
+  };
+  ["sora-form-el", "license-form-el", "emergency-form-el", "id-card-form-el", "contact-form-el", "more-hours-form-el"].forEach((id) => {
     document.getElementById(id)?.addEventListener("submit", (e) => {
       e.preventDefault();
       const first = e.target.querySelector('[name="first_name"]');
-      showThankYou(first?.value.trim());
+      showThankYou(first?.value.trim(), dedicatedFormKeys[id]);
     });
   });
 
@@ -433,7 +457,7 @@ function bindNavigation() {
 
   document.getElementById("uniform-form-el")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    showThankYou(document.getElementById("first-name")?.value.trim());
+    showThankYou(document.getElementById("first-name")?.value.trim(), "uniform");
   });
 
   document.getElementById("generic-form-el")?.addEventListener("submit", (e) => {

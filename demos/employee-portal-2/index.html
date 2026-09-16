@@ -10,7 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="tokens.css?v=3">
   <link rel="stylesheet" href="portal.css?v=5">
-  <link rel="stylesheet" href="demo.css?v=6">
+  <link rel="stylesheet" href="demo.css?v=7">
 </head>
 <body class="portal-body">
   <div class="demo-banner">Portfolio demo — submissions are simulated. Phone numbers are masked for privacy. <a href="../operations-portal/index.html" class="demo-banner-link">View the operations portal demo ↗</a></div>
@@ -418,6 +418,97 @@
       </div>
     </div>
 
+    <!-- ID CARD -->
+    <div id="view-id-card-form" class="view">
+      <div class="portal-form-card portal-form-wide">
+        <div class="card portal-card">
+          <div class="card-body p-4">
+            <p class="text-muted mb-1"><button type="button" class="text-link-btn" data-go="forms">← All forms</button></p>
+            <h1 class="h3 mb-1">🪪 ID Card Request</h1>
+            <p class="text-muted mb-3">Request a new Sterling company ID card.</p>
+            <p class="form-accuracy-disclaimer mb-4">Please double-check your entries before submitting. Inaccurate info may delay processing.</p>
+            <div class="uniform-instructions mb-4">
+              <h2 class="h6 mb-3">Before You Submit</h2>
+              <p class="mb-3">Make sure your <strong>name</strong> and <strong>SORA #</strong> are correct. Select <strong>Armed</strong> only if you are actively working as an armed guard.</p>
+              <p class="mb-0">Upload your carry permit on the <button type="button" class="text-link-btn" data-go="forms">Driver's License / Carry Permit form</button> when applicable.</p>
+            </div>
+            <form id="id-card-form-el" class="vstack gap-4">
+              <div class="row g-3">
+                <div class="col-md-6"><label class="form-label">First Name *</label><input class="form-control" name="first_name" required></div>
+                <div class="col-md-6"><label class="form-label">Last Name *</label><input class="form-control" name="last_name" required></div>
+                <div class="col-md-6">
+                  <label class="form-label">Armed / Unarmed / Supervisor *</label>
+                  <select class="form-select" name="card_role" required>
+                    <option value="">Select…</option>
+                    <option>Armed</option>
+                    <option>Unarmed</option>
+                    <option>Supervisor</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">SORA Card Number *</label>
+                  <input class="form-control text-uppercase" name="sora_number" required placeholder="922621E">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT UPDATE -->
+    <div id="view-contact-form" class="view">
+      <div class="portal-form-card portal-form-wide">
+        <div class="card portal-card">
+          <div class="card-body p-4">
+            <p class="text-muted mb-1"><button type="button" class="text-link-btn" data-go="forms">← All forms</button></p>
+            <h1 class="h3 mb-1">📬 Updated Contact / Address</h1>
+            <p class="text-muted mb-3">Submit your updated home address, email, or phone number.</p>
+            <p class="form-accuracy-disclaimer mb-4">Please double-check your entries before submitting. Inaccurate info may delay processing.</p>
+            <form id="contact-form-el" class="vstack gap-4">
+              <div class="row g-3">
+                <div class="col-md-6"><label class="form-label">First Name *</label><input class="form-control" name="first_name" required></div>
+                <div class="col-md-6"><label class="form-label">Last Name *</label><input class="form-control" name="last_name" required></div>
+                <div class="col-12"><label class="form-label">Address</label><textarea class="form-control" name="address" rows="3" placeholder="Street, city, state, ZIP"></textarea></div>
+                <div class="col-md-6"><label class="form-label">Phone Number</label><input class="form-control" name="phone" type="tel"></div>
+                <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" name="email" type="email"></div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">Submit Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MORE HOURS -->
+    <div id="view-more-hours-form" class="view">
+      <div class="portal-form-card portal-form-wide">
+        <div class="card portal-card">
+          <div class="card-body p-4">
+            <p class="text-muted mb-1"><button type="button" class="text-link-btn" data-go="forms">← All forms</button></p>
+            <h1 class="h3 mb-1">⏰ Request More Hours</h1>
+            <p class="text-muted mb-3">Request extra hours outside of your scheduled shift.</p>
+            <p class="form-accuracy-disclaimer mb-4">Please double-check your entries before submitting. Inaccurate info may delay processing.</p>
+            <form id="more-hours-form-el" class="vstack gap-4">
+              <div class="row g-3">
+                <div class="col-md-6"><label class="form-label">First Name *</label><input class="form-control" name="first_name" required></div>
+                <div class="col-md-6"><label class="form-label">Last Name *</label><input class="form-control" name="last_name" required></div>
+                <div class="col-md-6"><label class="form-label">Phone *</label><input class="form-control" name="phone" type="tel" required></div>
+                <div class="col-md-6"><label class="form-label">Town of Residence *</label><input class="form-control" name="town_of_residence" required></div>
+                <div class="col-md-6"><label class="form-label">Current Hours per Week *</label><input class="form-control" name="current_hours_per_week" type="number" min="0" max="168" step="0.5" required></div>
+                <div class="col-md-6"><label class="form-label">Current Assigned Site</label><input class="form-control" name="site_name" placeholder="Site name"></div>
+                <div class="col-md-6"><label class="form-label">Valid Driver's License *</label><select class="form-select" name="valid_drivers_license" required><option value="">Select…</option><option>Yes</option><option>No</option></select></div>
+                <div class="col-md-6"><label class="form-label">Primary Transportation *</label><select class="form-select" name="transportation" required><option value="">Select…</option><option>Own vehicle</option><option>Public transit</option><option>Rideshare</option></select></div>
+                <div class="col-12"><label class="form-label">Availability notes *</label><textarea class="form-control" name="availability_notes" rows="4" required placeholder="Which days/times you can work extra hours"></textarea></div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SORA UPDATE -->
     <div id="view-sora-form" class="view">
       <div class="portal-form-card portal-form-wide">
@@ -705,7 +796,7 @@
           <div class="card-body p-4 text-center">
             <div class="thank-you-icon">✅</div>
             <h1 class="h3 mb-2">Thank You<span id="thank-name"></span>!</h1>
-            <p class="text-muted mb-4">Your request has been received. In production, submissions feed into the Sterling admin dashboard for review.</p>
+            <p class="text-muted mb-4" id="thank-message">Your request has been received. In production, submissions feed into the Sterling admin dashboard for review.</p>
             <div class="d-flex gap-2 justify-content-center flex-wrap">
               <button type="button" class="btn btn-primary" id="thank-another">Submit another form</button>
               <button type="button" class="btn btn-outline-secondary" id="thank-home">Back to home</button>
@@ -725,6 +816,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="demo.js?v=7"></script>
+  <script src="demo.js?v=9"></script>
 </body>
 </html>

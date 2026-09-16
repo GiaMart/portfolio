@@ -22,6 +22,20 @@
   color: #fff;
 }
 
+a.portal-quick-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.form-accuracy-disclaimer {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.85rem;
+  color: #1e40af;
+}
+
 .portal-quick-link--featured {
   grid-column: 1 / -1;
   justify-content: center;

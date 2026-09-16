@@ -25,6 +25,9 @@ const SUBMISSIONS = [
     site_name: "ShopRite Verona",
     phone: "(973) 555-0142",
     email: "maria.santos@example.com",
+    armed: "Unarmed",
+    special_uniform: true,
+    sweater_issued: true,
     status: "new",
     admin_notes: "",
     details: [
@@ -43,6 +46,7 @@ const SUBMISSIONS = [
     site_name: "Citizens Bank Newark",
     phone: "(973) 555-0198",
     email: "j.rivera@example.com",
+    armed: "Armed",
     status: "in_progress",
     admin_notes: "Waiting on HR to verify renewal date.",
     details: [
@@ -60,6 +64,7 @@ const SUBMISSIONS = [
     site_name: "Essex Green",
     phone: "(973) 555-0116",
     email: "",
+    armed: "Unarmed",
     status: "new",
     admin_notes: "",
     details: [
@@ -77,6 +82,7 @@ const SUBMISSIONS = [
     site_name: "Newark Academy",
     phone: "(973) 555-0177",
     email: "a.patel@example.com",
+    armed: "Unarmed",
     status: "completed",
     admin_notes: "ID printed and mailed.",
     details: [["Reason", "New hire"]],
@@ -90,6 +96,7 @@ const SUBMISSIONS = [
     site_name: "Payne Tech Interior",
     phone: "(973) 555-0133",
     email: "carlos.m@example.com",
+    armed: "Armed",
     status: "cancelled",
     admin_notes: "Duplicate submission — kept earlier request.",
     details: [
@@ -107,6 +114,14 @@ const REPORT_TABLES = {
       ["1038", "Rivera", "James", "Active", "Citizens Bank Newark", "Yes", "08/15/2026"],
       ["1031", "Brooks", "Tyler", "Active", "Essex Green", "No", "09/28/2026"],
       ["1024", "Patel", "Aisha", "Active", "Newark Academy", "No", "02/14/2027"],
+    ],
+  },
+  idcards: {
+    head: ["Employee ID", "Last", "First", "Card role", "SORA #", "Status"],
+    rows: [
+      ["1038", "Rivera", "James", "Armed", "SR-882104", "Active"],
+      ["1042", "Santos", "Maria", "Unarmed", "SR-901442", "Active"],
+      ["1024", "Patel", "Aisha", "Unarmed", "SR-877119", "Pending print"],
     ],
   },
   sora: {
@@ -222,6 +237,30 @@ function siteOptions() {
   return [...new Set(SUBMISSIONS.map((r) => r.site_name))].sort();
 }
 
+function submissionRowClass(row) {
+  const classes = [];
+  if (row.special_uniform) classes.push("table-row-special-uniform");
+  if (row.sweater_issued) classes.push("table-row-sweater-issued");
+  return classes.join(" ");
+}
+
+function armedBadge(label) {
+  if (!label) return "—";
+  const tone = label === "Armed" ? "danger" : "secondary";
+  return `<span class="badge text-bg-${tone}">${esc(label)}</span>`;
+}
+
+function guardCell(row) {
+  const flags = [];
+  if (row.sweater_issued) flags.push('<span class="badge badge-sweater-issued">Sweater issued</span>');
+  return `${esc(row.first_name)} ${esc(row.last_name)}${flags.length ? `<div class="mt-1">${flags.join(" ")}</div>` : ""}`;
+}
+
+function siteCell(row) {
+  const special = row.special_uniform ? '<span class="badge badge-special-uniform ms-1">Special</span>' : "";
+  return `<span class="site-hint"><strong>${esc(row.site_name)}</strong>${special}</span>`;
+}
+
 function setNavActive(view) {
   const navView = view === "detail" ? "list" : view;
   document.querySelectorAll(".ops-nav .nav-link[data-view], .ops-nav .dropdown-item[data-view]").forEach((btn) => {
@@ -257,16 +296,25 @@ function renderDashboardPortal() {
   tbody.innerHTML = pending
     .map(
       (row) => `
-    <tr data-id="${row.id}">
+    <tr data-id="${row.id}" class="${submissionRowClass(row)}">
       <td class="text-nowrap ps-3">${esc(row.created_at.split(" ").slice(0, 3).join(" "))}</td>
       <td>${esc(FORM_LABELS[row.form_type] || row.form_type)}</td>
-      <td>${esc(row.first_name)} ${esc(row.last_name)}</td>
+      <td>${guardCell(row)}</td>
+      <td>${armedBadge(row.armed)}</td>
+      <td>${siteCell(row)}</td>
       <td><span class="badge text-bg-${STATUS_BADGE[row.status]}">${esc(statusLabel(row.status))}</span></td>
+      <td class="text-end pe-3"><button type="button" class="btn btn-sm btn-outline-primary" data-view-id="${row.id}">View</button></td>
     </tr>`
     )
     .join("");
   tbody.querySelectorAll("tr[data-id]").forEach((tr) => {
     tr.addEventListener("click", () => showDetail(Number(tr.dataset.id)));
+  });
+  tbody.querySelectorAll("[data-view-id]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showDetail(Number(btn.dataset.viewId));
+    });
   });
 }
 
@@ -281,19 +329,20 @@ function renderList() {
   if (totalCount) totalCount.textContent = String(SUBMISSIONS.length);
 
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">No submissions match these filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">No submissions match these filters.</td></tr>';
     return;
   }
 
   tbody.innerHTML = rows
     .map(
       (row) => `
-    <tr data-id="${row.id}">
+    <tr data-id="${row.id}" class="${submissionRowClass(row)}">
       <td onclick="event.stopPropagation()"><input class="form-check-input row-check" type="checkbox" aria-label="Select submission"></td>
       <td class="text-nowrap">${esc(row.created_at)}</td>
       <td>${esc(FORM_LABELS[row.form_type] || row.form_type)}</td>
-      <td>${esc(row.first_name)} ${esc(row.last_name)}</td>
-      <td><span class="site-hint"><strong>${esc(row.site_name)}</strong></span></td>
+      <td>${guardCell(row)}</td>
+      <td>${armedBadge(row.armed)}</td>
+      <td>${siteCell(row)}</td>
       <td><span class="badge text-bg-${STATUS_BADGE[row.status]}">${esc(statusLabel(row.status))}</span></td>
       <td class="text-end"><button type="button" class="btn btn-sm btn-outline-primary" data-view-id="${row.id}">View</button></td>
     </tr>`
@@ -328,7 +377,10 @@ function showDetail(id) {
   document.getElementById("detail-email").innerHTML = row.email
     ? `<span class="demo-masked">${esc(row.email)}</span>`
     : "—";
-  document.getElementById("detail-site").innerHTML = `<strong>${esc(row.site_name)}</strong>`;
+  document.getElementById("detail-site").innerHTML = siteCell(row);
+
+  const specialAlert = document.getElementById("detail-special-alert");
+  if (specialAlert) specialAlert.hidden = !row.special_uniform;
 
   document.getElementById("detail-fields").innerHTML = row.details
     .map(([label, value]) => `<dt class="col-sm-4">${esc(label)}</dt><dd class="col-sm-8">${esc(value)}</dd>`)

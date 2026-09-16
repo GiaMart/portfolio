@@ -1103,13 +1103,13 @@ main.main--with-demo {
 
 /* Uniform Inventory 2.0 — email & queue previews */
 .project-image--email {
-  max-width: 640px;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .uniform-email-preview {
-  background: #eef2f7;
   border-radius: 12px;
-  padding: 1.5rem 1.25rem;
+  overflow: hidden;
 }
 
 .uniform-email-card {

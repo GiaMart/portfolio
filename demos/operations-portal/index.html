@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="ops.css?v=8">
+  <link rel="stylesheet" href="ops.css?v=10">
 </head>
 <body>
   <div class="demo-banner">Portfolio demo — sample operations data only. Status changes apply for this session only. <a href="../employee-portal-2/index.html" class="demo-banner-link">View employee portal demo ↗</a></div>
@@ -444,73 +444,379 @@
     </div>
 
     <div id="view-uniforms" class="view">
-      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <div>
-          <h1 class="h3 mb-0">Uniform Inventory</h1>
-          <p class="text-muted small mb-0">Stock levels, portal requests, and QR stock-room checkout</p>
-        </div>
-        <button type="button" class="btn btn-primary btn-sm demo-disabled">Issue uniform</button>
-      </div>
       <nav class="uniform-subnav d-flex flex-wrap gap-2 mb-3" aria-label="Uniform sections">
-        <button type="button" class="btn btn-primary btn-sm" data-uniform-tab="inventory">Inventory</button>
-        <button type="button" class="btn btn-outline-primary btn-sm demo-disabled">Portal requests (3)</button>
+        <button type="button" class="btn btn-primary btn-sm" data-uniform-tab="dashboard">Dashboard</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="portal-requests">Portal requests (1 pending)</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="inventory">Inventory</button>
+        <button type="button" class="btn btn-outline-primary btn-sm demo-disabled">Restock</button>
+        <button type="button" class="btn btn-outline-primary btn-sm demo-disabled">Issue uniform</button>
         <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="restock-log">Restock log</button>
         <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="takeout-log">Takeout log</button>
+        <button type="button" class="btn btn-outline-primary btn-sm demo-disabled">Lookup</button>
         <button type="button" class="btn btn-outline-primary btn-sm" data-uniform-tab="stock-room">Stock room QR</button>
       </nav>
 
-      <div id="uniform-panel-inventory" class="uniform-panel active">
-      <div class="row g-3 mb-3">
-        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Low stock alerts</div><div class="fs-4 fw-semibold text-danger">6</div></div></div></div>
-        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Portal requests open</div><div class="fs-4 fw-semibold">3</div></div></div></div>
-        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Takeouts this week</div><div class="fs-4 fw-semibold">18</div></div></div></div>
-        <div class="col-6 col-md-3"><div class="card h-100"><div class="card-body py-3"><div class="text-muted small">Stock room QR</div><div class="small fw-semibold">Active · Verona</div></div></div></div>
+      <div id="uniform-panel-dashboard" class="uniform-panel active">
+        <div class="page-header mb-2">
+          <h1 class="h3 mb-0">Uniforms</h1>
+          <p class="text-muted small mb-0">Inventory, restocks, and takeouts</p>
+        </div>
+        <div class="uniform-section-layout">
+          <div class="uniform-section-main">
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-md-4 col-xl"><div class="card stat-card p-3 h-100"><div class="stat-label">SKUs tracked</div><div class="stat-value">46</div></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="card stat-card p-3 h-100"><div class="stat-label">Total on hand</div><div class="stat-value">733</div></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="card stat-card p-3 h-100"><div class="stat-label">Low stock</div><div class="stat-value text-warning">7</div></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="card stat-card p-3 h-100"><div class="stat-label">Out of stock</div><div class="stat-value text-danger">0</div></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="card stat-card p-3 h-100"><div class="stat-label">Takeouts this month</div><div class="stat-value">76</div></div></div>
+            </div>
+            <div class="row g-3 uniforms-dashboard-main">
+              <div class="col-lg-4 uniforms-dashboard-left">
+                <div class="card uniforms-dashboard-stock-card">
+                  <div class="card-header-brand d-flex justify-content-between align-items-center py-2">
+                    <h2 class="h6 mb-0">Low stock</h2>
+                    <button type="button" class="small text-link-btn border-0 bg-transparent p-0 text-primary" data-uniform-tab="inventory">View all</button>
+                  </div>
+                  <div class="card-body p-0 table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                      <thead><tr><th class="ps-3">Item</th><th>Size</th><th class="text-end pe-3">Qty</th></tr></thead>
+                      <tbody>
+                        <tr><td class="ps-3 small">Jacket</td><td class="small">5XL</td><td class="text-end pe-3 fw-semibold text-warning small">2</td></tr>
+                        <tr><td class="ps-3 small">Pants</td><td class="small">5XL</td><td class="text-end pe-3 fw-semibold text-warning small">3</td></tr>
+                        <tr><td class="ps-3 small">Sweater</td><td class="small">5XL</td><td class="text-end pe-3 fw-semibold text-warning small">2</td></tr>
+                        <tr><td class="ps-3 small">Short Sleeve</td><td class="small">L</td><td class="text-end pe-3 fw-semibold text-warning small">4</td></tr>
+                        <tr><td class="ps-3 small">Pants</td><td class="small">4XL</td><td class="text-end pe-3 fw-semibold text-warning small">3</td></tr>
+                      </tbody>
+                    </table>
+                    <div class="px-3 py-2 border-top small text-muted">+ 2 more in inventory</div>
+                  </div>
+                </div>
+                <div class="card uniforms-dashboard-stock-card mt-3">
+                  <div class="card-header-brand d-flex justify-content-between align-items-center py-2">
+                    <h2 class="h6 mb-0">Out of stock</h2>
+                    <button type="button" class="small text-link-btn border-0 bg-transparent p-0 text-primary" data-uniform-tab="inventory">View all</button>
+                  </div>
+                  <div class="card-body p-0 table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                      <thead><tr><th class="ps-3">Item</th><th>Size</th><th class="text-end pe-3">Qty</th></tr></thead>
+                      <tbody><tr><td colspan="3" class="text-muted ps-3 py-2 small">Nothing is out of stock right now.</td></tr></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8 d-flex flex-column gap-3">
+                <div class="card">
+                  <div class="card-header-brand d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0">Pending requests</h2>
+                    <button type="button" class="small text-link-btn border-0 bg-transparent p-0 text-primary" data-uniform-tab="portal-requests">View all</button>
+                  </div>
+                  <div class="card-body p-0 table-responsive">
+                    <table class="table table-sm table-hover mb-0 uniforms-dashboard-pending">
+                      <thead><tr><th class="ps-3">Submitted</th><th>Guard</th><th>Pack</th><th class="text-end pe-3"></th></tr></thead>
+                      <tbody>
+                        <tr>
+                          <td class="ps-3 text-nowrap small">08-11-2026 11:44 AM</td>
+                          <td><div class="fw-semibold">James Adjimond</div><div class="small mt-1 text-muted">Prospect Towers</div></td>
+                          <td><div class="uniform-request-items"><span class="uniform-item-chip">SS L</span><span class="uniform-item-chip">Pants M</span><span class="uniform-item-chip">Baseball cap</span></div></td>
+                          <td class="text-end pe-3"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Open</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header-brand d-flex justify-content-between align-items-center py-2">
+                    <h2 class="h6 mb-0">Recent takeouts</h2>
+                    <button type="button" class="small text-link-btn border-0 bg-transparent p-0 text-primary" data-uniform-tab="takeout-log">View all</button>
+                  </div>
+                  <div class="card-body p-0 table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                      <thead><tr><th class="ps-3">Date</th><th>Name</th><th class="text-end pe-3">Qty</th></tr></thead>
+                      <tbody>
+                        <tr><td class="ps-3 small text-nowrap">09-09-2026</td><td class="small"><div>interview office</div><div class="text-muted">Pants (4XL)</div></td><td class="text-end pe-3">1</td></tr>
+                        <tr><td class="ps-3 small text-nowrap">09-08-2026</td><td class="small"><div>Maria Santos</div><div class="text-muted">Short Sleeve (L)</div></td><td class="text-end pe-3">1</td></tr>
+                        <tr><td class="ps-3 small text-nowrap">09-07-2026</td><td class="small"><div>Tyler Brooks</div><div class="text-muted">Pants (34)</div></td><td class="text-end pe-3">1</td></tr>
+                        <tr><td class="ps-3 small text-nowrap">09-05-2026</td><td class="small"><div>James Rivera</div><div class="text-muted">Long Sleeve (XL)</div></td><td class="text-end pe-3">1</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside class="uniform-section-size-chart d-none d-xl-block" aria-label="Uniform size charts">
+            <div class="uniform-size-chart-side">
+              <div class="uniform-size-charts">
+                <div class="uniform-size-chart">
+                  <h2 class="uniform-size-chart-title">Shirt Size Chart</h2>
+                  <p class="uniform-size-chart-intro">Shirts are labeled by neck size on the tags.</p>
+                  <div class="uniform-size-chart-table-wrap">
+                    <table class="uniform-size-chart-table"><thead><tr><th>Neck size</th><th>Size</th></tr></thead><tbody><tr><td>13 – 13½</td><td>XS</td></tr><tr><td>15 – 15½</td><td>M</td></tr><tr><td>16 – 16½</td><td>L</td></tr><tr><td>17 – 17½</td><td>XL</td></tr><tr><td>18 – 18½</td><td>2XL</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="uniform-size-chart">
+                  <h2 class="uniform-size-chart-title">Pants Size Chart</h2>
+                  <p class="uniform-size-chart-intro">Unisex, adjustable — match waist to form size.</p>
+                  <div class="uniform-size-chart-table-wrap">
+                    <table class="uniform-size-chart-table"><thead><tr><th>Waist size</th><th>Size</th></tr></thead><tbody><tr><td>27 – 31</td><td>S</td></tr><tr><td>31 – 35</td><td>M</td></tr><tr><td>35 – 39</td><td>L</td></tr><tr><td>39 – 43</td><td>XL</td></tr></tbody></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
-      <div class="card"><div class="table-responsive">
-        <table class="table table-hover mb-0 align-middle">
-          <thead><tr><th class="ps-3">Item</th><th>Size</th><th>On hand</th><th>Reorder at</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr><td class="ps-3">Short sleeve shirt</td><td>L</td><td>4</td><td>8</td><td><span class="badge text-bg-danger">Low</span></td></tr>
-            <tr><td class="ps-3">Pants</td><td>34</td><td>12</td><td>6</td><td><span class="badge text-bg-success">OK</span></td></tr>
-            <tr><td class="ps-3">Baseball cap</td><td>One size</td><td>22</td><td>10</td><td><span class="badge text-bg-success">OK</span></td></tr>
-            <tr class="table-warning"><td class="ps-3">Long sleeve shirt</td><td>2XL</td><td>0</td><td>5</td><td><span class="badge text-bg-danger">Out</span></td></tr>
-          </tbody>
-        </table>
-      </div></div>
+
+      <div id="uniform-panel-inventory" class="uniform-panel">
+        <div class="page-header mb-2">
+          <h1 class="h3 mb-0">Uniform Inventory</h1>
+          <p class="text-muted small mb-0">Current stock by item and size · <a href="#" data-uniform-tab="portal-requests" class="uniform-jump-tab">1 open request</a></p>
+        </div>
+        <div class="uniform-section-size-chart-mobile d-xl-none mb-3">
+          <div class="uniform-size-charts uniform-size-charts--compact">
+            <div class="uniform-size-chart uniform-size-chart--compact">
+              <h2 class="uniform-size-chart-title">Shirt Size Chart</h2>
+              <p class="uniform-size-chart-intro">Match neck tag to form size.</p>
+              <div class="uniform-size-chart-pairs"><div class="uniform-size-chart-pair"><span>15–15½</span><strong>M</strong></div><div class="uniform-size-chart-pair"><span>16–16½</span><strong>L</strong></div><div class="uniform-size-chart-pair"><span>17–17½</span><strong>XL</strong></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="uniform-section-layout">
+          <div class="uniform-section-main">
+            <div class="alert alert-light border small mb-3">
+              <strong>On hand</strong> = starting + restocks − takeouts + adjustments (physical stock in the room).
+              <strong>Requests</strong> = completed portal uniform requests for that item/size.
+              <strong>Current</strong> = on hand − requests.
+            </div>
+            <div class="card mb-3">
+              <div class="card-body">
+                <form class="row g-2 align-items-end demo-disabled">
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-1">Item</label>
+                    <select class="form-select form-select-sm"><option>All items</option><option selected>Short Sleeve</option></select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label small text-muted mb-1">Status</label>
+                    <select class="form-select form-select-sm"><option selected>All</option><option>OK</option><option>Low stock</option><option>Out of stock</option></select>
+                  </div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-sm btn-outline-primary">Filter</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Reset</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="card uniform-inventory-table-card">
+              <div class="card-body table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                  <thead>
+                    <tr>
+                      <th>Item</th><th>Size</th><th>Season</th>
+                      <th class="text-end">Starting</th><th class="text-end">Restocks</th><th class="text-end">Takeouts</th><th class="text-end">Adjust</th>
+                      <th class="text-end">On hand</th><th class="text-end">Requests</th><th class="text-end">Current</th><th>Status</th><th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="table-danger"><td>Short Sleeve</td><td>XS</td><td>Summer</td><td class="text-end">0</td><td class="text-end">0</td><td class="text-end">8</td><td class="text-end">0</td><td class="text-end fw-semibold">0</td><td class="text-end">0</td><td class="text-end">0</td><td><span class="badge text-bg-danger">Out</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                    <tr><td>Short Sleeve</td><td>S</td><td>Summer</td><td class="text-end">0</td><td class="text-end">24</td><td class="text-end">18</td><td class="text-end">0</td><td class="text-end fw-semibold">6</td><td class="text-end text-primary fw-semibold">14</td><td class="text-end">-8</td><td><span class="badge text-bg-success">OK</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                    <tr><td>Short Sleeve</td><td>M</td><td>Summer</td><td class="text-end">0</td><td class="text-end">30</td><td class="text-end">12</td><td class="text-end">0</td><td class="text-end fw-semibold">18</td><td class="text-end text-primary fw-semibold">8</td><td class="text-end">10</td><td><span class="badge text-bg-success">OK</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                    <tr class="table-warning"><td>Short Sleeve</td><td>L</td><td>Summer</td><td class="text-end">0</td><td class="text-end">24</td><td class="text-end">20</td><td class="text-end">0</td><td class="text-end fw-semibold">4</td><td class="text-end text-primary fw-semibold">14</td><td class="text-end">-10</td><td><span class="badge text-bg-warning">Low</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                    <tr><td>Short Sleeve</td><td>XL</td><td>Summer</td><td class="text-end">0</td><td class="text-end">18</td><td class="text-end">10</td><td class="text-end text-primary fw-semibold">-8</td><td class="text-end fw-semibold">0</td><td class="text-end text-primary fw-semibold">6</td><td class="text-end">-6</td><td><span class="badge text-bg-success">OK</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                    <tr><td>Short Sleeve</td><td>2XL</td><td>Summer</td><td class="text-end">0</td><td class="text-end">12</td><td class="text-end">8</td><td class="text-end">0</td><td class="text-end fw-semibold">4</td><td class="text-end text-primary fw-semibold">2</td><td class="text-end">2</td><td><span class="badge text-bg-success">OK</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                    <tr><td>Pants</td><td>34</td><td>—</td><td class="text-end">0</td><td class="text-end">18</td><td class="text-end">6</td><td class="text-end">0</td><td class="text-end fw-semibold">12</td><td class="text-end text-primary fw-semibold">4</td><td class="text-end">8</td><td><span class="badge text-bg-success">OK</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                    <tr class="table-danger"><td>Long Sleeve</td><td>2XL</td><td>Winter</td><td class="text-end">0</td><td class="text-end">10</td><td class="text-end">10</td><td class="text-end">0</td><td class="text-end fw-semibold">0</td><td class="text-end text-primary fw-semibold">3</td><td class="text-end">-3</td><td><span class="badge text-bg-danger">Out</span></td><td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Adjust</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <aside class="uniform-section-size-chart d-none d-xl-block" aria-label="Uniform size charts">
+            <div class="uniform-size-chart-side">
+              <div class="uniform-size-charts">
+                <div class="uniform-size-chart">
+                  <h2 class="uniform-size-chart-title">Shirt Size Chart</h2>
+                  <p class="uniform-size-chart-intro">Shirts are labeled by neck size on the tags. Use this chart to match neck size to the correct size on the form.</p>
+                  <div class="uniform-size-chart-table-wrap">
+                    <table class="uniform-size-chart-table">
+                      <thead><tr><th>Neck size</th><th>Size</th></tr></thead>
+                      <tbody>
+                        <tr><td>13 – 13½</td><td>XS</td></tr><tr><td>14 – 14½</td><td>S</td></tr><tr><td>15 – 15½</td><td>M</td></tr><tr><td>16 – 16½</td><td>L</td></tr><tr><td>17 – 17½</td><td>XL</td></tr><tr><td>18 – 18½</td><td>2XL</td></tr><tr><td>19 – 19½</td><td>3XL</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="uniform-size-chart">
+                  <h2 class="uniform-size-chart-title">Pants Size Chart</h2>
+                  <p class="uniform-size-chart-intro">Pants are unisex and adjustable, so each size covers a range of waist measurements.</p>
+                  <div class="uniform-size-chart-table-wrap">
+                    <table class="uniform-size-chart-table">
+                      <thead><tr><th>Waist size</th><th>Size</th></tr></thead>
+                      <tbody>
+                        <tr><td>27 – 31</td><td>S</td></tr><tr><td>31 – 35</td><td>M</td></tr><tr><td>35 – 39</td><td>L</td></tr><tr><td>39 – 43</td><td>XL</td></tr><tr><td>43 – 47</td><td>2XL</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div id="uniform-panel-portal-requests" class="uniform-panel">
+        <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-3 mb-2">
+          <div>
+            <h1 class="h3 mb-1">Uniform Requests</h1>
+            <p class="text-muted mb-0">1 pending · 4 shown</p>
+          </div>
+          <button type="button" class="btn btn-outline-secondary btn-sm demo-disabled">Export CSV</button>
+        </div>
+        <div class="special-uniform-legend mb-3" role="note">
+          <span class="badge badge-special-uniform">Special Uniform Site</span>
+          <span class="special-uniform-legend-text">Purple rows mean this site uses <strong>specially ordered uniforms</strong>. Double-check the guard's <strong>schedule</strong> to confirm what items they should receive.</span>
+        </div>
+        <div class="sweater-issued-legend mb-3" role="note">
+          <span class="badge badge-sweater-issued">Sweater or Jacket Already Issued</span>
+          <span class="sweater-issued-legend-text">Red rows mean this guard already received a sweater or jacket. Usually only <strong>1 of each</strong> is given.</span>
+        </div>
+        <div class="card mb-3 d-none d-md-block">
+          <div class="card-header-brand">
+            <h2 class="h6 mb-0">Pending items vs on-hand inventory</h2>
+          </div>
+          <div class="card-body">
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge text-bg-light border text-dark">Hats (Baseball Cap): <strong>1 pending</strong> · 30 on hand · 29 available</span>
+              <span class="badge text-bg-light border text-dark">Short Sleeve L: <strong>1 pending</strong> · 4 on hand · <span class="text-danger">(out)</span></span>
+              <span class="badge text-bg-light border text-dark">Pants 34: <strong>0 pending</strong> · 12 on hand · 8 available</span>
+            </div>
+          </div>
+        </div>
+        <form class="row g-2 align-items-end mb-3 uniform-requests-filters demo-disabled">
+          <div class="col-6 col-md-2"><label class="form-label">Status</label><select class="form-select form-select-sm"><option>All statuses</option><option selected>Completed</option></select></div>
+          <div class="col-12 col-md-3"><label class="form-label">Site</label><select class="form-select form-select-sm"><option selected>All sites</option></select></div>
+          <div class="col-6 col-md-2"><label class="form-label">From</label><input class="form-control form-control-sm" type="date" value="2026-08-01"></div>
+          <div class="col-6 col-md-2"><label class="form-label">To</label><input class="form-control form-control-sm" type="date" value="2026-09-16"></div>
+          <div class="col-12 col-md-3 d-flex gap-2"><button type="button" class="btn btn-primary btn-sm flex-grow-1">Filter</button><button type="button" class="btn btn-outline-secondary btn-sm">Reset</button></div>
+        </form>
+        <div class="uniform-section-layout uniform-section-layout--requests">
+          <div class="uniform-section-main">
+            <div class="card uniform-requests-table-card">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 uniform-requests-table">
+                  <thead>
+                    <tr><th>Submitted</th><th>Guard</th><th>Site</th><th>Reason</th><th>Items</th><th>Status</th><th class="text-end">Actions</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr class="table-row-special-uniform table-row-sweater-issued">
+                      <td class="text-nowrap">09-15-2026 11:44</td>
+                      <td><div>Maria Santos</div><span class="badge badge-sweater-issued mt-1">Sweater already issued</span></td>
+                      <td><span class="site-hint"><strong>ShopRite Verona</strong> <span class="badge badge-special-uniform">Special</span></span></td>
+                      <td><div>New Hire</div><div class="mt-1"><span class="badge badge-sora-unarmed">Unarmed</span></div></td>
+                      <td class="small">
+                        <div class="uniform-request-items"><span class="uniform-item-chip">SS L</span><span class="uniform-item-chip">Pants L</span></div>
+                        <div class="uniform-stock-lines"><div class="uniform-stock-line is-out">Short Sleeve L: 4 on hand · 14 requested · <strong>out</strong></div></div>
+                      </td>
+                      <td><span class="badge text-bg-success">Completed</span></td>
+                      <td class="text-end text-nowrap uniform-requests-actions"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Edit</button> <button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Details</button></td>
+                    </tr>
+                    <tr class="table-row-sweater-issued">
+                      <td class="text-nowrap">09-12-2026 3:18 PM</td>
+                      <td><div>James Rivera</div><span class="badge badge-sweater-issued mt-1">Sweater already issued</span></td>
+                      <td>Citizens Bank Newark</td>
+                      <td><div>Weather Change</div><div class="mt-1"><span class="badge badge-sora-armed">Armed</span></div></td>
+                      <td class="small">
+                        <div class="uniform-request-items"><span class="uniform-item-chip">LS L</span><span class="uniform-item-chip">Pants 34</span></div>
+                        <div class="uniform-stock-lines"><div class="uniform-stock-line">Long Sleeve L: 6 on hand · 2 requested</div><div class="uniform-stock-line">Pants 34: 12 on hand · 4 requested</div></div>
+                      </td>
+                      <td><span class="badge text-bg-success">Completed</span></td>
+                      <td class="text-end text-nowrap uniform-requests-actions"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Edit</button> <button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Details</button></td>
+                    </tr>
+                    <tr>
+                      <td class="text-nowrap">09-08-2026 9:02 AM</td>
+                      <td>Tyler Brooks</td>
+                      <td>Newark Academy</td>
+                      <td><div>Extra Set</div><div class="mt-1"><span class="badge badge-sora-unarmed">Unarmed</span></div></td>
+                      <td class="small">
+                        <div class="uniform-request-items"><span class="uniform-item-chip">SS M</span><span class="uniform-item-chip">Pants 32</span><span class="uniform-item-chip">Sweater L</span></div>
+                        <div class="uniform-stock-lines"><div class="uniform-stock-line">Short Sleeve M: 18 on hand · 8 requested</div></div>
+                      </td>
+                      <td><span class="badge text-bg-primary">New</span></td>
+                      <td class="text-end text-nowrap uniform-requests-actions"><button type="button" class="btn btn-sm btn-success demo-disabled">Complete</button> <button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Edit</button> <button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Details</button></td>
+                    </tr>
+                    <tr>
+                      <td class="text-nowrap">08-30-2026 4:48 PM</td>
+                      <td>Aisha Patel</td>
+                      <td>Spectrum 360</td>
+                      <td><div>New Hire</div><div class="mt-1"><span class="badge badge-sora-unarmed">Unarmed</span></div></td>
+                      <td class="small">
+                        <div class="uniform-request-items"><span class="uniform-item-chip">SS L</span><span class="uniform-item-chip">Hat</span></div>
+                        <div class="uniform-stock-lines"><div class="uniform-stock-line is-low">Short Sleeve L: 4 on hand · 14 requested · <strong>low</strong></div></div>
+                        <div class="text-muted mt-1">Guard requested an extra shirt for training week.</div>
+                      </td>
+                      <td><span class="badge text-bg-success">Completed</span></td>
+                      <td class="text-end text-nowrap uniform-requests-actions"><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Edit</button> <button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Details</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <aside class="uniform-section-size-chart d-none d-xl-block" aria-label="Uniform size charts">
+            <div class="uniform-size-chart-side">
+              <div class="uniform-size-charts">
+                <div class="uniform-size-chart">
+                  <h2 class="uniform-size-chart-title">Shirt Size Chart</h2>
+                  <p class="uniform-size-chart-intro">Match neck tag to form size.</p>
+                  <div class="uniform-size-chart-table-wrap">
+                    <table class="uniform-size-chart-table"><thead><tr><th>Neck size</th><th>Size</th></tr></thead><tbody><tr><td>15 – 15½</td><td>M</td></tr><tr><td>16 – 16½</td><td>L</td></tr><tr><td>17 – 17½</td><td>XL</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="uniform-size-chart">
+                  <h2 class="uniform-size-chart-title">Pants Size Chart</h2>
+                  <div class="uniform-size-chart-table-wrap">
+                    <table class="uniform-size-chart-table"><thead><tr><th>Waist size</th><th>Size</th></tr></thead><tbody><tr><td>31 – 35</td><td>M</td></tr><tr><td>35 – 39</td><td>L</td></tr><tr><td>39 – 43</td><td>XL</td></tr></tbody></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
 
       <div id="uniform-panel-restock-log" class="uniform-panel">
+        <div class="page-header mb-3"><h1 class="h3 mb-0">Restock Log</h1></div>
         <div class="card"><div class="table-responsive">
           <table class="table table-hover mb-0 align-middle">
             <thead><tr><th class="ps-3">Date</th><th>Item</th><th>Size</th><th>Qty added</th><th>By</th></tr></thead>
             <tbody>
-              <tr><td class="ps-3">Jul 28, 2026</td><td>Short sleeve shirt</td><td>L</td><td>24</td><td>HR</td></tr>
-              <tr><td>Jul 22, 2026</td><td>Pants</td><td>34</td><td>18</td><td>HR</td></tr>
-              <tr><td>Jul 15, 2026</td><td>Baseball cap</td><td>One size</td><td>30</td><td>HR</td></tr>
+              <tr><td class="ps-3">Jul 28, 2026</td><td>Short Sleeve</td><td>L</td><td>24</td><td>Office Administrator</td></tr>
+              <tr><td>Jul 22, 2026</td><td>Pants</td><td>34</td><td>18</td><td>Office Administrator</td></tr>
+              <tr><td>Jul 15, 2026</td><td>Hats (Baseball Cap)</td><td>One size</td><td>30</td><td>Office Administrator</td></tr>
             </tbody>
           </table>
         </div></div>
       </div>
 
       <div id="uniform-panel-takeout-log" class="uniform-panel">
+        <div class="page-header mb-3"><h1 class="h3 mb-0">Takeout Log</h1></div>
         <div class="card"><div class="table-responsive">
           <table class="table table-hover mb-0 align-middle">
             <thead><tr><th class="ps-3">Date</th><th>Recipient</th><th>Item</th><th>Size</th><th>Qty</th><th>Source</th></tr></thead>
             <tbody>
-              <tr><td class="ps-3">Jul 29, 2026</td><td>Maria Santos</td><td>Short sleeve shirt</td><td>L</td><td>1</td><td>Stock room QR</td></tr>
+              <tr><td class="ps-3">Jul 29, 2026</td><td>Maria Santos</td><td>Short Sleeve</td><td>L</td><td>1</td><td>Stock room QR</td></tr>
               <tr><td>Jul 28, 2026</td><td>Tyler Brooks</td><td>Pants</td><td>34</td><td>1</td><td>Office issue</td></tr>
-              <tr><td>Jul 27, 2026</td><td>James Rivera</td><td>Long sleeve shirt</td><td>XL</td><td>1</td><td>Stock room QR</td></tr>
+              <tr><td>Jul 27, 2026</td><td>James Rivera</td><td>Long Sleeve</td><td>XL</td><td>1</td><td>Stock room QR</td></tr>
             </tbody>
           </table>
         </div></div>
       </div>
 
       <div id="uniform-panel-stock-room" class="uniform-panel">
+        <div class="page-header mb-3"><h1 class="h3 mb-0">Stock Room QR</h1></div>
         <div class="row g-3">
           <div class="col-lg-5">
             <div class="card h-100">
               <div class="card-body">
-                <h2 class="h5">Stock room QR</h2>
                 <p class="text-muted small">Secret link for the Verona stock room — not listed on the employee portal nav. Scanning opens a no-login takeout form.</p>
                 <div class="stock-room-qr-box mb-3" aria-hidden="true">▦</div>
                 <p class="small font-monospace text-muted mb-3">…/stock-room/issue?k=••••••••&amp;item=short_sleeve&amp;size=L</p>
@@ -523,9 +829,9 @@
               <table class="table table-hover mb-0 align-middle">
                 <thead><tr><th class="ps-3">Shelf label</th><th>Size</th><th>On hand</th><th></th></tr></thead>
                 <tbody>
-                  <tr><td class="ps-3">Short sleeve shirt</td><td>L</td><td>4</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
+                  <tr><td class="ps-3">Short Sleeve</td><td>L</td><td>4</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
                   <tr><td>Pants</td><td>34</td><td>12</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
-                  <tr><td>Baseball cap</td><td>One size</td><td>22</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
+                  <tr><td>Hats (Baseball Cap)</td><td>One size</td><td>30</td><td><button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Print sign</button></td></tr>
                 </tbody>
               </table>
             </div></div>
@@ -533,7 +839,6 @@
         </div>
       </div>
     </div>
-
     <div id="view-assignments" class="view">
       <div class="page-header mb-3">
         <h1 class="h3 mb-0">Assignments</h1>
@@ -984,6 +1289,6 @@
   <div class="demo-toast" id="demo-toast" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="ops.js?v=7"></script>
+  <script src="ops.js?v=9"></script>
 </body>
 </html>

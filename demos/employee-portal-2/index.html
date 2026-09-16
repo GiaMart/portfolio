@@ -357,9 +357,13 @@
                     <input class="form-control" id="last-name" name="last_name" required>
                   </div>
                   <div class="col-12">
-                    <label class="form-label" for="site">Assigned Site</label>
-                    <input class="form-control" id="site" name="site_name" placeholder="Start typing to search…">
-                    <div class="form-text">Start typing to search. Supervisors and certain sites (e.g., Newark Academy, Payne Tech Interior) require custom uniforms and will receive deliveries directly at site.</div>
+                    <label class="form-label" for="site">Assigned Site *</label>
+                    <select class="form-select" id="site" name="site_name" required>
+                      <option value="">Select site…</option>
+                      <option value="Essex Green">Essex Green</option>
+                      <option value="Newark Academy" data-sweater-site>Newark Academy</option>
+                    </select>
+                    <div class="form-text">Demo sites: <strong>Essex Green</strong> is a regular post; <strong>Newark Academy</strong> is sweater-eligible — pick it to see the sweater size field appear.</div>
                   </div>
                 </div>
               </div>
@@ -824,6 +828,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="demo.js?v=10"></script>
+  <script src="demo.js?v=11"></script>
 </body>
 </html>

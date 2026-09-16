@@ -326,20 +326,27 @@ function renderUniformForm() {
   });
 }
 
-function bindUniformSweaterField() {
-  const siteInput = document.getElementById("site");
+function syncUniformSweaterField() {
+  const siteSelect = document.getElementById("site");
   const sweaterField = document.getElementById("sweater-field");
-  if (!siteInput || !sweaterField) return;
+  const sweaterSelect = document.getElementById("sweater");
+  if (!siteSelect || !sweaterField) return;
 
-  const sweaterSites = ["newark academy", "payne tech", "shoprite verona"];
-  const sync = () => {
-    const value = siteInput.value.trim().toLowerCase();
-    const show = sweaterSites.some((site) => value.includes(site));
-    sweaterField.hidden = !show;
-  };
+  const option = siteSelect.selectedOptions[0];
+  const show = Boolean(option?.dataset.sweaterSite !== undefined);
+  sweaterField.hidden = !show;
+  if (!show && sweaterSelect) sweaterSelect.value = "";
+}
 
-  siteInput.addEventListener("input", sync);
-  siteInput.addEventListener("change", sync);
+function bindUniformSweaterField() {
+  const siteSelect = document.getElementById("site");
+  if (!siteSelect) return;
+
+  siteSelect.addEventListener("change", syncUniformSweaterField);
+  document.getElementById("uniform-form-el")?.addEventListener("reset", () => {
+    window.requestAnimationFrame(syncUniformSweaterField);
+  });
+  syncUniformSweaterField();
 }
 
 function renderFormCards() {
@@ -530,7 +537,16 @@ function syncIncidentDay() {
 }
 
 function handleHashRoute() {
-  if (window.location.hash === "#stock-room") showView("stock-room");
+  const hash = window.location.hash;
+  if (hash === "#stock-room") showView("stock-room");
+  else if (hash === "#uniform-form" || hash === "#uniform") showView("uniform-form");
+}
+
+function initialPortalView() {
+  const hash = window.location.hash;
+  if (hash === "#stock-room") return "stock-room";
+  if (hash === "#uniform-form" || hash === "#uniform") return "uniform-form";
+  return "home";
 }
 
 renderQuickLinks();
@@ -543,5 +559,5 @@ renderUniformForm();
 bindUniformSweaterField();
 bindNavigation();
 window.addEventListener("hashchange", handleHashRoute);
-showView(window.location.hash === "#stock-room" ? "stock-room" : "home");
+showView(initialPortalView());
 window.showView = showView;

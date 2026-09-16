@@ -539,16 +539,7 @@ function applyViewHash() {
   const [view, sub] = hash.split("/");
   if (view === "uniforms") {
     showView("uniforms");
-    if (sub) {
-      document.querySelectorAll("[data-uniform-tab]").forEach((btn) => {
-        const active = btn.dataset.uniformTab === sub;
-        btn.classList.toggle("btn-primary", active);
-        btn.classList.toggle("btn-outline-primary", !active);
-      });
-      document.querySelectorAll(".uniform-panel").forEach((panel) => {
-        panel.classList.toggle("active", panel.id === `uniform-panel-${sub}`);
-      });
-    }
+    activateUniformTab(sub || "dashboard");
     return;
   }
   if (document.getElementById(`view-${view}`)) {
@@ -727,17 +718,33 @@ function bindDetail() {
   });
 }
 
+function activateUniformTab(tab) {
+  document.querySelectorAll("[data-uniform-tab]").forEach((b) => {
+    b.classList.toggle("btn-primary", b.dataset.uniformTab === tab);
+    b.classList.toggle("btn-outline-primary", b.dataset.uniformTab !== tab);
+  });
+  document.querySelectorAll(".uniform-panel").forEach((panel) => {
+    panel.classList.toggle("active", panel.id === `uniform-panel-${tab}`);
+  });
+}
+
 function bindUniformTabs() {
   document.querySelectorAll("[data-uniform-tab]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tab = btn.dataset.uniformTab;
-      document.querySelectorAll("[data-uniform-tab]").forEach((b) => {
-        b.classList.toggle("btn-primary", b.dataset.uniformTab === tab);
-        b.classList.toggle("btn-outline-primary", b.dataset.uniformTab !== tab);
-      });
-      document.querySelectorAll(".uniform-panel").forEach((panel) => {
-        panel.classList.toggle("active", panel.id === `uniform-panel-${tab}`);
-      });
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      activateUniformTab(btn.dataset.uniformTab);
+    });
+  });
+  document.querySelectorAll(".uniform-jump-tab").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      activateUniformTab(link.dataset.uniformTab);
+    });
+  });
+  document.querySelectorAll("[data-uniform-tab].text-link-btn").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      activateUniformTab(link.dataset.uniformTab);
     });
   });
 }

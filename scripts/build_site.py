@@ -22,10 +22,12 @@ PROJECT_TEXT = {
     "uniform-inventory-tracking-2": [
         "Skills: Cursor · Flask · SQLite · Render · SMTP",
         "Evolution: Version 1 proved QR checkout and alerts in Google Sheets. Uniform Inventory Tracking 2.0 lives inside the operations portal — same database as employee uniform requests, guard history, and stock-room takeouts.",
-        "Inventory module: Dashboard stats (low stock, open portal requests, weekly takeouts), full SKU table with reorder thresholds, restock log, takeout log, and a secret stock-room QR link for no-login checkout from the Verona uniform room.",
-        "Portal integration: When guards submit uniform requests, HR sees them in the portal queue. Rows highlight in purple for special-uniform sites (non-standard sizing or delivery). Rows highlight in red when a guard already received a one-time item — like a sweater — so staff do not double-issue.",
-        "Sweater rules: Only certain sites can request a sweater in the employee portal. The site picker shows the sweater field only for eligible posts (e.g. Newark Academy, outdoor accounts). Guards get one sweater; the form explains the policy and HR can review exceptions in the notes.",
-        "Stock alert emails: When inventory newly hits low or out of stock, the system emails HR automatically with a branded alert listing affected sizes. Seasonal items respect in-season rules so winter skully alerts do not fire in July.",
+        "Uniforms dashboard: SKUs tracked, total on hand, low/out counts, pending requests with pack chips, recent takeouts, and size charts — the ops home screen for uniform inventory.",
+        "Inventory module: Full SKU table with starting/restock/takeout/adjust columns, reorder thresholds, restock log, takeout log, and a secret stock-room QR link for no-login checkout from the Verona uniform room.",
+        "Employee form: Guards submit uniform requests from the employee portal — site picker, armed/unarmed, reason, item sizes with out-of-stock labels, and sweater field for eligible sites only. Submissions land in the admin portal queue.",
+        "Portal integration: When guards submit uniform requests, HR sees them in the portal queue. Rows highlight in purple for special-uniform sites (custom to specific site). Rows highlight in red when a guard already received a one-time item — like a sweater — so staff do not double-issue.",
+        "Sweater rules: Only certain sites can request a sweater in the employee portal. The demo form includes Essex Green (regular) and Newark Academy (sweater-eligible) so visitors can see the sweater field appear when an eligible site is selected. Guards get one sweater; the form explains the policy and HR can review exceptions in the notes.",
+        "Stock alert emails: When inventory newly hits low or out of stock, the system emails Office Administrator automatically with a branded alert listing affected sizes. Seasonal items respect in-season rules so winter skully alerts do not fire in July.",
         "How I used AI: Cursor helped wire inventory mutations to alert checks, portal row highlighting, and sweater site logic. I owned thresholds, eligible sites, and the HR workflow.",
     ],
     "employee-portal": [
@@ -74,6 +76,11 @@ PROJECT_DEMOS = {
             "heading": "Try the employee portal",
             "note": "Interactive preview — pay calendar, incident report, all 7 production-style request forms, stock-room QR takeout, and FAQs. Submissions are simulated.",
         },
+        {
+            "path": "demos/employee-portal-2/index.html#uniform-form",
+            "heading": "Uniform request form",
+            "note": "Site picker includes Essex Green (regular) and Newark Academy (sweater-eligible). Select Newark Academy to reveal the sweater size field.",
+        },
     ],
     "operations-portal": [
         {
@@ -84,14 +91,24 @@ PROJECT_DEMOS = {
     ],
     "uniform-inventory-tracking-2": [
         {
-            "path": "demos/operations-portal/index.html#uniforms",
-            "heading": "Try the uniform module",
-            "note": "Opens the operations portal Uniforms tab — inventory stats, SKU table, restock/takeout logs, and stock-room QR. Use Staff → Uniforms in the nav, or scroll the iframe to explore sub-tabs.",
+            "path": "demos/operations-portal/index.html#uniforms/dashboard",
+            "heading": "Uniforms dashboard",
+            "note": "Staff → Uniforms → Dashboard. Overview stats, low/out-of-stock watch, pending requests with pack chips, recent takeouts, and size charts. Sample data only.",
         },
         {
-            "path": "demos/operations-portal/index.html#list",
-            "heading": "Portal submission queue",
-            "note": "Uniform requests from the employee portal land here. Purple rows = special-uniform sites. Red rows = guard already received a one-time item (e.g. sweater). Sample data only.",
+            "path": "demos/operations-portal/index.html#uniforms/inventory",
+            "heading": "Inventory table",
+            "note": "Full SKU grid with filters, on-hand vs requests vs current, and adjust buttons — same layout as production.",
+        },
+        {
+            "path": "demos/operations-portal/index.html#uniforms/portal-requests",
+            "heading": "Portal uniform requests",
+            "note": "Admin queue for employee submissions. Purple = special-uniform sites. Red = sweater or jacket already issued. Pending vs on-hand chips at the top.",
+        },
+        {
+            "path": "demos/employee-portal-2/index.html#uniform-form",
+            "heading": "Employee uniform request form",
+            "note": "Guard-facing form with Before You Submit copy and a demo site picker: Essex Green (regular) or Newark Academy (sweater-eligible — select it to reveal the sweater field). Submissions are simulated.",
         },
     ],
 }
@@ -151,26 +168,76 @@ def uniform_inventory_2_gallery() -> str:
       <h2 class="gallery-section-title">Low &amp; out-of-stock email alerts</h2>
       <figure class="project-image project-image--email">
         <div class="uniform-email-preview" role="img" aria-label="Sample uniform stock alert email">
-          <div class="uniform-email-card">
-            <div class="uniform-email-header">
-              <p class="uniform-email-title">Uniform Inventory Alert</p>
-              <p class="uniform-email-subtitle">The following in-season items need attention.</p>
-            </div>
-            <div class="uniform-email-body">
-              <h3 class="uniform-email-section uniform-email-section--out">Out of stock</h3>
-              <table class="uniform-email-table">
-                <tr><td><strong>Long sleeve shirt</strong> <span class="muted">— 2XL</span></td><td>0 on hand</td></tr>
-              </table>
-              <h3 class="uniform-email-section uniform-email-section--low">Low stock</h3>
-              <table class="uniform-email-table">
-                <tr><td><strong>Short sleeve shirt</strong> <span class="muted">— L</span></td><td>4 on hand</td></tr>
-                <tr><td><strong>Pants</strong> <span class="muted">— 34</span></td><td>6 on hand</td></tr>
-                <tr><td><strong>Winter skully</strong> <span class="muted">— One size</span></td><td>3 on hand</td></tr>
-              </table>
-              <p class="uniform-email-foot">View full inventory in the admin site under <strong>Uniforms → Inventory</strong>.</p>
+          <div style="max-width:640px;margin:0 auto 1rem;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff;font-family:Segoe UI,Helvetica,Arial,sans-serif;">
+            <div style="padding:0.75rem 1rem;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-size:0.82rem;color:#64748b;">
+              <div><strong style="color:#0f172a;">From:</strong> Sterling Operations Portal</div>
+              <div><strong style="color:#0f172a;">Subject:</strong> Uniform Stock alert — 1 out, 3 low</div>
             </div>
           </div>
-          <p class="uniform-email-meta">Subject: <strong>Uniform Stock alert — 1 out, 3 low</strong> · Sent to HR when a SKU newly crosses its reorder threshold</p>
+          <div style="margin:0;padding:0;background:#eef2f7;font-family:Segoe UI,Helvetica,Arial,sans-serif;color:#0f172a;border-radius:12px;overflow:hidden;">
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;border-collapse:collapse;">
+              <tr>
+                <td align="center" style="padding:32px 16px;">
+                  <table width="560" cellpadding="0" cellspacing="0" role="presentation"
+                         style="width:100%;max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(10,22,40,0.08);border-collapse:collapse;">
+                    <tr>
+                      <td style="background:linear-gradient(135deg,#0a1628 0%,#1e3a5f 100%);padding:32px 28px;text-align:center;">
+                        <p style="margin:0 0 10px;font-size:24px;font-weight:700;line-height:1.3;color:#ffffff;">Uniform Inventory Alert</p>
+                        <p style="margin:0;font-size:15px;font-weight:700;line-height:1.5;color:#ffffff;">The following in-season items need attention.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:28px 32px 24px;">
+                        <h2 style="margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#dc2626;">Out of stock</h2>
+                        <table width="100%" cellpadding="0" cellspacing="0" style="width:100%;font-size:15px;border-collapse:collapse;">
+                          <tr>
+                            <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                              <span style="font-weight:600;color:#0f172a;">Long sleeve shirt</span>
+                              <span style="color:#64748b;"> — 2XL</span>
+                            </td>
+                            <td align="right" style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#0f172a;white-space:nowrap;">0 on hand</td>
+                          </tr>
+                        </table>
+                        <h2 style="margin:24px 0 8px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#d97706;">Low stock</h2>
+                        <table width="100%" cellpadding="0" cellspacing="0" style="width:100%;font-size:15px;border-collapse:collapse;">
+                          <tr>
+                            <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                              <span style="font-weight:600;color:#0f172a;">Short sleeve shirt</span>
+                              <span style="color:#64748b;"> — L</span>
+                            </td>
+                            <td align="right" style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#0f172a;white-space:nowrap;">4 on hand</td>
+                          </tr>
+                          <tr>
+                            <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                              <span style="font-weight:600;color:#0f172a;">Pants</span>
+                              <span style="color:#64748b;"> — 34</span>
+                            </td>
+                            <td align="right" style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#0f172a;white-space:nowrap;">6 on hand</td>
+                          </tr>
+                          <tr>
+                            <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                              <span style="font-weight:600;color:#0f172a;">Winter skully</span>
+                              <span style="color:#64748b;"> — One size</span>
+                            </td>
+                            <td align="right" style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-weight:600;color:#0f172a;white-space:nowrap;">3 on hand</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:0 32px 32px;">
+                        <p style="margin:0;font-size:14px;line-height:1.5;color:#64748b;">
+                          View full inventory in the admin site under
+                          <strong style="color:#1e3a5f;">Uniforms → Inventory</strong>.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <p style="margin:1rem 0 0;font-size:0.82rem;color:#666;text-align:center;">Sent to Office Administrator when a SKU newly crosses its reorder threshold</p>
         </div>
         <figcaption>Automated SMTP alert when inventory newly hits low or out of stock — same template as production</figcaption>
       </figure>
@@ -178,30 +245,34 @@ def uniform_inventory_2_gallery() -> str:
     <div class="gallery-section">
       <h2 class="gallery-section-title">Portal queue highlighting</h2>
       <figure class="project-image project-image--dashboard">
-        <div class="uniform-queue-preview">
-          <div class="uniform-queue-legend">
-            <span><i class="legend-swatch legend-swatch--special"></i> Special uniform site (purple)</span>
-            <span><i class="legend-swatch legend-swatch--sweater"></i> Sweater / one-time item already issued (red)</span>
+        <div style="border:1px solid #e8e8e8;border-radius:12px;overflow:hidden;background:#fff;font-family:Segoe UI,Helvetica,Arial,sans-serif;">
+          <div style="display:flex;flex-wrap:wrap;gap:0.75rem 1.25rem;padding:0.85rem 1rem;background:#f8fafc;border-bottom:1px solid #e8e8e8;font-size:0.82rem;color:#666;">
+            <span><span style="display:inline-block;width:0.85rem;height:0.85rem;border-radius:0.2rem;margin-right:0.35rem;background:rgba(124,58,237,0.45);vertical-align:-0.1rem;border:1px solid rgba(0,0,0,0.08);"></span> Special uniform site (purple)</span>
+            <span><span style="display:inline-block;width:0.85rem;height:0.85rem;border-radius:0.2rem;margin-right:0.35rem;background:rgba(220,38,38,0.45);vertical-align:-0.1rem;border:1px solid rgba(0,0,0,0.08);"></span> Sweater / one-time item already issued (red)</span>
           </div>
-          <table class="uniform-queue-table">
+          <table width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:0.9rem;">
             <thead>
-              <tr><th>Employee</th><th>Site</th><th>Flags</th></tr>
+              <tr style="background:#f1f5f9;">
+                <th style="text-align:left;padding:0.65rem 1rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:#666;">Employee</th>
+                <th style="text-align:left;padding:0.65rem 1rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:#666;">Site</th>
+                <th style="text-align:left;padding:0.65rem 1rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:#666;">Flags</th>
+              </tr>
             </thead>
             <tbody>
-              <tr class="row-special row-sweater">
-                <td>Maria Santos</td>
-                <td>ShopRite Verona <span class="badge badge-special">Special</span></td>
-                <td><span class="badge badge-sweater">Sweater issued</span></td>
+              <tr style="background:rgba(220,38,38,0.12);">
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">Maria Santos</td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">ShopRite Verona <span style="display:inline-block;padding:0.15rem 0.45rem;border-radius:999px;font-size:0.68rem;font-weight:700;background:#7c3aed;color:#fff;margin-left:0.25rem;">Special</span></td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;"><span style="display:inline-block;padding:0.15rem 0.45rem;border-radius:999px;font-size:0.68rem;font-weight:700;background:#dc2626;color:#fff;">Sweater issued</span></td>
               </tr>
-              <tr class="row-sweater">
-                <td>James Rivera</td>
-                <td>Citizens Bank Newark</td>
-                <td><span class="badge badge-sweater">Sweater issued</span></td>
+              <tr style="background:rgba(220,38,38,0.12);">
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">James Rivera</td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">Citizens Bank Newark</td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;"><span style="display:inline-block;padding:0.15rem 0.45rem;border-radius:999px;font-size:0.68rem;font-weight:700;background:#dc2626;color:#fff;">Sweater issued</span></td>
               </tr>
               <tr>
-                <td>Tyler Brooks</td>
-                <td>Newark Academy</td>
-                <td><span class="muted">Sweater-eligible site</span></td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">Tyler Brooks</td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">Newark Academy</td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;color:#666;font-size:0.82rem;">Sweater-eligible site</td>
               </tr>
             </tbody>
           </table>

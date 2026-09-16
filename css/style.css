@@ -69,8 +69,8 @@ a {
 }
 
 .logo-img {
-  width: 42px;
   height: 28px;
+  width: auto;
   border-radius: 0;
   object-fit: contain;
   flex-shrink: 0;

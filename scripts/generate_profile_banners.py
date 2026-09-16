@@ -17,7 +17,8 @@ TOP_BAR = "#2563eb"
 
 FONT_BOLD = "C:/Windows/Fonts/segoeuib.ttf"
 FONT_REG = "C:/Windows/Fonts/segoeui.ttf"
-FONT_ITALIC_BOLD = "C:/Windows/Fonts/segoeuiz.ttf"
+FONT_ITALIC_BOLD = "C:/Windows/Fonts/arialbi.ttf"
+LOGO_SOURCE = OUT / "gm-logo.png"
 
 
 def load_font(path: str, size: int) -> ImageFont.FreeTypeFont:
@@ -127,22 +128,26 @@ def github_social_preview() -> Image.Image:
     return linkedin_layout(label="GitHub")
 
 
-def draw_gm_icon(size: int) -> Image.Image:
-    img = Image.new("RGB", (size, size), WHITE)
-    draw = ImageDraw.Draw(img)
-    top_bar = max(2, size // 16)
-    draw.rectangle((0, 0, size, top_bar), fill=TOP_BAR)
+def load_gm_logo() -> Image.Image:
+    logo = Image.open(LOGO_SOURCE).convert("RGBA")
+    return logo
 
-    font_size = max(8, int(size * 0.42))
-    font = load_font(FONT_ITALIC_BOLD, font_size)
-    monogram = "GM"
-    bbox = draw.textbbox((0, 0), monogram, font=font)
-    text_w = bbox[2] - bbox[0]
-    text_h = bbox[3] - bbox[1]
-    x = (size - text_w) // 2 - bbox[0]
-    y = (size - text_h) // 2 - bbox[1] + top_bar // 2
-    draw.text((x, y), monogram, fill=TEXT, font=font)
-    return img
+
+def draw_gm_icon(size: int) -> Image.Image:
+    logo = load_gm_logo()
+    canvas = Image.new("RGBA", (size, size), (255, 255, 255, 255))
+    pad = max(2, size // 10)
+    max_w = size - pad * 2
+    max_h = size - pad * 2
+    scale = min(max_w / logo.width, max_h / logo.height)
+    resized = logo.resize(
+        (max(1, int(logo.width * scale)), max(1, int(logo.height * scale))),
+        Image.Resampling.LANCZOS,
+    )
+    x = (size - resized.width) // 2
+    y = (size - resized.height) // 2
+    canvas.paste(resized, (x, y), resized)
+    return canvas.convert("RGB")
 
 
 def save_favicons() -> None:

@@ -280,7 +280,7 @@ const SUBMISSIONS = [
     email: "maria.santos@example.com",
     armed: "Unarmed",
     special_uniform: true,
-    sweater_issued: true,
+    sweater_issued: false,
     status: "new",
     admin_notes: "",
     details: [

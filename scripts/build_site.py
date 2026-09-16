@@ -273,10 +273,10 @@ def uniform_inventory_2_gallery() -> str:
               </tr>
             </thead>
             <tbody>
-              <tr style="background:rgba(220,38,38,0.12);">
+              <tr style="background:rgba(124,58,237,0.12);">
                 <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">Maria Santos</td>
                 <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">ShopRite Verona <span style="display:inline-block;padding:0.15rem 0.45rem;border-radius:999px;font-size:0.68rem;font-weight:700;background:#7c3aed;color:#fff;margin-left:0.25rem;">Special</span></td>
-                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;"><span style="display:inline-block;padding:0.15rem 0.45rem;border-radius:999px;font-size:0.68rem;font-weight:700;background:#dc2626;color:#fff;">Sweater issued</span></td>
+                <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;color:#666;font-size:0.82rem;">Special-uniform site</td>
               </tr>
               <tr style="background:rgba(220,38,38,0.12);">
                 <td style="padding:0.75rem 1rem;border-top:1px solid #e8e8e8;">James Rivera</td>
@@ -303,13 +303,17 @@ PROJECT_GALLERY_EXTRA = {
 
 IMAGE_CAPTIONS = {
     "seton-hall": [
-        "", "Men's Next Game", "", "Women's Next Game", "", "Wounded Warrior Project",
+        "Locker Room", "Men's Next Game", "Locker Room", "Women's Next Game", "Locker Room",
+        "Wounded Warrior Project",
+        "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room",
+        "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room", "Locker Room",
     ],
     "2021": [
         "Lakers Poster", "Luka", "Lamelo", "LA Bron", "Mamba Out", "KD To NYC",
-        "CP3 To Houston", "Lebron NBA Logoman", "Lebron Lakers Logoman", "Kyrie NBA Logoman",
-        "Kyrie Celtics Logoman", "Kyrie Celtics Logoman Alt", "Porzingus NBA Logoman",
-        "Porzingus Knicks Logoman", "Kemba Record", "Derozan Trade", "Butler Potential Trades",
+        "CP3 To Houston", "LeBron NBA Logoman", "LeBron Lakers Logoman", "Kyrie NBA Logoman",
+        "Kyrie Celtics Logoman", "Kyries Celtics Logoman Alt", "Porzingus NBA Logoman",
+        "Porzingus Knicks Logoman", "Kemba Record", "", "",
+        "", "Derozan Trade", "Jimmy Butler Top 3 Trade",
     ],
     "art-work-1": [
         "Brotherhood", "Matthew Hurt Commitment", "Kyree Walker Top Schools", "March Madness",
@@ -318,7 +322,9 @@ IMAGE_CAPTIONS = {
         "Boogie Ellis Commitment", "Josh Green Commitment", "Myles Powell Statline",
         "Johnny Juzang Commitment", "Jeremy Roach Commitment",
     ],
-    "commissions": ["Top Schools", "Transfer", "", "", "", "", "", "Jesse Jones G League"],
+    "commissions": ["Top Schools", "Transfer", "", "", "", "", "", "Jesse Jones G League", ""],
+    "misc": ["", "", "", "", "", "", "", ""],
+    "sterling": ["Full Logo", "White Text", "Blue Text"],
     "ariannas-angels": [
         "2026 Logo",
         "2024 Gift — Phone Wallet",

@@ -4,7 +4,7 @@
     "systems": "AI-assisted development, prompt engineering, automation & internal tools",
     "design": "Branding, digital ads, video, visual design"
   },
-  "siteLogo": "images/gm-logo.svg",
+  "siteLogo": "images/gm-logo.png",
   "profilePhoto": "images/profile.png",
   "headshot": "images/headshot.png",
   "linkedin": "https://www.linkedin.com/in/gia-martini/",
@@ -38,51 +38,45 @@
         "location": "Verona, NJ",
         "dates": "September 2023 – Present",
         "highlights": [
-          "Led digital transformation by identifying operational inefficiencies and implementing automation and AI-assisted workflows.",
-          "Built Employee Portal 2.0 using Cursor and ChatGPT — from Google Sites prototype to a live custom portal with forms, pay calendar, and admin dashboard.",
-          "Developed QR-based uniform inventory system (Google Sheets, AppSheet, Apps Script) with AI-assisted scripting and documentation.",
-          "Maintained operational, financial, and personnel data systems across Excel, ADP Workforce, and compliance portals.",
-          "Created SOPs, HR policies, and training materials using ChatGPT; provided end-user IT support and technology training."
+          "Led digital transformation initiatives across HR, operations, compliance, and IT by implementing new systems, process improvements, and digital workflows.",
+          "Consolidated operational, financial, and personnel data from multiple spreadsheets into a centralized internal portal, streamlining administrative workflows and improving data accessibility and accuracy.",
+          "Conducted a comprehensive audit of SORA certification records to improve data integrity and regulatory compliance.",
+          "Designed, developed, and deployed an employee portal and administrative dashboard using AI-assisted development tools, centralizing HR resources, documentation, and administrative workflows.",
+          "Built and deployed a QR-based uniform inventory and checkout system within the internal portal, enabling supervisors to scan item-specific QR codes and track inventory in real time.",
+          "Provided end-user IT support across hardware, software, mobile devices, printers, and business applications, including deployment, configuration, troubleshooting, and user training.",
+          "Created SOPs, HR policies, technical documentation, and training materials to standardize internal processes and support technology adoption."
         ]
       }
     ],
     "tools": {
-      "AI & Development": [
+      "AI & Digital Tools": [
         "Cursor",
         "ChatGPT",
         "Prompt Engineering",
-        "AI-Assisted Coding",
-        "AI Documentation & SOPs"
+        "Squarespace"
       ],
-      "Automation & No-Code": [
-        "Zapier",
-        "Google Apps Script",
-        "AppSheet",
-        "Google Sheets",
-        "Google Forms"
+      "Business Systems": [
+        "Google Workspace",
+        "ADP Workforce Now"
       ],
       "Data & Analytics": [
         "Excel",
+        "Google Sheets",
         "SQL",
         "Power BI",
         "Tableau"
       ],
-      "Platforms & IT": [
-        "Google Workspace",
-        "Google Sites",
-        "Squarespace",
-        "ADP Workforce",
-        "Jamf Now",
-        "Microsoft Office",
-        "Render"
+      "Productivity": [
+        "Microsoft Office"
+      ],
+      "Technical": [
+        "PC Hardware & Troubleshooting",
+        "Jamf Now"
       ],
       "Design & Media": [
         "Adobe Photoshop",
         "Adobe Premiere Pro",
         "Canva"
-      ],
-      "Other": [
-        "PC Building & Troubleshooting"
       ]
     }
   },
@@ -384,15 +378,15 @@
       "text": [],
       "images": [
         {
-          "alt": "",
+          "alt": "Full Logo",
           "src": "images/sterling/sterling-0.jpg"
         },
         {
-          "alt": "",
+          "alt": "White Text",
           "src": "images/sterling/sterling-1.png"
         },
         {
-          "alt": "",
+          "alt": "Blue Text",
           "src": "images/sterling/sterling-2.jpg"
         }
       ]

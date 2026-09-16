@@ -19,6 +19,15 @@ PROJECT_TEXT = {
         "How I used AI: ChatGPT helped write and debug Apps Script and Python. I defined the workflow and requirements; AI accelerated the code and documentation.",
         "Outcome: Employees scan and submit takeouts from the uniform room. Admin staff get live inventory oversight and alerts before items run out.",
     ],
+    "uniform-inventory-tracking-2": [
+        "Skills: Cursor · Flask · SQLite · Render · SMTP",
+        "Evolution: Version 1 proved QR checkout and alerts in Google Sheets. Uniform Inventory Tracking 2.0 lives inside the operations portal — same database as employee uniform requests, guard history, and stock-room takeouts.",
+        "Inventory module: Dashboard stats (low stock, open portal requests, weekly takeouts), full SKU table with reorder thresholds, restock log, takeout log, and a secret stock-room QR link for no-login checkout from the Verona uniform room.",
+        "Portal integration: When guards submit uniform requests, HR sees them in the portal queue. Rows highlight in purple for special-uniform sites (non-standard sizing or delivery). Rows highlight in red when a guard already received a one-time item — like a sweater — so staff do not double-issue.",
+        "Sweater rules: Only certain sites can request a sweater in the employee portal. The site picker shows the sweater field only for eligible posts (e.g. Newark Academy, outdoor accounts). Guards get one sweater; the form explains the policy and HR can review exceptions in the notes.",
+        "Stock alert emails: When inventory newly hits low or out of stock, the system emails HR automatically with a branded alert listing affected sizes. Seasonal items respect in-season rules so winter skully alerts do not fire in July.",
+        "How I used AI: Cursor helped wire inventory mutations to alert checks, portal row highlighting, and sweater site logic. I owned thresholds, eligible sites, and the HR workflow.",
+    ],
     "employee-portal": [
         "Skills: Google Sites · Google Forms · Google Sheets",
         "A modern, mobile-friendly Google Site that consolidates essential company resources for employees in one place — from pay schedules to HR forms.",
@@ -41,9 +50,10 @@ PROJECT_TEXT = {
     ],
     "operations-portal": [
         "Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render",
-        "The problem: Sterling ran on spreadsheets and disconnected tools — guards, client sites, billing, SORA certifications, uniforms, supervisor reports, and employee requests had no single source of truth.",
+        "The problem: Sterling ran on spreadsheets and disconnected tools — and supervisors still filed incident reports, disciplinary write-ups, and log sheets on pen and paper. Guards, client sites, billing, SORA certifications, uniforms, and employee requests had no single source of truth.",
         "My approach: I mapped the ops workflow with leadership, then built the admin app iteratively in Cursor with AI — database schema, Flask routes, Bootstrap UI, role-based permissions, and production deployment on Render with separate employee and admin domains.",
-        "What's included: Operations dashboard with pay calendar, SORA watch, billing snapshot, and portal queue (armed status, special-uniform sites, sweater/jacket flags), client and site management, guard roster, SORA compliance tracking, uniform inventory with QR stock-room checkout, billing (invoices, oldest open, deposits, all payments), supervisor and site-specific reports (Wayne Mall, Castle Ridge), documents and printables, equipment registry, and an employee portal submission queue with workflow automation.",
+        "Field reporting: Supervisors now file incident reports, write-ups, and log sheets from their phones in the field instead of paper forms. For sites that require daily logs, we set up site-specific log types and scheduled email times so completed logs go automatically to the property manager — no manual forwarding.",
+        "What's included: Operations dashboard with pay calendar, SORA watch, billing snapshot, and portal queue (armed status, special-uniform sites, sweater/jacket flags), client and site management, guard roster, SORA compliance tracking, uniform inventory with QR stock-room checkout, billing (invoices, oldest open, deposits, all payments), supervisor mobile reporting, site-specific log queues with auto-email to property managers (e.g. Wayne Mall, Castle Ridge), documents and printables, equipment registry, and an employee portal submission queue with workflow automation.",
         "Access control: Role-based sign-in accounts — IT full admin, HR for portal submissions, Finance for invoices and billing, supervisors for field reports, and view-only access where needed.",
         "Deployment: Live on Render with Gunicorn and persistent storage. Email notifications fire when employees submit portal requests or incident reports.",
         "How I used AI: Cursor helped me scaffold routes, debug SQL, refine templates, and iterate quickly. I owned the requirements, UX, and testing — AI accelerated the build.",
@@ -52,7 +62,7 @@ PROJECT_TEXT = {
         "Skills: Squarespace · Web Design · Branding · Content Strategy",
         "The challenge: Sterling's previous website was dated and static. It listed an Employment page in the nav, but there was no way to collect applications online or review submissions — hiring relied on phone calls and scattered email attachments.",
         "What I did: Redesigned and rebuilt sterlingsecurityguards.com on Squarespace — modern homepage, service sections, and a dedicated Employment Opportunities page with an application form (resume upload, contact info, armed/unarmed status, and more).",
-        "Employment applications: Submissions now go directly into Squarespace, where leadership can review applicants in one place. That workflow never existed on the old site — the Employment link was there, but it didn't capture or organize applications.",
+        "Employment applications: Submissions sync from the Squarespace form into a Google Sheet, where leadership can review applicants in one place and mass-email candidates to schedule interviews. That workflow never existed on the old site — the Employment link was there, but it didn't capture or organize applications.",
         "Outcome: A mobile-friendly public site that presents Sterling's services clearly, routes consultation requests, and gives hiring a structured pipeline for new guard applications.",
     ],
 }
@@ -72,11 +82,31 @@ PROJECT_DEMOS = {
             "note": "Interactive preview — updated dashboard (pay calendar, SORA watch, billing snapshot), portal queue with armed/special-uniform cues, billing (oldest open, all payments), Wayne Mall & Castle Ridge logs, uniforms, printables, and all major modules. Sample data only.",
         },
     ],
+    "uniform-inventory-tracking-2": [
+        {
+            "path": "demos/operations-portal/index.html#uniforms",
+            "heading": "Try the uniform module",
+            "note": "Opens the operations portal Uniforms tab — inventory stats, SKU table, restock/takeout logs, and stock-room QR. Use Staff → Uniforms in the nav, or scroll the iframe to explore sub-tabs.",
+        },
+        {
+            "path": "demos/operations-portal/index.html#list",
+            "heading": "Portal submission queue",
+            "note": "Uniform requests from the employee portal land here. Purple rows = special-uniform sites. Red rows = guard already received a one-time item (e.g. sweater). Sample data only.",
+        },
+    ],
 }
 
 RELATED_LINKS = {
     "employee-portal-2": ("operations-portal.html", "Operations Portal — admin dashboard & submission queue"),
     "operations-portal": ("employee-portal-2.html", "Employee Portal 2.0 — guard-facing portal"),
+    "uniform-inventory-tracking-2": (
+        "uniform-inventory-tracking.html",
+        "Uniform Inventory Tracking (v1) — Google Sheets & AppSheet",
+    ),
+    "uniform-inventory-tracking": (
+        "uniform-inventory-tracking-2.html",
+        "Uniform Inventory Tracking 2.0 — operations portal module",
+    ),
 }
 
 IMAGE_LAYOUT = {
@@ -104,9 +134,85 @@ FRAME_TITLES = {
 
 GALLERY_POLISH = {
     "uniform-inventory-tracking",
+    "uniform-inventory-tracking-2",
     "employee-portal",
     "scheduling-automation",
     "sterling-website",
+}
+
+GALLERY_GRID = {
+    "ariannas-angels",
+}
+
+
+def uniform_inventory_2_gallery() -> str:
+    return """
+    <div class="gallery-section">
+      <h2 class="gallery-section-title">Low &amp; out-of-stock email alerts</h2>
+      <figure class="project-image project-image--email">
+        <div class="uniform-email-preview" role="img" aria-label="Sample uniform stock alert email">
+          <div class="uniform-email-card">
+            <div class="uniform-email-header">
+              <p class="uniform-email-title">Uniform Inventory Alert</p>
+              <p class="uniform-email-subtitle">The following in-season items need attention.</p>
+            </div>
+            <div class="uniform-email-body">
+              <h3 class="uniform-email-section uniform-email-section--out">Out of stock</h3>
+              <table class="uniform-email-table">
+                <tr><td><strong>Long sleeve shirt</strong> <span class="muted">— 2XL</span></td><td>0 on hand</td></tr>
+              </table>
+              <h3 class="uniform-email-section uniform-email-section--low">Low stock</h3>
+              <table class="uniform-email-table">
+                <tr><td><strong>Short sleeve shirt</strong> <span class="muted">— L</span></td><td>4 on hand</td></tr>
+                <tr><td><strong>Pants</strong> <span class="muted">— 34</span></td><td>6 on hand</td></tr>
+                <tr><td><strong>Winter skully</strong> <span class="muted">— One size</span></td><td>3 on hand</td></tr>
+              </table>
+              <p class="uniform-email-foot">View full inventory in the admin site under <strong>Uniforms → Inventory</strong>.</p>
+            </div>
+          </div>
+          <p class="uniform-email-meta">Subject: <strong>Uniform Stock alert — 1 out, 3 low</strong> · Sent to HR when a SKU newly crosses its reorder threshold</p>
+        </div>
+        <figcaption>Automated SMTP alert when inventory newly hits low or out of stock — same template as production</figcaption>
+      </figure>
+    </div>
+    <div class="gallery-section">
+      <h2 class="gallery-section-title">Portal queue highlighting</h2>
+      <figure class="project-image project-image--dashboard">
+        <div class="uniform-queue-preview">
+          <div class="uniform-queue-legend">
+            <span><i class="legend-swatch legend-swatch--special"></i> Special uniform site (purple)</span>
+            <span><i class="legend-swatch legend-swatch--sweater"></i> Sweater / one-time item already issued (red)</span>
+          </div>
+          <table class="uniform-queue-table">
+            <thead>
+              <tr><th>Employee</th><th>Site</th><th>Flags</th></tr>
+            </thead>
+            <tbody>
+              <tr class="row-special row-sweater">
+                <td>Maria Santos</td>
+                <td>ShopRite Verona <span class="badge badge-special">Special</span></td>
+                <td><span class="badge badge-sweater">Sweater issued</span></td>
+              </tr>
+              <tr class="row-sweater">
+                <td>James Rivera</td>
+                <td>Citizens Bank Newark</td>
+                <td><span class="badge badge-sweater">Sweater issued</span></td>
+              </tr>
+              <tr>
+                <td>Tyler Brooks</td>
+                <td>Newark Academy</td>
+                <td><span class="muted">Sweater-eligible site</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption>Purple = special-uniform site. Red = guard already received a one-time item — prevents double-issuing sweaters.</figcaption>
+      </figure>
+    </div>"""
+
+
+PROJECT_GALLERY_EXTRA = {
+    "uniform-inventory-tracking-2": uniform_inventory_2_gallery,
 }
 
 IMAGE_CAPTIONS = {
@@ -127,7 +233,15 @@ IMAGE_CAPTIONS = {
         "Johnny Juzang Commitment", "Jeremy Roach Commitment",
     ],
     "commissions": ["Top Schools", "Transfer", "", "", "", "", "", "Jesse Jones G League"],
-    "ariannas-angels": ["2024 Gift", "", "2023 Gift"],
+    "ariannas-angels": [
+        "2026 Logo",
+        "2024 Gift — Phone Wallet",
+        "2024 Sticker",
+        "2023 Gift — Keychain",
+        "10th Anniversary Mint Label",
+        "Bucco's Rising Stars Christmas Lunch — Banner",
+        "Bucco's Rising Stars Christmas Lunch — Poster",
+    ],
     "uniform-inventory-tracking": [
         "Live inventory dashboard with color-coded sizes and low-stock alerts",
         "AppSheet · Inventory view",
@@ -284,6 +398,16 @@ def build_gallery_page(title: str, active: str, category: str) -> str:
     return layout(title, active, body)
 
 
+def grid_figure_html(src: str, alt: str, title: str) -> str:
+    return f"""
+    <figure class="project-image project-image--grid-card">
+      <div class="project-image-card">
+        <img src="../{src}" alt="{esc(alt)}" loading="lazy">
+        <span class="project-image-label">{esc(title)}</span>
+      </div>
+    </figure>"""
+
+
 def figure_html(p: dict, i: int, img: dict, img_layout: str, captions: list) -> str:
     cap = captions[i] if i < len(captions) else img.get("alt", "")
     alt = cap or p["title"]
@@ -355,9 +479,16 @@ def build_project(p: dict) -> str:
         text_html = '<div class="project-text">' + "".join(f"<p>{esc(t)}</p>" for t in text) + "</div>"
 
     images_html = ""
+    if slug in GALLERY_GRID:
+        grid_items = []
+        for i, img in enumerate(p["images"]):
+            cap = captions[i] if i < len(captions) else img.get("alt", "") or p["title"]
+            alt = cap or p["title"]
+            grid_items.append(grid_figure_html(img["src"], alt, cap))
+        images_html = f'<div class="project-gallery-grid">{"".join(grid_items)}</div>'
     i = 0
     mobile_section_open = False
-    while i < len(p["images"]):
+    while i < len(p["images"]) and slug not in GALLERY_GRID:
         layout_idx = i
         if slug == "sterling-website" and i >= 2:
             layout_idx = 1
@@ -440,6 +571,11 @@ def build_project(p: dict) -> str:
             for d in demos
         )
 
+    gallery_extra_html = ""
+    gallery_extra = PROJECT_GALLERY_EXTRA.get(slug)
+    if gallery_extra:
+        gallery_extra_html = gallery_extra()
+
     related_html = ""
     if slug in RELATED_LINKS:
         href, label = RELATED_LINKS[slug]
@@ -451,7 +587,9 @@ def build_project(p: dict) -> str:
         live_html = f'<p class="project-live"><a href="{esc(p["liveUrl"])}" target="_blank" rel="noopener">{esc(live_label)} ↗</a></p>'
 
     gallery_cls = "project-gallery"
-    if slug in GALLERY_POLISH:
+    if slug in GALLERY_GRID:
+        gallery_cls = "project-gallery project-gallery--grid"
+    elif slug in GALLERY_POLISH:
         gallery_cls = "project-gallery project-gallery--systems"
 
     body = f"""
@@ -464,7 +602,7 @@ def build_project(p: dict) -> str:
   {related_html}
   {live_html}
   {demo_html}
-  <section class="{gallery_cls}">{images_html}
+  <section class="{gallery_cls}">{images_html}{gallery_extra_html}
   </section>"""
     main_class = "main--with-demo" if slug in PROJECT_DEMOS else ""
     return layout(

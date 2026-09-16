@@ -15,6 +15,259 @@ const STATUS_BADGE = {
   cancelled: "secondary",
 };
 
+const BIWEEKLY = 14;
+const PERIOD_SPAN = 13;
+const PAYDAY_AFTER_END = 7;
+
+let opsCalendarMonth = new Date();
+opsCalendarMonth = new Date(opsCalendarMonth.getFullYear(), opsCalendarMonth.getMonth(), 1);
+
+function startOfDay(d = new Date()) {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function dateOnly(y, m, d) {
+  return new Date(y, m - 1, d);
+}
+
+const PAY_ANCHOR_PERIOD_START = dateOnly(2025, 5, 24);
+const PAY_ANCHOR_PERIOD_END = dateOnly(2025, 6, 6);
+const PAY_ANCHOR_PAYDAY = dateOnly(2025, 6, 13);
+
+function dateKey(d) {
+  const x = startOfDay(d);
+  const m = String(x.getMonth() + 1).padStart(2, "0");
+  const day = String(x.getDate()).padStart(2, "0");
+  return `${x.getFullYear()}-${m}-${day}`;
+}
+
+function addDays(d, n) {
+  const r = new Date(d);
+  r.setDate(r.getDate() + n);
+  return r;
+}
+
+function sameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+function fmtPeriod(start, end) {
+  const sameYear = start.getFullYear() === end.getFullYear();
+  const startStr = start.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const endStr = end.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: sameYear ? undefined : "numeric",
+  });
+  return `${startStr} – ${endStr}${sameYear ? `, ${end.getFullYear()}` : ""}`;
+}
+
+function fmtPayday(d) {
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+
+function alignAnchor(anchor, target) {
+  let current = new Date(anchor);
+  if (current > target) {
+    while (current > target) current = addDays(current, -BIWEEKLY);
+  } else {
+    while (addDays(current, BIWEEKLY) <= target) current = addDays(current, BIWEEKLY);
+  }
+  return current;
+}
+
+function biweeklyRange(anchor, start, end) {
+  let current = new Date(anchor);
+  while (current > start) current = addDays(current, -BIWEEKLY);
+  while (current < start) current = addDays(current, BIWEEKLY);
+  const dates = [];
+  while (current <= end) {
+    dates.push(new Date(current));
+    current = addDays(current, BIWEEKLY);
+  }
+  return dates;
+}
+
+function payScheduleMarkers(rangeStart, rangeEnd) {
+  const rs = startOfDay(rangeStart);
+  const re = startOfDay(rangeEnd);
+  const periodStarts = new Set(biweeklyRange(PAY_ANCHOR_PERIOD_START, rs, re).map((d) => dateKey(d)));
+  const periodEnds = new Set(biweeklyRange(PAY_ANCHOR_PERIOD_END, rs, re).map((d) => dateKey(d)));
+  const paydays = new Set(biweeklyRange(PAY_ANCHOR_PAYDAY, rs, re).map((d) => dateKey(d)));
+  const inPeriod = new Set();
+
+  biweeklyRange(PAY_ANCHOR_PERIOD_START, rs, re).forEach((ps) => {
+    const pe = addDays(startOfDay(ps), PERIOD_SPAN);
+    let day = startOfDay(ps);
+    while (day <= pe) {
+      if (day >= rs && day <= re) inPeriod.add(dateKey(day));
+      day = addDays(day, 1);
+    }
+  });
+
+  return { periodStarts, periodEnds, paydays, inPeriod };
+}
+
+function payCalendar(today = startOfDay(), past = 2, future = 6) {
+  const anchor = alignAnchor(PAY_ANCHOR_PERIOD_START, today);
+  const periods = [];
+  const startAnchor = addDays(anchor, -BIWEEKLY * past);
+  for (let i = 0; i < past + 1 + future; i += 1) {
+    const ps = startOfDay(addDays(startAnchor, BIWEEKLY * i));
+    const pe = startOfDay(addDays(ps, PERIOD_SPAN));
+    const pd = startOfDay(addDays(pe, PAYDAY_AFTER_END));
+    let label = "past";
+    if (ps <= today && today <= pe) label = "current";
+    else if (pd >= today) label = "upcoming";
+    periods.push({ period_start: ps, period_end: pe, payday: pd, label });
+  }
+  return periods;
+}
+
+function currentPayPeriod(today = startOfDay()) {
+  return payCalendar(today).find((p) => p.label === "current") || null;
+}
+
+function monthGrid(year, month, today = startOfDay()) {
+  const first = dateOnly(year, month + 1, 1);
+  const last = dateOnly(year, month + 1, new Date(year, month + 1, 0).getDate());
+  const gridStart = startOfDay(addDays(first, -((first.getDay() + 7) % 7)));
+  const gridEnd = startOfDay(addDays(last, (6 - ((last.getDay() + 7) % 7)) % 7));
+  const { periodStarts, periodEnds, paydays, inPeriod } = payScheduleMarkers(gridStart, gridEnd);
+  const activePeriod = currentPayPeriod(today);
+
+  const weeks = [];
+  let day = new Date(gridStart);
+  while (day <= gridEnd) {
+    const week = [];
+    for (let i = 0; i < 7; i += 1) {
+      const dayDate = startOfDay(day);
+      const key = dateKey(dayDate);
+      const markers = [];
+      if (periodStarts.has(key)) markers.push("period_start");
+      if (periodEnds.has(key)) markers.push("period_end");
+      if (paydays.has(key)) markers.push("payday");
+      if (inPeriod.has(key) && !markers.includes("in_period")) markers.push("in_period");
+      if (
+        activePeriod &&
+        dayDate >= activePeriod.period_start &&
+        dayDate <= activePeriod.period_end &&
+        !markers.includes("current_period")
+      ) {
+        markers.push("current_period");
+      }
+      week.push({
+        date: dayDate,
+        in_month: dayDate.getMonth() === month,
+        is_today: sameDay(dayDate, today),
+        markers,
+      });
+      day = addDays(day, 1);
+    }
+    weeks.push(week);
+  }
+
+  return {
+    title: first.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+    weeks,
+  };
+}
+
+function renderOpsPayCalendar() {
+  const grid = document.getElementById("ops-pay-month-grid");
+  const title = document.getElementById("ops-pay-month-title");
+  if (!grid || !title) return;
+
+  const today = startOfDay();
+  const { title: monthTitle, weeks } = monthGrid(
+    opsCalendarMonth.getFullYear(),
+    opsCalendarMonth.getMonth(),
+    today
+  );
+  title.textContent = monthTitle;
+
+  const head = `<div class="pay-month-row pay-month-head">
+    <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+  </div>`;
+
+  const body = weeks
+    .map(
+      (week) => `
+      <div class="pay-month-row">
+        ${week
+          .map((day) => {
+            const classes = [
+              "pay-month-day",
+              !day.in_month ? "other-month" : "",
+              day.is_today ? "is-today" : "",
+              ...day.markers.map((m) => `mark-${m}`),
+            ]
+              .filter(Boolean)
+              .join(" ");
+            let tag = "";
+            if (day.markers.includes("payday")) tag = '<span class="day-tag payday">Pay</span>';
+            else if (day.markers.includes("period_start")) tag = '<span class="day-tag period-start">Start</span>';
+            else if (day.markers.includes("period_end")) tag = '<span class="day-tag period-end">End</span>';
+            return `<div class="${classes}"><span class="day-num">${day.date.getDate()}</span>${tag}</div>`;
+          })
+          .join("")}
+      </div>`
+    )
+    .join("");
+
+  grid.innerHTML = head + body;
+}
+
+function renderOpsPayTable() {
+  const tbody = document.getElementById("ops-pay-tbody");
+  if (!tbody) return;
+  const today = startOfDay();
+  const periods = payCalendar(today);
+  let nextPaydayShown = false;
+
+  tbody.innerHTML = periods
+    .map((p) => {
+      const isNext = !nextPaydayShown && p.payday >= today && p.label !== "past";
+      if (isNext) nextPaydayShown = true;
+
+      let badge = "";
+      if (p.label === "current") badge = '<span class="badge text-bg-info">Current period</span>';
+      if (isNext) {
+        badge += `<span class="badge text-bg-primary${p.label === "current" ? " ms-1" : ""}">Next payday</span>`;
+      }
+
+      const rowClass = [
+        p.label === "current" ? "current-period" : "",
+        isNext ? "next-payday-period" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+      return `<tr class="${rowClass}">
+        <td>${fmtPeriod(p.period_start, p.period_end)}</td>
+        <td>${fmtPayday(p.payday)}</td>
+        <td class="text-end text-nowrap">${badge}</td>
+      </tr>`;
+    })
+    .join("");
+}
+
+function shiftOpsCalendarMonth(delta) {
+  opsCalendarMonth = new Date(opsCalendarMonth.getFullYear(), opsCalendarMonth.getMonth() + delta, 1);
+  renderOpsPayCalendar();
+}
+
+function resetOpsCalendarToToday() {
+  const today = new Date();
+  opsCalendarMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  renderOpsPayCalendar();
+}
+
+function bindOpsPayCalendar() {
+  document.getElementById("ops-cal-prev")?.addEventListener("click", () => shiftOpsCalendarMonth(-1));
+  document.getElementById("ops-cal-next")?.addEventListener("click", () => shiftOpsCalendarMonth(1));
+  document.getElementById("ops-cal-today")?.addEventListener("click", resetOpsCalendarToToday);
+}
+
 const SUBMISSIONS = [
   {
     id: 1042,
@@ -280,6 +533,29 @@ function showView(name) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function applyViewHash() {
+  const hash = (window.location.hash || "").replace(/^#/, "").trim();
+  if (!hash) return;
+  const [view, sub] = hash.split("/");
+  if (view === "uniforms") {
+    showView("uniforms");
+    if (sub) {
+      document.querySelectorAll("[data-uniform-tab]").forEach((btn) => {
+        const active = btn.dataset.uniformTab === sub;
+        btn.classList.toggle("btn-primary", active);
+        btn.classList.toggle("btn-outline-primary", !active);
+      });
+      document.querySelectorAll(".uniform-panel").forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `uniform-panel-${sub}`);
+      });
+    }
+    return;
+  }
+  if (document.getElementById(`view-${view}`)) {
+    showView(view);
+  }
+}
+
 function showToast(message) {
   const toast = document.getElementById("demo-toast");
   if (!toast) return;
@@ -486,8 +762,16 @@ bindFilters();
 bindDetail();
 bindReportPills();
 bindUniformTabs();
+bindOpsPayCalendar();
+renderOpsPayCalendar();
+renderOpsPayTable();
 renderDashboardPortal();
 renderList();
-showView("dashboard");
+if (window.location.hash) {
+  applyViewHash();
+} else {
+  showView("dashboard");
+}
+window.addEventListener("hashchange", applyViewHash);
 window.showDetail = showDetail;
 window.showView = showView;

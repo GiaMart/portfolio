@@ -401,9 +401,13 @@
       "title": "Volunteer",
       "category": "design",
       "year": "2024",
-      "thumbnail": "images/ariannas-angels/ariannas-angels-0.png",
+      "thumbnail": "images/ariannas-angels/ariannas-angels-2026-logo.jpg",
       "text": [],
       "images": [
+        {
+          "alt": "2026 Logo",
+          "src": "images/ariannas-angels/ariannas-angels-2026-logo.jpg"
+        },
         {
           "alt": "",
           "src": "images/ariannas-angels/ariannas-angels-0.png"
@@ -479,6 +483,16 @@
       "year": "2026",
       "order": 6,
       "thumbnail": "images/operations-portal/cover.png",
+      "text": [],
+      "images": []
+    },
+    {
+      "slug": "uniform-inventory-tracking-2",
+      "title": "Uniform Inventory Tracking 2.0",
+      "category": "systems",
+      "year": "2026",
+      "order": 5,
+      "thumbnail": "images/uniform-inventory-tracking-2/cover.png",
       "text": [],
       "images": []
     },

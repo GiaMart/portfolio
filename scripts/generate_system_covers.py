@@ -84,6 +84,14 @@ def cover_operations_portal() -> Image.Image:
     return screenshot_demo(OPS_DEMO, top=38)
 
 
+def cover_uniform_inventory_2() -> Image.Image:
+    url = OPS_DEMO.resolve().as_uri() + "#uniforms"
+    img = screenshot_url(url, window="1400,920")
+    side = min(img.width, img.height - 38)
+    left = (img.width - side) // 2
+    return crop_square(img, left=left, top=38, side=side)
+
+
 def cover_uniform() -> Image.Image:
     src = IMAGES / "uniform-inventory-tracking" / "uniform-inventory-tracking-0.png"
     img = Image.open(src)
@@ -134,6 +142,7 @@ def main() -> None:
     covers = {
         "operations-portal": cover_operations_portal,
         "employee-portal-2": cover_employee_portal_2,
+        "uniform-inventory-tracking-2": cover_uniform_inventory_2,
         "sterling-website": cover_sterling_website,
         "uniform-inventory-tracking": cover_uniform,
         "scheduling-automation": cover_scheduling,

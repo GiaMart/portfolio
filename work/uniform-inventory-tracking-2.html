@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Uniform Inventory Tracking 2.0 — Gia Martini</title>
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="../index.html" class="logo">
+      <img src="../images/profile.png" alt="Gia Martini" class="logo-img">
+      <span>Gia Martini</span>
+    </a>
+    <nav class="site-nav"><a href="../index.html">Welcome</a>
+<a href="../about.html">About</a>
+<a href="../systems.html" class="active">Digital Systems</a>
+<a href="../design.html">Graphic Design</a>
+<a href="../contact.html">Contact</a></nav>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
+  </header>
+  <main class="main--with-demo">
+  <section class="project-header">
+    <a href="../systems.html" class="back-link">← Back</a>
+    <h1>Uniform Inventory Tracking 2.0</h1>
+    <span class="year">2026</span>
+  </section>
+  <div class="project-text"><p>Skills: Cursor · Flask · SQLite · Render · SMTP</p><p>Evolution: Version 1 proved QR checkout and alerts in Google Sheets. Uniform Inventory Tracking 2.0 lives inside the operations portal — same database as employee uniform requests, guard history, and stock-room takeouts.</p><p>Inventory module: Dashboard stats (low stock, open portal requests, weekly takeouts), full SKU table with reorder thresholds, restock log, takeout log, and a secret stock-room QR link for no-login checkout from the Verona uniform room.</p><p>Portal integration: When guards submit uniform requests, HR sees them in the portal queue. Rows highlight in purple for special-uniform sites (non-standard sizing or delivery). Rows highlight in red when a guard already received a one-time item — like a sweater — so staff do not double-issue.</p><p>Sweater rules: Only certain sites can request a sweater in the employee portal. The site picker shows the sweater field only for eligible posts (e.g. Newark Academy, outdoor accounts). Guards get one sweater; the form explains the policy and HR can review exceptions in the notes.</p><p>Stock alert emails: When inventory newly hits low or out of stock, the system emails HR automatically with a branded alert listing affected sizes. Seasonal items respect in-season rules so winter skully alerts do not fire in July.</p><p>How I used AI: Cursor helped wire inventory mutations to alert checks, portal row highlighting, and sweater site logic. I owned thresholds, eligible sites, and the HR workflow.</p></div>
+  <p class="project-related">Related: <a href="uniform-inventory-tracking.html">Uniform Inventory Tracking (v1) — Google Sheets &amp; AppSheet</a></p>
+  
+  
+  <section class="project-demo">
+    <h2 class="demo-heading">Try the uniform module</h2>
+    <p class="demo-note">Opens the operations portal Uniforms tab — inventory stats, SKU table, restock/takeout logs, and stock-room QR. Use Staff → Uniforms in the nav, or scroll the iframe to explore sub-tabs.</p>
+    <div class="demo-frame-wrap">
+      <iframe src="../demos/operations-portal/index.html#uniforms" title="Try the uniform module" loading="lazy"></iframe>
+    </div>
+  </section>
+  <section class="project-demo">
+    <h2 class="demo-heading">Portal submission queue</h2>
+    <p class="demo-note">Uniform requests from the employee portal land here. Purple rows = special-uniform sites. Red rows = guard already received a one-time item (e.g. sweater). Sample data only.</p>
+    <div class="demo-frame-wrap">
+      <iframe src="../demos/operations-portal/index.html#list" title="Portal submission queue" loading="lazy"></iframe>
+    </div>
+  </section>
+  <section class="project-gallery project-gallery--systems">
+    <div class="gallery-section">
+      <h2 class="gallery-section-title">Low &amp; out-of-stock email alerts</h2>
+      <figure class="project-image project-image--email">
+        <div class="uniform-email-preview" role="img" aria-label="Sample uniform stock alert email">
+          <div class="uniform-email-card">
+            <div class="uniform-email-header">
+              <p class="uniform-email-title">Uniform Inventory Alert</p>
+              <p class="uniform-email-subtitle">The following in-season items need attention.</p>
+            </div>
+            <div class="uniform-email-body">
+              <h3 class="uniform-email-section uniform-email-section--out">Out of stock</h3>
+              <table class="uniform-email-table">
+                <tr><td><strong>Long sleeve shirt</strong> <span class="muted">— 2XL</span></td><td>0 on hand</td></tr>
+              </table>
+              <h3 class="uniform-email-section uniform-email-section--low">Low stock</h3>
+              <table class="uniform-email-table">
+                <tr><td><strong>Short sleeve shirt</strong> <span class="muted">— L</span></td><td>4 on hand</td></tr>
+                <tr><td><strong>Pants</strong> <span class="muted">— 34</span></td><td>6 on hand</td></tr>
+                <tr><td><strong>Winter skully</strong> <span class="muted">— One size</span></td><td>3 on hand</td></tr>
+              </table>
+              <p class="uniform-email-foot">View full inventory in the admin site under <strong>Uniforms → Inventory</strong>.</p>
+            </div>
+          </div>
+          <p class="uniform-email-meta">Subject: <strong>Uniform Stock alert — 1 out, 3 low</strong> · Sent to HR when a SKU newly crosses its reorder threshold</p>
+        </div>
+        <figcaption>Automated SMTP alert when inventory newly hits low or out of stock — same template as production</figcaption>
+      </figure>
+    </div>
+    <div class="gallery-section">
+      <h2 class="gallery-section-title">Portal queue highlighting</h2>
+      <figure class="project-image project-image--dashboard">
+        <div class="uniform-queue-preview">
+          <div class="uniform-queue-legend">
+            <span><i class="legend-swatch legend-swatch--special"></i> Special uniform site (purple)</span>
+            <span><i class="legend-swatch legend-swatch--sweater"></i> Sweater / one-time item already issued (red)</span>
+          </div>
+          <table class="uniform-queue-table">
+            <thead>
+              <tr><th>Employee</th><th>Site</th><th>Flags</th></tr>
+            </thead>
+            <tbody>
+              <tr class="row-special row-sweater">
+                <td>Maria Santos</td>
+                <td>ShopRite Verona <span class="badge badge-special">Special</span></td>
+                <td><span class="badge badge-sweater">Sweater issued</span></td>
+              </tr>
+              <tr class="row-sweater">
+                <td>James Rivera</td>
+                <td>Citizens Bank Newark</td>
+                <td><span class="badge badge-sweater">Sweater issued</span></td>
+              </tr>
+              <tr>
+                <td>Tyler Brooks</td>
+                <td>Newark Academy</td>
+                <td><span class="muted">Sweater-eligible site</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption>Purple = special-uniform site. Red = guard already received a one-time item — prevents double-issuing sweaters.</figcaption>
+      </figure>
+    </div>
+  </section></main>
+  <footer class="site-footer">
+    <p>&copy; Gia Martini</p>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>

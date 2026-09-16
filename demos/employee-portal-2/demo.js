@@ -320,10 +320,26 @@ function renderUniformForm() {
       </label>`
     ).join("");
   }
-  ["short-sleeve", "long-sleeve", "pants"].forEach((id) => {
+  ["short-sleeve", "long-sleeve", "pants", "jacket", "sweater"].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = sizeOptions();
   });
+}
+
+function bindUniformSweaterField() {
+  const siteInput = document.getElementById("site");
+  const sweaterField = document.getElementById("sweater-field");
+  if (!siteInput || !sweaterField) return;
+
+  const sweaterSites = ["newark academy", "payne tech", "shoprite verona"];
+  const sync = () => {
+    const value = siteInput.value.trim().toLowerCase();
+    const show = sweaterSites.some((site) => value.includes(site));
+    sweaterField.hidden = !show;
+  };
+
+  siteInput.addEventListener("input", sync);
+  siteInput.addEventListener("change", sync);
 }
 
 function renderFormCards() {
@@ -524,6 +540,7 @@ renderOfficeHours();
 renderFormList();
 renderFormCards();
 renderUniformForm();
+bindUniformSweaterField();
 bindNavigation();
 window.addEventListener("hashchange", handleHashRoute);
 showView(window.location.hash === "#stock-room" ? "stock-room" : "home");

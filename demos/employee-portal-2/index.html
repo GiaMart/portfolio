@@ -329,16 +329,17 @@
           <div class="card-body p-4">
             <p class="text-muted mb-1"><button type="button" class="text-link-btn" data-go="forms">← All forms</button></p>
             <h1 class="h3 mb-1">👔 Uniform Request</h1>
-            <p class="text-muted mb-4">Request shirts, pants, and hats. Please read the instructions before submitting.</p>
+            <p class="text-muted mb-3">Request shirts, pants, and hats. Please read the instructions before submitting.</p>
+            <p class="form-accuracy-disclaimer mb-4">Please double check to make sure spelling &amp; information is as accurate as possible.</p>
 
             <div class="uniform-instructions mb-4">
               <h2 class="h6 mb-3">Before You Submit</h2>
               <ul class="mb-3">
                 <li>Uniforms are issued in <strong>limited quantities</strong>. If our records show you have already received 2–3 sets, additional requests may not be fulfilled.</li>
                 <li><strong>Incorrect sizes or damaged items</strong> must be returned before a replacement is issued.</li>
-                <li>If you are unsure of your size, <strong>do not request multiple sizes</strong>. You must visit the Verona office to try items on.</li>
-                <li>Please <strong>do not submit duplicate requests</strong>. Only the first will be processed.</li>
-                <li>Out-of-stock items will be sent when available — <strong>do not resubmit requests</strong>.</li>
+                <li>Please <strong>do not submit multiple requests</strong>. If more than one is sent, only the first will be processed.</li>
+                <li>If an item is missing from your order, you have reached the maximum allowed or it is out of stock. If the item is unavailable, we will send it out when it is restocked.</li>
+                <li><strong>Sweaters:</strong> We only give out <strong>1 sweater</strong>, and only at certain sites. If you have a special reason you need one, write it in the notes and we will review it. Make sure you pick the correct site so the sweater option can appear.</li>
               </ul>
               <p class="mb-0">Thank you for your patience and understanding!</p>
             </div>
@@ -358,7 +359,7 @@
                   <div class="col-12">
                     <label class="form-label" for="site">Assigned Site</label>
                     <input class="form-control" id="site" name="site_name" placeholder="Start typing to search…">
-                    <div class="form-text">Supervisors and certain sites require custom uniforms and may receive deliveries directly at site.</div>
+                    <div class="form-text">Start typing to search. Supervisors and certain sites (e.g., Newark Academy, Payne Tech Interior) require custom uniforms and will receive deliveries directly at site.</div>
                   </div>
                 </div>
               </div>
@@ -371,7 +372,7 @@
                   <option value="armed">Armed</option>
                   <option value="unarmed">Unarmed</option>
                 </select>
-                <div class="form-text">If you hold an Armed SORA but are working unarmed, select <strong>Unarmed</strong>.</div>
+                <div class="form-text">If you hold an Armed SORA but are working unarmed, select <strong>Unarmed</strong>. Do <strong>not</strong> select Armed unless you are actively working armed.</div>
               </div>
 
               <div>
@@ -396,19 +397,26 @@
                     <select class="form-select" id="pants" name="pants_size"></select>
                   </div>
                   <div class="col-md-6">
+                    <label class="form-label" for="jacket">Jacket</label>
+                    <select class="form-select" id="jacket" name="jacket_size"></select>
+                  </div>
+                  <div class="col-md-6" id="sweater-field" hidden>
+                    <label class="form-label" for="sweater">Sweater</label>
+                    <select class="form-select" id="sweater" name="sweater_size"></select>
+                  </div>
+                  <div class="col-md-6">
                     <label class="form-label" for="hat">Hat</label>
                     <select class="form-select" id="hat" name="hat">
-                      <option value="">No hat</option>
+                      <option value="">— Not requested —</option>
                       <option value="baseball_cap">Baseball cap</option>
+                      <option value="skully">Skully (winter)</option>
                     </select>
                   </div>
+                  <div class="col-12">
+                    <label class="form-label" for="notes">Additional Notes</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Optional"></textarea>
+                  </div>
                 </div>
-                <div class="form-text mt-2">Baseball cap available now. Winter hats are not offered on this form during summer.</div>
-              </div>
-
-              <div>
-                <label class="form-label" for="notes">Additional Notes</label>
-                <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Optional"></textarea>
               </div>
 
               <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
@@ -816,6 +824,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="demo.js?v=9"></script>
+  <script src="demo.js?v=10"></script>
 </body>
 </html>

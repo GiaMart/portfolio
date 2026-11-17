@@ -1,4 +1,4 @@
-/* Portfolio iframe embeds — desktop chrome at narrow iframe widths (production site unchanged). */
+/* Portfolio iframe embeds — desktop layout when iframe width < 1180px (production site unchanged). */
 body.portfolio-embed {
   padding-bottom: 0 !important;
 }
@@ -38,7 +38,7 @@ body.portfolio-embed .nav-call {
 
 body.portfolio-embed .hero {
   align-items: center !important;
-  min-height: min(76vh, 540px) !important;
+  min-height: min(62vh, 480px) !important;
   background:
     linear-gradient(90deg, rgba(8, 19, 31, 0.92) 0%, rgba(8, 19, 31, 0.84) 48%, rgba(8, 19, 31, 0.55) 74%, rgba(8, 19, 31, 0.3) 90%, rgba(8, 19, 31, 0.35) 100%),
     url("img/hero.jpg") center 42% / cover no-repeat !important;
@@ -47,12 +47,43 @@ body.portfolio-embed .hero {
 body.portfolio-embed .hero-inner {
   margin-left: max(1.25rem, 2.25vw) !important;
   margin-right: auto !important;
-  padding-top: 2.25rem !important;
-  padding-bottom: 2rem !important;
+  padding-top: 2rem !important;
+  padding-bottom: 1.75rem !important;
 }
 
 body.portfolio-embed .hero h1 {
-  font-size: clamp(1.65rem, 3.2vw, 2.5rem) !important;
+  font-size: clamp(1.55rem, 2.8vw, 2.35rem) !important;
+  max-width: 22em;
+}
+
+body.portfolio-embed .hero .lede {
+  font-size: 1rem !important;
+}
+
+/* Undo tablet single-column rules so layouts match full desktop */
+body.portfolio-embed .services-banner {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
+  gap: 2.5rem !important;
+  align-items: center !important;
+}
+
+body.portfolio-embed .about-band {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) !important;
+  gap: 2.5rem !important;
+}
+
+body.portfolio-embed .about-band > div,
+body.portfolio-embed .about-band .frame {
+  order: unset !important;
+}
+
+body.portfolio-embed .why-grid {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2rem 3rem !important;
+}
+
+body.portfolio-embed .why-section .section-head h2 {
+  white-space: normal !important;
 }
 
 body.portfolio-embed .facts {
@@ -66,4 +97,23 @@ body.portfolio-embed .service-grid {
 
 body.portfolio-embed .client-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+body.portfolio-embed .contact-layout.two {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+body.portfolio-embed .service-offers img {
+  width: 20%;
+  max-width: 118px;
+}
+
+body.portfolio-embed .services-banner h2,
+body.portfolio-embed .about-band h2 {
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem) !important;
+}
+
+body.portfolio-embed .portfolio-demo-bar {
+  font-size: 0.72rem;
+  padding: 0.35rem 0.6rem;
 }

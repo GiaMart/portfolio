@@ -652,9 +652,15 @@ main.main--wide-demo {
 }
 
 /* Read → try: intro, then text block + demo, repeated */
+main.main--with-demo .project-intro,
+main.main--with-demo .project-outro,
+main.main--with-demo .project-demo-step__text {
+  max-width: none;
+  width: 100%;
+}
+
 .project-intro,
 .project-outro {
-  max-width: 42rem;
   margin-bottom: 1.75rem;
 }
 
@@ -664,6 +670,7 @@ main.main--wide-demo {
   margin-bottom: 0.75rem;
   color: var(--muted);
   line-height: 1.75;
+  max-width: none;
 }
 
 .project-demo-flow {
@@ -671,16 +678,14 @@ main.main--wide-demo {
   flex-direction: column;
   gap: 3.25rem;
   margin: 2.25rem 0 2.5rem;
+  width: 100%;
 }
 
 .project-demo-step {
   display: flex;
   flex-direction: column;
   gap: 1.15rem;
-}
-
-.project-demo-step__text {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .project-demo-step__text p {
@@ -728,6 +733,12 @@ main.main--wide-demo .project-demo--dashboard .demo-frame-wrap iframe {
 main.main--wide-demo .project-demo--inventory .demo-frame-wrap iframe {
   height: min(70vh, 700px);
   min-height: 460px;
+}
+
+/* Public marketing site — taller frame, desktop layout via portfolio-embed.css in demo */
+main.main--with-demo .project-demo--site .demo-frame-wrap iframe {
+  height: min(88vh, 900px);
+  min-height: 560px;
 }
 
 .project-demo-step + .project-demo-step {

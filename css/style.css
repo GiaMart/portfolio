@@ -659,7 +659,7 @@ main.main--wide-demo {
 /* Side-by-side copy + live demos */
 .project-demo-layout {
   display: grid;
-  grid-template-columns: minmax(380px, 1fr) minmax(300px, 0.88fr);
+  grid-template-columns: minmax(360px, 1fr) minmax(380px, 1.15fr);
   gap: clamp(1.75rem, 4vw, 3.25rem);
   align-items: start;
   margin-bottom: 2.5rem;
@@ -700,7 +700,7 @@ main.main--wide-demo {
 .project-demo-panel {
   min-width: 0;
   justify-self: end;
-  width: min(100%, 640px);
+  width: min(100%, 820px);
   margin-left: auto;
 }
 
@@ -731,20 +731,20 @@ main.main--wide-demo {
 
 .demo-frame-wrap iframe {
   width: 100%;
-  height: min(58vh, 580px);
-  min-height: 400px;
+  height: min(68vh, 680px);
+  min-height: 440px;
   border: none;
   display: block;
 }
 
 main.main--wide-demo .project-demo--dashboard .demo-frame-wrap iframe {
-  height: min(64vh, 640px);
-  min-height: 440px;
+  height: min(72vh, 720px);
+  min-height: 480px;
 }
 
 main.main--wide-demo .project-demo--inventory .demo-frame-wrap iframe {
-  height: min(62vh, 620px);
-  min-height: 420px;
+  height: min(70vh, 700px);
+  min-height: 460px;
 }
 
 /* Stack only on phones — keep side-by-side in Cursor preview & typical laptop windows */

@@ -55,7 +55,7 @@ PROJECT_TEXT = {
         "The problem: Sterling ran on spreadsheets and disconnected tools — and supervisors still filled out incident reports, disciplinary write-ups, and log sheets on pen and paper. Guards, client sites, billing, SORA certifications, uniforms, and employee requests had no single source of truth.",
         "My approach: I mapped the ops workflow with leadership, then built the admin app iteratively in Cursor with AI — database schema, Flask routes, Bootstrap UI, role-based permissions, and production deployment on Render with separate employee and admin domains.",
         "Field reporting: Supervisors now fill out incident reports, write-ups, and log sheets from their phones in the field instead of paper forms. For sites that require daily logs, we set up site-specific log types and scheduled email times so completed logs go automatically to the property manager — no manual forwarding.",
-        "What's included: Operations dashboard with pay calendar, SORA watch, billing snapshot, and portal queue (armed status, special-uniform sites, sweater/jacket flags), client and site management, guard roster, SORA compliance tracking, uniform inventory with QR stock-room checkout, billing (invoices, oldest open, deposits, all payments), supervisor mobile reporting, site-specific log queues with auto-email to property managers (e.g. Wayne Mall, Castle Ridge), documents and printables, equipment registry, and an employee portal submission queue with workflow automation.",
+        "What's included: Operations dashboard with pay calendar, SORA watch, billing snapshot, and portal queue (armed status, special-uniform sites, sweater/jacket flags), client and site management, guard roster with assignments and shifts, sick time tracking, SORA compliance, uniform inventory with QR stock-room checkout, billing (invoices, oldest open, deposits, all payments), Website queue for public careers and business inquiries, supervisor mobile reporting, site-specific log queues with auto-email to property managers (e.g. Wayne Mall, Castle Ridge), documents and printables, equipment registry, system status dashboard, and an employee portal submission queue with completed-by tracking.",
         "Access control: Role-based sign-in accounts — IT full admin, HR for portal submissions, Finance for invoices and billing, supervisors for field reports, and view-only access where needed.",
         "Deployment: Live on Render with Gunicorn and persistent storage. Email notifications fire when employees submit portal requests or incident reports.",
         "How I used AI: Cursor helped me scaffold routes, debug SQL, refine templates, and iterate quickly. I owned the requirements, UX, and testing — AI accelerated the build.",
@@ -65,7 +65,15 @@ PROJECT_TEXT = {
         "The challenge: Sterling's previous website was dated and static. It listed an Employment page in the nav, but there was no way to collect applications online or review submissions — hiring relied on phone calls and scattered email attachments.",
         "What I did: Redesigned and rebuilt sterlingsecurityguards.com on Squarespace — modern homepage, service sections, and a dedicated Employment Opportunities page with an application form (resume upload, contact info, armed/unarmed status, and more).",
         "Employment applications: Submissions sync from the Squarespace form into a Google Sheet, where leadership can review applicants in one place and mass-email candidates to schedule interviews. That workflow never existed on the old site — the Employment link was there, but it didn't capture or organize applications.",
-        "Outcome: A mobile-friendly public site that presents Sterling's services clearly, routes consultation requests, and gives hiring a structured pipeline for new guard applications.",
+        "Outcome: A mobile-friendly interim site that presented Sterling's services clearly and gave hiring a structured pipeline. It was later replaced by a custom Website 2.0 that posts directly into the operations portal — see Sterling Securities Website 2.0.",
+    ],
+    "sterling-website-2": [
+        "Skills: Cursor · HTML · CSS · JavaScript · Flask API",
+        "The challenge: Squarespace worked for a quick refresh, but hiring and business leads still lived outside the operations database. Sterling needed a fast, brand-consistent public site with careers and consultation forms wired into the same backend as the employee and admin portals.",
+        "What I built: A custom multi-page site (home, about, security, careers, contact) with Fraunces/Outfit typography, responsive layout, image sliders, and accessible form UX — deployed at sterlingsecurityguards.com.",
+        "Portal integration: Employment and business inquiry forms POST JSON to the operations portal Website API. HR reviews Applications and Businesses tabs in ops — same infrastructure as portal submissions, not a separate spreadsheet.",
+        "Outcome: One hiring pipeline from public careers form to ops review, plus business consultation intake alongside the live guard-facing and admin tools.",
+        "How I used AI: Cursor helped structure pages, refine responsive CSS, and wire form validation and phone masking. I owned content, branding, and production testing.",
     ],
 }
 
@@ -87,7 +95,32 @@ PROJECT_DEMOS = {
         {
             "path": "demos/operations-portal/index.html",
             "heading": "Try the operations portal",
-            "note": "Interactive preview — updated dashboard (pay calendar, SORA watch, billing snapshot), portal queue with armed/special-uniform cues, billing (oldest open, all payments), Wayne Mall & Castle Ridge logs, uniforms, printables, and all major modules. Sample data only.",
+            "note": "Interactive preview — dashboard, portal queue (armed/special-uniform cues, completed-by on detail), Staff → assignments, shifts, sick time, uniforms, billing, Website inquiries from sterlingsecurityguards.com, system status, Wayne Mall & Castle Ridge logs, and printables. Sample data only.",
+        },
+        {
+            "path": "demos/operations-portal/index.html?view=website",
+            "heading": "Website inquiries queue",
+            "note": "Applications and business leads from the public site — tabs, search, and the same module as production ops.",
+            "lazy": False,
+        },
+    ],
+    "sterling-website-2": [
+        {
+            "path": "demos/sterling-website-2/index.html",
+            "heading": "Sterling Securities Website 2.0",
+            "note": "Custom public site — homepage hero, services, fleet gallery, and consultation paths. Form posts are simulated in this portfolio preview.",
+        },
+        {
+            "path": "demos/sterling-website-2/careers.html",
+            "heading": "Careers application",
+            "note": "Employment application with armed/unarmed, address, and phone masking — production posts into the ops Website queue.",
+            "lazy": False,
+        },
+        {
+            "path": "demos/operations-portal/index.html?view=website",
+            "heading": "Where applications land",
+            "note": "Operations Portal → Website — Applications and Businesses tabs for HR and office staff.",
+            "lazy": False,
         },
     ],
     "uniform-inventory-tracking-2": [
@@ -123,6 +156,8 @@ PROJECT_DEMOS = {
 RELATED_LINKS = {
     "employee-portal-2": ("operations-portal.html", "Operations Portal — admin dashboard & submission queue"),
     "operations-portal": ("employee-portal-2.html", "Employee Portal 2.0 — guard-facing portal"),
+    "sterling-website-2": ("operations-portal.html", "Operations Portal — Website inquiries queue"),
+    "sterling-website": ("sterling-website-2.html", "Sterling Securities Website 2.0 — custom site + portal intake"),
     "uniform-inventory-tracking-2": (
         "uniform-inventory-tracking.html",
         "Uniform Inventory Tracking (v1) — Google Sheets & AppSheet",
@@ -162,6 +197,7 @@ GALLERY_POLISH = {
     "employee-portal",
     "scheduling-automation",
     "sterling-website",
+    "sterling-website-2",
 }
 
 GALLERY_GRID = {

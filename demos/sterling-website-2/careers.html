@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Careers — Sterling Securities</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520;9..144,640&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css?v=54">
+</head>
+<body>
+  <div class="portfolio-demo-bar" role="status">Portfolio preview — careers and contact forms are simulated here. <a href="../operations-portal/index.html?view=website">View ops Website queue ↗</a></div>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="img/mark.png?v=5" alt=""><span class="brand-name">Sterling<small>Securities</small></span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="security.html">Security</a>
+      <a href="investigations.html" hidden>Investigations</a>
+      <a href="careers.html" aria-current="page">Careers</a>
+      <a href="contact.html">Contact</a>
+      <a class="nav-call" href="tel:18776527633">1-877-NJARMED</a>
+    </nav>
+  </header>
+  <main id="content">
+    <header class="page-hero">
+      <p class="kicker">Employment</p>
+      <h1>Let’s Work Together</h1>
+      <p class="lede careers-lede">At Sterling Securities, we are always looking for dedicated and professional security personnel to join our team.</p>
+    </header>
+    <section class="section" style="padding-top:1.2rem">
+      <div class="wrap contact-layout">
+        <div class="prose">
+          <p>We hire on a rolling basis as new opportunities become available, ensuring we maintain a strong and reliable workforce. Whether you're an experienced security officer, a retired law enforcement professional, or looking to start a career in security, we encourage you to apply.</p>
+          <p>If you're interested in becoming part of a trusted security provider, submit your application today, and we'll reach out when a position that fits your qualifications becomes available. Stay connected for the latest openings and career opportunities with Sterling Securities.</p>
+          <p>If you need security for a property, please use the <a href="contact.html">contact page</a>.</p>
+        </div>
+        <div>
+          <form data-inquiry="employment">
+            <div class="form-row">
+              <label>First name<input name="first" autocomplete="given-name" required></label>
+              <label>Last name<input name="last" autocomplete="family-name" required></label>
+            </div>
+            <div class="form-row">
+              <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+              <label>Email<input name="email" type="email" autocomplete="email" required></label>
+            </div>
+            <label>Address<input name="address" autocomplete="street-address" required placeholder="Street, city, state, ZIP"></label>
+            <label>Armed/Unarmed
+              <select name="armed" required>
+                <option value="">Select one</option>
+                <option>Armed</option>
+                <option>Unarmed</option>
+                <option>Both</option>
+              </select>
+            </label>
+            <div class="form-row">
+              <label>SORA card
+                <select name="sora" required>
+                  <option value="">Select one</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>In Progress</option>
+                </select>
+              </label>
+              <label>Driver's license
+                <select name="license" required>
+                  <option value="">Select one</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </label>
+            </div>
+            <label>What Should We Know?<textarea name="note" required placeholder="Licenses, shifts you can work, relevant work experience, and where you can get to"></textarea></label>
+            <p class="hp">Leave this blank<input name="company_website" tabindex="-1" autocomplete="off"></p>
+            <button class="btn" type="submit">Submit application</button>
+          </form>
+          <div class="form-sent" hidden tabindex="-1">
+            <h2 class="serif">Application Received</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div><img src="img/logo.png?v=2" alt="Sterling Securities"><p>155 Pompton Avenue, Suite 106<br>Verona, NJ 07044<br>M-F 9:00 AM - 4:00 PM</p></div>
+      <div><h2>Reach Us</h2><ul><li><a href="tel:18776527633">1-877-NJARMED</a></li><li><a href="tel:9734844111">(973) 484-4111</a></li><li><a href="mailto:info@sterlingsecurityguards.com">info@sterlingsecurityguards.com</a></li></ul></div>
+      <div><h2>On This Site</h2><ul><li><a href="about.html">About</a></li><li><a href="security.html">Security Division</a></li><li hidden><a href="investigations.html">Investigative Division</a></li><li><a href="careers.html">Employment</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    </div>
+  </footer>
+  <div class="call-dock"><a href="tel:18776527633">Call</a><a href="contact.html">Consultation</a></div>
+  <script src="site.js?v=13"></script>
+</body>
+</html>

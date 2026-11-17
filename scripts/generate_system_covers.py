@@ -20,6 +20,7 @@ CHROME_CANDIDATES = (
 
 PORTAL_DEMO = ROOT / "demos" / "employee-portal-2" / "index.html"
 OPS_DEMO = ROOT / "demos" / "operations-portal" / "index.html"
+WEBSITE2_DEMO = ROOT / "demos" / "sterling-website-2" / "index.html"
 STERLING_SITE = "https://www.sterlingsecurityguards.com/"
 
 
@@ -116,6 +117,10 @@ def cover_employee_portal() -> Image.Image:
     return crop_square(background, left=0, top=0, side=min(background.width, background.height))
 
 
+def cover_sterling_website_2() -> Image.Image:
+    return screenshot_demo(WEBSITE2_DEMO, top=48)
+
+
 def cover_sterling_website() -> Image.Image:
     img = screenshot_url(STERLING_SITE, window="1440,2000")
     # Skip nav + phone banner; crop the fleet hero photo only.
@@ -147,6 +152,7 @@ def main() -> None:
         "operations-portal": cover_operations_portal,
         "employee-portal-2": cover_employee_portal_2,
         "uniform-inventory-tracking-2": cover_uniform_inventory_2,
+        "sterling-website-2": cover_sterling_website_2,
         "sterling-website": cover_sterling_website,
         "uniform-inventory-tracking": cover_uniform,
         "scheduling-automation": cover_scheduling,

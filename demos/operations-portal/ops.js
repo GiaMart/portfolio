@@ -337,6 +337,7 @@ const SUBMISSIONS = [
     email: "a.patel@example.com",
     armed: "Unarmed",
     status: "completed",
+    completed_by: "HR",
     admin_notes: "ID printed and mailed.",
     details: [["Reason", "New hire"]],
   },
@@ -708,6 +709,14 @@ function showDetail(id) {
   if (statusSelect) statusSelect.value = row.status;
   if (notesField) notesField.value = row.admin_notes || "";
 
+  const completedWrap = document.getElementById("detail-completed-wrap");
+  const completedBy = document.getElementById("detail-completed-by");
+  if (completedWrap && completedBy) {
+    const show = row.status === "completed" && row.completed_by;
+    completedWrap.hidden = !show;
+    completedBy.textContent = show ? row.completed_by : "";
+  }
+
   showView("detail");
 }
 
@@ -748,6 +757,11 @@ function bindDetail() {
     if (!row) return;
     row.status = document.getElementById("status-select").value;
     row.admin_notes = document.getElementById("admin-notes").value.trim();
+    if (row.status === "completed") {
+      row.completed_by = row.completed_by || "Demo admin";
+    } else {
+      delete row.completed_by;
+    }
     showToast("Submission updated for this demo session.");
     showDetail(activeId);
     renderDashboardPortal();
@@ -785,6 +799,52 @@ function bindUniformTabs() {
   });
 }
 
+function setWebsiteKind(kind) {
+  document.querySelectorAll("#website-kind-tabs .nav-link").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.websiteKind === kind);
+  });
+  const showType = kind === "all";
+  document.querySelectorAll("[data-website-col='type']").forEach((th) => {
+    th.hidden = !showType;
+  });
+  document.querySelectorAll("[data-website-col='employment']").forEach((th) => {
+    th.hidden = kind === "contact";
+  });
+  document.querySelectorAll("[data-website-col='contact']").forEach((th) => {
+    th.hidden = kind === "employment";
+  });
+  document.querySelectorAll("#website-inquiries-body tr").forEach((tr) => {
+    const rowKind = tr.dataset.kind;
+  const visible = kind === "all" || rowKind === kind;
+    tr.hidden = !visible;
+    tr.querySelectorAll(".website-employment-only").forEach((cell) => {
+      cell.hidden = kind === "contact";
+    });
+    tr.querySelectorAll(".website-contact-only").forEach((cell) => {
+      cell.hidden = kind === "employment";
+    });
+    if (kind !== "all") {
+      tr.querySelectorAll('td:nth-child(2)').forEach((td) => {
+        td.hidden = true;
+      });
+    } else {
+      tr.querySelectorAll('td:nth-child(2)').forEach((td) => {
+        td.hidden = false;
+      });
+    }
+  });
+}
+
+function bindWebsiteKindTabs() {
+  document.querySelectorAll("#website-kind-tabs [data-website-kind]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      setWebsiteKind(btn.dataset.websiteKind || "all");
+    });
+  });
+  setWebsiteKind("all");
+}
+
 function bindNav() {
   document.querySelectorAll("[data-view]").forEach((el) => {
     el.addEventListener("click", (e) => {
@@ -801,6 +861,7 @@ function bindNav() {
 }
 
 bindNav();
+bindWebsiteKindTabs();
 bindFilters();
 bindDetail();
 bindReportPills();

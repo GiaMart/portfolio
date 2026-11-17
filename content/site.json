@@ -482,6 +482,18 @@
       "images": []
     },
     {
+      "slug": "sterling-website-2",
+      "title": "Sterling Securities Website 2.0",
+      "category": "systems",
+      "year": "2026",
+      "order": 7,
+      "thumbnail": "images/sterling-website-2/cover.png",
+      "liveUrl": "https://www.sterlingsecurityguards.com/",
+      "liveLabel": "View live site — sterlingsecurityguards.com",
+      "text": [],
+      "images": []
+    },
+    {
       "slug": "uniform-inventory-tracking-2",
       "title": "Uniform Inventory Tracking 2.0",
       "category": "systems",
@@ -503,7 +515,7 @@
     },
     {
       "slug": "sterling-website",
-      "title": "Sterling Securities Website",
+      "title": "Sterling Securities Website (Squarespace)",
       "category": "systems",
       "year": "2025",
       "order": 4,

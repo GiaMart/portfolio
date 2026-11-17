@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="ops.css?v=11">
+  <link rel="stylesheet" href="ops.css?v=12">
 </head>
 <body>
   <div class="demo-banner">Portfolio demo — sample operations data only. Status changes apply for this session only. <a href="../employee-portal-2/index.html" class="demo-banner-link">View employee portal demo ↗</a></div>
@@ -39,6 +39,9 @@
                 <li><button type="button" class="dropdown-item" data-view="guards">Guards</button></li>
                 <li><button type="button" class="dropdown-item" data-view="sora">SORA</button></li>
                 <li><button type="button" class="dropdown-item" data-view="uniforms">Uniforms</button></li>
+                <li><button type="button" class="dropdown-item" data-view="assignments">Assignments</button></li>
+                <li><button type="button" class="dropdown-item" data-view="shifts">Shifts</button></li>
+                <li><button type="button" class="dropdown-item" data-view="sick-time">Sick Time</button></li>
               </ul>
             </li>
             <li class="nav-item dropdown ops-nav-dropdown">
@@ -51,6 +54,7 @@
               </ul>
             </li>
             <li class="nav-item"><button type="button" class="nav-link" data-view="list">Portal</button></li>
+            <li class="nav-item"><button type="button" class="nav-link" data-view="website">Website</button></li>
             <li class="nav-item dropdown ops-nav-dropdown">
               <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Reports</button>
               <ul class="dropdown-menu dropdown-menu-dark">
@@ -82,6 +86,7 @@
               <ul class="dropdown-menu dropdown-menu-dark">
                 <li><button type="button" class="dropdown-item" data-view="accounts">Accounts</button></li>
                 <li><button type="button" class="dropdown-item" data-view="backups">Backups</button></li>
+                <li><button type="button" class="dropdown-item" data-view="status">Status</button></li>
               </ul>
             </li>
           </ul>
@@ -1123,6 +1128,202 @@
       </div></div>
     </div>
 
+    <div id="view-website" class="view">
+      <div class="page-header mb-4">
+        <h1 class="h3 mb-0">Website</h1>
+        <p class="text-muted small mb-0 mt-1">Careers and contact submissions from sterlingsecurityguards.com</p>
+      </div>
+      <ul class="nav nav-pills gap-2 mb-3" id="website-kind-tabs">
+        <li class="nav-item"><button type="button" class="nav-link active" data-website-kind="all">All</button></li>
+        <li class="nav-item"><button type="button" class="nav-link" data-website-kind="employment">Applications</button></li>
+        <li class="nav-item"><button type="button" class="nav-link" data-website-kind="contact">Businesses</button></li>
+      </ul>
+      <div class="card mb-3">
+        <div class="card-body py-3">
+          <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+              <label class="form-label small text-muted mb-1" for="website-search">Search</label>
+              <input class="form-control form-control-sm" id="website-search" type="search" placeholder="Name, phone, or email" autocomplete="off">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small text-muted mb-1" for="website-town">Town</label>
+              <input class="form-control form-control-sm" id="website-town" type="search" placeholder="Verona, Cedar Grove…" autocomplete="off">
+            </div>
+            <div class="col-auto d-flex gap-2">
+              <button type="button" class="btn btn-sm btn-primary demo-disabled">Filter</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary demo-disabled">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <span class="text-muted small">New submissions sync from the public API — delete and bulk actions are admin-only in production.</span>
+          <a class="btn btn-sm btn-outline-secondary" href="../sterling-website-2/careers.html" target="_blank" rel="noopener">Open careers form ↗</a>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th class="text-nowrap ps-3">Received</th>
+                <th data-website-col="type">Type</th>
+                <th>Name</th>
+                <th class="text-nowrap">Phone</th>
+                <th data-website-col="employment">Address</th>
+                <th data-website-col="employment">Armed/Unarmed</th>
+                <th data-website-col="contact">Email</th>
+                <th data-website-col="contact">What they need</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="website-inquiries-body">
+              <tr data-kind="employment">
+                <td class="text-nowrap ps-3">Mar 12, 2026 9:14 AM</td>
+                <td>Application</td>
+                <td class="fw-semibold">Jordan Lee</td>
+                <td><span class="demo-masked">(973) 555-0182</span></td>
+                <td>Verona, NJ</td>
+                <td>Unarmed</td>
+                <td class="website-contact-only" hidden>—</td>
+                <td class="website-contact-only" hidden>—</td>
+                <td class="text-end pe-3"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">View</button></td>
+              </tr>
+              <tr data-kind="employment">
+                <td class="text-nowrap ps-3">Mar 11, 2026 4:52 PM</td>
+                <td>Application</td>
+                <td class="fw-semibold">Alicia Morales</td>
+                <td><span class="demo-masked">(862) 555-4410</span></td>
+                <td>Cedar Grove, NJ</td>
+                <td>Armed</td>
+                <td class="website-contact-only" hidden>—</td>
+                <td class="website-contact-only" hidden>—</td>
+                <td class="text-end pe-3"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">View</button></td>
+              </tr>
+              <tr data-kind="contact">
+                <td class="text-nowrap ps-3">Mar 10, 2026 11:08 AM</td>
+                <td>Business inquiry</td>
+                <td class="fw-semibold">Riverside Office Park</td>
+                <td><span class="demo-masked">(201) 555-9921</span></td>
+                <td class="website-employment-only" hidden>—</td>
+                <td class="website-employment-only" hidden>—</td>
+                <td>leasing@demo.example</td>
+                <td>Overnight armed coverage · 7 days</td>
+                <td class="text-end pe-3"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-sick-time" class="view">
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+          <h1 class="h3 mb-0">Sick Time</h1>
+          <p class="text-muted small mb-0">Paid and unpaid sick hours by guard — linked to scheduling reports</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm demo-disabled">Log sick time</button>
+      </div>
+      <div class="card mb-3">
+        <div class="card-body py-3">
+          <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+              <label class="form-label small text-muted mb-1">Guard</label>
+              <input class="form-control form-control-sm" type="search" placeholder="Search guard name" autocomplete="off" disabled>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small text-muted mb-1">From</label>
+              <input class="form-control form-control-sm" type="date" value="2026-03-01" disabled>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small text-muted mb-1">To</label>
+              <input class="form-control form-control-sm" type="date" value="2026-03-15" disabled>
+            </div>
+            <div class="col-auto"><button type="button" class="btn btn-sm btn-outline-primary demo-disabled">Filter</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead>
+              <tr>
+                <th class="ps-3">Date</th>
+                <th>Guard</th>
+                <th>Site</th>
+                <th class="text-end">Hours</th>
+                <th>Paid</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ps-3 text-nowrap">Mar 12, 2026</td>
+                <td class="fw-semibold">Maria Santos</td>
+                <td>ShopRite Verona</td>
+                <td class="text-end">8.0</td>
+                <td><span class="badge text-bg-success">Paid</span></td>
+                <td class="text-muted small">Called out overnight shift</td>
+              </tr>
+              <tr>
+                <td class="text-nowrap">Mar 9, 2026</td>
+                <td class="fw-semibold">James Rivera</td>
+                <td>Citizens Bank Newark</td>
+                <td class="text-end">4.0</td>
+                <td><span class="badge text-bg-secondary">Unpaid</span></td>
+                <td class="text-muted small">Partial day — coverage swapped</td>
+              </tr>
+              <tr>
+                <td class="text-nowrap">Mar 4, 2026</td>
+                <td class="fw-semibold">Tyler Brooks</td>
+                <td>Essex Green</td>
+                <td class="text-end">8.0</td>
+                <td><span class="badge text-bg-success">Paid</span></td>
+                <td class="text-muted small">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-status" class="view">
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+        <h1 class="h3 mb-0">System Status</h1>
+        <p class="text-muted small mb-0">Checked Mar 12, 2026 · 2:45 PM</p>
+      </div>
+      <p class="status-key small text-muted mb-3">
+        <span class="status-pill status-pill--good"><span class="status-dot"></span> Good</span>
+        <span class="status-pill status-pill--trouble"><span class="status-dot"></span> Trouble</span>
+        <span class="status-pill status-pill--down"><span class="status-dot"></span> Down</span>
+      </p>
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="card status-tile-list">
+            <button type="button" class="status-row demo-disabled"><span class="status-row-name">Operations Portal</span><span class="status-row-meta"><span class="status-row-ms">142 ms</span><span class="status-dot status-dot--good"></span></span></button>
+            <button type="button" class="status-row demo-disabled"><span class="status-row-name">Employee Portal</span><span class="status-row-meta"><span class="status-row-ms">118 ms</span><span class="status-dot status-dot--good"></span></span></button>
+            <button type="button" class="status-row demo-disabled"><span class="status-row-name">Public Website API</span><span class="status-row-meta"><span class="status-row-ms">96 ms</span><span class="status-dot status-dot--good"></span></span></button>
+            <button type="button" class="status-row demo-disabled"><span class="status-row-name">Email (SMTP)</span><span class="status-row-meta"><span class="status-row-ms">—</span><span class="status-dot status-dot--good"></span></span></button>
+            <a class="status-row" href="https://www.sterlingsecurityguards.com/" target="_blank" rel="noopener noreferrer"><span class="status-row-name">sterlingsecurityguards.com ↗</span><span class="status-row-meta"><span class="status-row-ms">204 ms</span><span class="status-dot status-dot--good"></span></span></a>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card status-disk-card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-semibold">Disk</span>
+              <span class="status-dot status-dot--good"></span>
+            </div>
+            <div class="status-disk-bar mb-3" aria-hidden="true"><span style="width: 41%;"></span></div>
+            <dl class="row small mb-0 status-disk-facts">
+              <dt class="col-5 text-muted">Used</dt><dd class="col-7">41%</dd>
+              <dt class="col-5 text-muted">Free</dt><dd class="col-7">5.1 GB</dd>
+              <dt class="col-5 text-muted">Last Backup</dt><dd class="col-7">Mar 11, 2026</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="view-accounts" class="view">
       <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
         <div>
@@ -1278,6 +1479,10 @@
                     <option value="cancelled">Cancelled</option>
                   </select>
                 </div>
+                <div id="detail-completed-wrap" hidden>
+                  <label class="form-label text-muted small mb-0">Completed by</label>
+                  <p class="mb-0 fw-semibold" id="detail-completed-by"></p>
+                </div>
                 <div>
                   <label class="form-label" for="admin-notes">Admin notes</label>
                   <textarea class="form-control" id="admin-notes" rows="5" placeholder="Internal notes for ops staff…"></textarea>
@@ -1294,6 +1499,6 @@
   <div class="demo-toast" id="demo-toast" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="ops.js?v=11"></script>
+  <script src="ops.js?v=12"></script>
 </body>
 </html>

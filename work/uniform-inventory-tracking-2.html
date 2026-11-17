@@ -27,6 +27,9 @@
     <button class="nav-toggle" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
   </header>
   <main class="main--with-demo main--wide-demo">
+  <div class="project-demo-layout">
+    <div class="project-demo-copy">
+
   <section class="project-header">
     <a href="../systems.html" class="back-link">← Back</a>
     <h1>Uniform Inventory Tracking 2.0</h1>
@@ -35,7 +38,9 @@
   <div class="project-text"><p>Skills: Cursor · Flask · SQLite · Render · SMTP</p><p>Evolution: Version 1 proved QR checkout and alerts in Google Sheets. Uniform Inventory Tracking 2.0 lives inside the operations portal — same database as employee uniform requests, guard history, and stock-room takeouts.</p><p>Uniforms dashboard: SKUs tracked, total on hand, low/out counts, pending requests with pack chips, recent takeouts, and size charts — the ops home screen for uniform inventory.</p><p>Inventory module: Full SKU table with starting/restock/takeout/adjust columns, reorder thresholds, restock log, takeout log, and a secret stock-room QR link for no-login checkout from the Verona uniform room.</p><p>Employee form: Guards submit uniform requests from the employee portal — site picker, armed/unarmed, reason, item sizes with out-of-stock labels, and sweater field for eligible sites only. Submissions land in the admin portal queue.</p><p>Portal integration: When guards submit uniform requests, HR sees them in the portal queue. Rows highlight in purple for special-uniform sites (custom to specific site). Rows highlight in red when a guard already received a one-time item — like a sweater — so staff do not double-issue.</p><p>Sweater rules: Only certain sites can request a sweater in the employee portal. The demo form includes Essex Green (regular) and Newark Academy (sweater-eligible) so visitors can see the sweater field appear when an eligible site is selected. Guards get one sweater; the form explains the policy and HR can review exceptions in the notes.</p><p>Stock alert emails: When inventory newly hits low or out of stock, the system emails Office Administrator automatically with a branded alert listing affected sizes. Seasonal items respect in-season rules so winter skully alerts do not fire in July.</p><p>How I used AI: Cursor helped wire inventory mutations to alert checks, portal row highlighting, and sweater site logic. I owned thresholds, eligible sites, and the HR workflow.</p></div>
   <p class="project-related">Related: <a href="uniform-inventory-tracking.html">Uniform Inventory Tracking (v1) — Google Sheets &amp; AppSheet</a></p>
   
-  
+    </div>
+    <div class="project-demo-panel" aria-label="Interactive previews">
+
   <section class="project-demo project-demo--dashboard">
     <h2 class="demo-heading">Uniforms dashboard</h2>
     <p class="demo-note">Staff → Uniforms → Dashboard. Overview stats, low/out-of-stock watch, pending requests with pack chips, recent takeouts, and size charts. Sample data only.</p>
@@ -64,6 +69,8 @@
       <iframe src="../demos/employee-portal-2/index.html?view=uniform-form" title="Employee uniform request form" loading="eager"></iframe>
     </div>
   </section>
+    </div>
+  </div>
   <section class="project-gallery project-gallery--systems">
     <div class="gallery-sections-row">
     <div class="gallery-section">

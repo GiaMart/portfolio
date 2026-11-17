@@ -724,7 +724,7 @@ def build_project(p: dict) -> str:
     elif slug in GALLERY_POLISH:
         gallery_cls = "project-gallery project-gallery--systems"
 
-    body = f"""
+    header_and_copy = f"""
   <section class="project-header">
     <a href="../{back}" class="back-link">← Back</a>
     <h1>{esc(p['title'])}</h1>
@@ -732,8 +732,22 @@ def build_project(p: dict) -> str:
   </section>
   {text_html}
   {related_html}
-  {live_html}
-  {demo_html}
+  {live_html}"""
+
+    if demo_html:
+        body = f"""
+  <div class="project-demo-layout">
+    <div class="project-demo-copy">
+{header_and_copy}
+    </div>
+    <div class="project-demo-panel" aria-label="Interactive previews">
+{demo_html}
+    </div>
+  </div>
+  <section class="{gallery_cls}">{images_html}{gallery_extra_html}
+  </section>"""
+    else:
+        body = f"""{header_and_copy}
   <section class="{gallery_cls}">{images_html}{gallery_extra_html}
   </section>"""
     main_class = "main--with-demo" if slug in PROJECT_DEMOS else ""

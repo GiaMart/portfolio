@@ -486,8 +486,8 @@ body.lightbox-open {
   border-radius: calc(var(--radius) + 4px);
 }
 
-.project-demo + .project-demo {
-  margin-top: -0.75rem;
+.project-demo-panel .project-demo:last-child {
+  margin-bottom: 0;
 }
 
 .gallery-section-title {
@@ -647,16 +647,60 @@ body.lightbox-open {
 }
 
 main.main--with-demo {
-  max-width: 1280px;
+  max-width: min(1680px, 96vw);
+  padding-left: clamp(1rem, 2.5vw, 2rem);
+  padding-right: clamp(1rem, 2.5vw, 2rem);
 }
 
 main.main--wide-demo {
-  max-width: 1440px;
+  max-width: min(1720px, 98vw);
+}
+
+/* Side-by-side copy + live demos */
+.project-demo-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 34%) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  align-items: start;
+  margin-bottom: 2.5rem;
+}
+
+.project-demo-copy {
+  position: sticky;
+  top: 5.25rem;
+  align-self: start;
+  max-height: calc(100vh - 6.5rem);
+  overflow-y: auto;
+  padding-right: 0.35rem;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.project-demo-copy .project-text {
+  max-width: none;
+  margin-bottom: 1.25rem;
+}
+
+.project-demo-copy .project-text p {
+  font-size: 0.92rem;
+}
+
+.project-demo-copy .project-header h1 {
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+}
+
+.project-demo-copy .project-related,
+.project-demo-copy .project-live {
+  margin-bottom: 0.75rem;
+}
+
+.project-demo-panel {
+  min-width: 0;
 }
 
 /* Embedded project demo */
 .project-demo {
-  margin: 2rem 0 2.5rem;
+  margin: 0 0 1.75rem;
 }
 
 .demo-heading {
@@ -681,17 +725,38 @@ main.main--wide-demo {
 
 .demo-frame-wrap iframe {
   width: 100%;
-  height: 720px;
+  height: min(78vh, 720px);
+  min-height: 480px;
   border: none;
   display: block;
 }
 
 main.main--wide-demo .project-demo--dashboard .demo-frame-wrap iframe {
-  height: 920px;
+  height: min(88vh, 920px);
+  min-height: 560px;
 }
 
 main.main--wide-demo .project-demo--inventory .demo-frame-wrap iframe {
-  height: 860px;
+  height: min(84vh, 860px);
+  min-height: 520px;
+}
+
+@media (max-width: 960px) {
+  .project-demo-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .project-demo-copy {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .project-demo {
+    margin: 0 0 2rem;
+  }
 }
 
 .project-related {

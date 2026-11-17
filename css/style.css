@@ -486,9 +486,6 @@ body.lightbox-open {
   border-radius: calc(var(--radius) + 4px);
 }
 
-.project-demo-panel .project-demo:last-child {
-  margin-bottom: 0;
-}
 
 .gallery-section-title {
   font-size: 0.8rem;
@@ -647,66 +644,52 @@ body.lightbox-open {
 }
 
 main.main--with-demo {
-  max-width: min(1760px, 98vw);
-  padding-left: clamp(1rem, 2.5vw, 2rem);
-  padding-right: clamp(1rem, 2.5vw, 2rem);
+  max-width: min(1200px, 96vw);
 }
 
 main.main--wide-demo {
-  max-width: min(1840px, 99vw);
+  max-width: min(1280px, 97vw);
 }
 
-/* Side-by-side copy + live demos — narrow copy, wide interactive panel */
-.project-demo-layout {
-  display: grid;
-  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 2rem);
-  align-items: start;
-  margin-bottom: 2.5rem;
-  width: 100%;
+/* Read → try: intro, then text block + demo, repeated */
+.project-intro,
+.project-outro {
+  max-width: 42rem;
+  margin-bottom: 1.75rem;
 }
 
-.project-demo-copy {
-  position: sticky;
-  top: 5.25rem;
-  align-self: start;
-  max-height: calc(100vh - 6.5rem);
-  overflow-y: auto;
-  padding-right: 0.5rem;
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
-  max-width: 360px;
-}
-
-.project-demo-copy .project-text {
-  max-width: none;
-  margin-bottom: 1.25rem;
-}
-
-.project-demo-copy .project-text p {
-  font-size: 0.95rem;
+.project-intro p,
+.project-outro p,
+.project-demo-step__text p {
+  margin-bottom: 0.75rem;
+  color: var(--muted);
   line-height: 1.75;
 }
 
-.project-demo-copy .project-header h1 {
-  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+.project-demo-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 3.25rem;
+  margin: 2.25rem 0 2.5rem;
 }
 
-.project-demo-copy .project-related,
-.project-demo-copy .project-live {
-  margin-bottom: 0.75rem;
+.project-demo-step {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
 }
 
-.project-demo-panel {
-  min-width: 0;
-  justify-self: stretch;
-  width: 100%;
-  max-width: none;
+.project-demo-step__text {
+  max-width: 42rem;
+}
+
+.project-demo-step__text p {
+  font-size: 0.98rem;
 }
 
 /* Embedded project demo */
 .project-demo {
-  margin: 0 0 1.75rem;
+  margin: 0;
 }
 
 .demo-heading {
@@ -747,30 +730,9 @@ main.main--wide-demo .project-demo--inventory .demo-frame-wrap iframe {
   min-height: 460px;
 }
 
-/* Stack only on phones — keep side-by-side in Cursor preview & typical laptop windows */
-@media (max-width: 640px) {
-  .project-demo-layout {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .project-demo-copy {
-    position: static;
-    max-height: none;
-    overflow: visible;
-    padding-right: 0;
-    max-width: none;
-  }
-
-  .project-demo-panel {
-    justify-self: stretch;
-    width: 100%;
-    max-width: none;
-  }
-
-  .project-demo {
-    margin: 0 0 2rem;
-  }
+.project-demo-step + .project-demo-step {
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--border);
 }
 
 .project-related {

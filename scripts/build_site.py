@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = json.loads((ROOT / "content" / "site.json").read_text(encoding="utf-8"))
 # Bump when css/style.css changes so browsers & GitHub Pages pick up layout updates.
-STYLE_VERSION = "20260312e"
+STYLE_VERSION = "20260312f"
 
 LINKEDIN_SVG = """<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -79,78 +79,153 @@ PROJECT_TEXT = {
     ],
 }
 
+# Intro/outro for demo project pages — body paragraphs live on each demo step in PROJECT_DEMOS.
+PROJECT_DEMO_INTRO = {
+    "employee-portal-2": [
+        "Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render",
+        "The challenge: The original Google Sites portal couldn't support a dynamic pay calendar, guard-facing incident reporting, structured form routing with file uploads, or an admin review queue tied to company data.",
+        "My approach: I'm not a traditional developer — I use AI as a build partner. I scoped requirements with HR and ops, designed the UX, and iteratively built Employee Portal 2.0 in Cursor — then deployed it on its own live domain alongside the operations admin.",
+    ],
+    "operations-portal": [
+        "Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render",
+        "The problem: Sterling ran on spreadsheets and disconnected tools — and supervisors still filled out incident reports, disciplinary write-ups, and log sheets on pen and paper. Guards, client sites, billing, SORA certifications, uniforms, and employee requests had no single source of truth.",
+        "My approach: I mapped the ops workflow with leadership, then built the admin app iteratively in Cursor with AI — database schema, Flask routes, Bootstrap UI, role-based permissions, and production deployment on Render with separate employee and admin domains.",
+    ],
+    "sterling-website-2": [
+        "Skills: Cursor · HTML · CSS · JavaScript · Flask API",
+        "The challenge: Squarespace worked for a quick refresh, but hiring and business leads still lived outside the operations database. Sterling needed a fast, brand-consistent public site with careers and consultation forms wired into the same backend as the employee and admin portals.",
+    ],
+    "uniform-inventory-tracking-2": [
+        "Skills: Cursor · Flask · SQLite · Render · SMTP",
+        "Evolution: Version 1 proved QR checkout and alerts in Google Sheets. Uniform Inventory Tracking 2.0 lives inside the operations portal — same database as employee uniform requests, guard history, and stock-room takeouts.",
+    ],
+}
+
+PROJECT_DEMO_OUTRO = {
+    "employee-portal-2": [
+        "Why this matters: This project shows how someone with operations and IT knowledge can ship production software by combining clear problem-solving with AI-assisted development — not by writing every line of code from scratch.",
+    ],
+    "operations-portal": [
+        "Access control: Role-based sign-in accounts — IT full admin, HR for portal submissions, Finance for invoices and billing, supervisors for field reports, and view-only access where needed.",
+        "Deployment: Live on Render with Gunicorn and persistent storage. Email notifications fire when employees submit portal requests or incident reports.",
+        "How I used AI: Cursor helped me scaffold routes, debug SQL, refine templates, and iterate quickly. I owned the requirements, UX, and testing — AI accelerated the build.",
+    ],
+    "sterling-website-2": [
+        "How I used AI: Cursor helped structure pages, refine responsive CSS, and wire form validation and phone masking. I owned content, branding, and production testing.",
+    ],
+    "uniform-inventory-tracking-2": [
+        "Stock alert emails: When inventory newly hits low or out of stock, the system emails Office Administrator automatically with a branded alert listing affected sizes. Seasonal items respect in-season rules so winter skully alerts do not fire in July.",
+        "How I used AI: Cursor helped wire inventory mutations to alert checks, portal row highlighting, and sweater site logic. I owned thresholds, eligible sites, and the HR workflow.",
+    ],
+}
+
 PROJECT_DEMOS = {
     "employee-portal-2": [
         {
             "path": "demos/employee-portal-2/index.html",
             "heading": "Try the employee portal",
-            "note": "Interactive preview — pay calendar, incident report, all 7 production-style request forms, stock-room QR takeout, and FAQs. Submissions are simulated.",
+            "note": "Submissions are simulated. Sample data only.",
+            "paragraphs": [
+                "What's included: Biweekly pay calendar, office map and FAQs, 7 employee request forms (each with production-style fields and file uploads where applicable), guard-facing incident reports, QR stock-room takeout, site-specific QR logs (Wayne Mall and Castle Ridge), and email notifications on every submission — all connected to the same database as SORA, uniforms, and billing.",
+            ],
         },
         {
             "path": "demos/employee-portal-2/index.html?view=uniform-form",
             "heading": "Uniform request form",
-            "note": "Site picker includes Essex Green (regular) and Newark Academy (sweater-eligible). Select Newark Academy to reveal the sweater size field.",
+            "note": "Select Newark Academy in the site picker to reveal the sweater size field.",
             "lazy": False,
+            "paragraphs": [
+                "Guards submit uniform requests from the employee portal — site picker, armed/unarmed, reason, item sizes with out-of-stock labels, and a sweater field for eligible sites only. Essex Green is a regular site; Newark Academy is sweater-eligible in this demo.",
+            ],
         },
     ],
     "operations-portal": [
         {
             "path": "demos/operations-portal/index.html",
             "heading": "Try the operations portal",
-            "note": "Interactive preview — dashboard, portal queue (armed/special-uniform cues, completed-by on detail), Staff → assignments, shifts, sick time, uniforms, billing, Website inquiries from sterlingsecurityguards.com, system status, Wayne Mall & Castle Ridge logs, and printables. Sample data only.",
+            "note": "Sample data only — status changes apply for this session.",
+            "paragraphs": [
+                "Field reporting: Supervisors now fill out incident reports, write-ups, and log sheets from their phones in the field instead of paper forms. For sites that require daily logs, we set up site-specific log types and scheduled email times so completed logs go automatically to the property manager — no manual forwarding.",
+                "What's included: Operations dashboard with pay calendar, SORA watch, billing snapshot, and portal queue (armed status, special-uniform sites, sweater/jacket flags), client and site management, guard roster with assignments and shifts, sick time tracking, SORA compliance, uniform inventory with QR stock-room checkout, billing, supervisor mobile reporting, site-specific log queues, documents and printables, equipment registry, system status dashboard, and an employee portal submission queue with completed-by tracking.",
+            ],
         },
         {
             "path": "demos/operations-portal/index.html?view=website",
             "heading": "Website inquiries queue",
-            "note": "Applications and business leads from the public site — tabs, search, and the same module as production ops.",
+            "note": "Applications and business leads from sterlingsecurityguards.com.",
             "lazy": False,
+            "paragraphs": [
+                "Website queue: Careers and consultation forms on the public site POST into the operations portal. HR and office staff review Applications and Businesses tabs — the same database as portal submissions, not a separate spreadsheet.",
+            ],
         },
     ],
     "sterling-website-2": [
         {
             "path": "demos/sterling-website-2/index.html",
             "heading": "Sterling Securities Website 2.0",
-            "note": "Custom public site — homepage hero, services, fleet gallery, and consultation paths. Form posts are simulated in this portfolio preview.",
+            "note": "Form posts are simulated in this portfolio preview.",
+            "paragraphs": [
+                "What I built: A custom multi-page site (home, about, security, careers, contact) with Fraunces/Outfit typography, responsive layout, image sliders, and accessible form UX — deployed at sterlingsecurityguards.com.",
+            ],
         },
         {
             "path": "demos/sterling-website-2/careers.html",
             "heading": "Careers application",
-            "note": "Employment application with armed/unarmed, address, and phone masking — production posts into the ops Website queue.",
+            "note": "Production posts into the ops Website queue.",
             "lazy": False,
+            "paragraphs": [
+                "Portal integration: Employment and business inquiry forms POST JSON to the operations portal Website API. Guards apply online with armed/unarmed status, address, and phone masking — the same validation patterns as the live site.",
+            ],
         },
         {
             "path": "demos/operations-portal/index.html?view=website",
             "heading": "Where applications land",
-            "note": "Operations Portal → Website — Applications and Businesses tabs for HR and office staff.",
+            "note": "Operations Portal → Website.",
             "lazy": False,
+            "paragraphs": [
+                "Outcome: One hiring pipeline from public careers form to ops review, plus business consultation intake alongside the live guard-facing and admin tools.",
+            ],
         },
     ],
     "uniform-inventory-tracking-2": [
         {
             "path": "demos/operations-portal/index.html?view=uniforms&uniformTab=dashboard",
             "heading": "Uniforms dashboard",
-            "note": "Staff → Uniforms → Dashboard. Overview stats, low/out-of-stock watch, pending requests with pack chips, recent takeouts, and size charts. Sample data only.",
+            "note": "Staff → Uniforms → Dashboard.",
             "lazy": False,
             "demo_class": "project-demo--dashboard",
+            "paragraphs": [
+                "Uniforms dashboard: SKUs tracked, total on hand, low/out counts, pending requests with pack chips, recent takeouts, and size charts — the ops home screen for uniform inventory.",
+            ],
         },
         {
             "path": "demos/operations-portal/index.html?view=uniforms&uniformTab=inventory",
             "heading": "Inventory table",
-            "note": "Full SKU grid with filters, on-hand vs requests vs current, and adjust buttons — same layout as production.",
+            "note": "Full SKU grid with filters and adjust actions.",
             "lazy": False,
             "demo_class": "project-demo--inventory",
+            "paragraphs": [
+                "Inventory module: Full SKU table with starting/restock/takeout/adjust columns, reorder thresholds, restock log, takeout log, and a secret stock-room QR link for no-login checkout from the Verona uniform room.",
+            ],
         },
         {
             "path": "demos/operations-portal/index.html?view=list&form_type=uniform",
             "heading": "Portal submissions queue",
-            "note": "Staff → Portal — where HR reviews employee uniform requests. Purple rows = special-uniform sites. Red rows = sweater or jacket already issued.",
+            "note": "Purple rows = special-uniform sites. Red badge = sweater already issued.",
             "lazy": False,
+            "paragraphs": [
+                "Portal integration: When guards submit uniform requests, HR sees them in the portal queue. Rows highlight in purple for special-uniform sites. Rows highlight in red when a guard already received a one-time item — like a sweater — so staff do not double-issue.",
+                "Sweater rules: Only certain sites can request a sweater in the employee portal. Guards get one sweater; the form explains the policy and HR can review exceptions in the notes.",
+            ],
         },
         {
             "path": "demos/employee-portal-2/index.html?view=uniform-form",
             "heading": "Employee uniform request form",
-            "note": "Guard-facing form with Before You Submit copy and a demo site picker: Essex Green (regular) or Newark Academy (sweater-eligible — select it to reveal the sweater field). Submissions are simulated.",
+            "note": "Submissions are simulated.",
             "lazy": False,
+            "paragraphs": [
+                "Employee form: Guards submit uniform requests from the employee portal — site picker, armed/unarmed, reason, item sizes with out-of-stock labels, and sweater field for eligible sites only. Submissions land in the admin portal queue.",
+            ],
         },
     ],
 }
@@ -601,6 +676,29 @@ def browser_frame_html(src: str, alt: str, title: str, cap_html: str) -> str:
     </figure>"""
 
 
+def prose_block(paragraphs: list[str], css_class: str = "project-text") -> str:
+    if not paragraphs:
+        return ""
+    return f'<div class="{css_class}">' + "".join(f"<p>{esc(t)}</p>" for t in paragraphs) + "</div>"
+
+
+def build_demo_step_html(d: dict) -> str:
+    step_text = prose_block(d.get("paragraphs") or [], "project-demo-step__text")
+    extra_demo_class = f" {esc(d['demo_class'])}" if d.get("demo_class") else ""
+    note_html = f'<p class="demo-note">{esc(d["note"])}</p>' if d.get("note") else ""
+    return f"""
+  <article class="project-demo-step">
+    {step_text}
+    <section class="project-demo{extra_demo_class}">
+      <h2 class="demo-heading">{esc(d["heading"])}</h2>
+      {note_html}
+      <div class="demo-frame-wrap">
+        <iframe src="../{esc(d["path"])}" title="{esc(d["heading"])}" loading="{"lazy" if d.get("lazy", True) else "eager"}"></iframe>
+      </div>
+    </section>
+  </article>"""
+
+
 def build_project(p: dict) -> str:
     slug = p["slug"]
     text = p.get("text") or PROJECT_TEXT.get(slug, [])
@@ -683,8 +781,8 @@ def build_project(p: dict) -> str:
 
     back = "design.html" if p["category"] == "design" else "systems.html"
 
-    demo_html = ""
     demos = PROJECT_DEMOS.get(slug, [])
+    demo_flow_html = ""
     if demos:
         if isinstance(demos, str):
             demos = [{
@@ -692,17 +790,7 @@ def build_project(p: dict) -> str:
                 "heading": "Try the demo",
                 "note": "Interactive preview.",
             }]
-        demo_html = "".join(
-            f"""
-  <section class="project-demo{(" " + esc(d["demo_class"])) if d.get("demo_class") else ""}">
-    <h2 class="demo-heading">{esc(d["heading"])}</h2>
-    <p class="demo-note">{esc(d["note"])}</p>
-    <div class="demo-frame-wrap">
-      <iframe src="../{esc(d["path"])}" title="{esc(d["heading"])}" loading="{"lazy" if d.get("lazy", True) else "eager"}"></iframe>
-    </div>
-  </section>"""
-            for d in demos
-        )
+        demo_flow_html = "".join(build_demo_step_html(d) for d in demos)
 
     gallery_extra_html = ""
     gallery_extra = PROJECT_GALLERY_EXTRA.get(slug)
@@ -725,15 +813,15 @@ def build_project(p: dict) -> str:
     elif slug in GALLERY_POLISH:
         gallery_cls = "project-gallery project-gallery--systems"
 
-    header_and_copy = f"""
+    header_html = f"""
   <section class="project-header">
     <a href="../{back}" class="back-link">← Back</a>
     <h1>{esc(p['title'])}</h1>
     <span class="year">{esc(p['year'])}</span>
-  </section>
-  {text_html}
-  {related_html}
-  {live_html}"""
+  </section>"""
+
+    intro_html = prose_block(PROJECT_DEMO_INTRO.get(slug, []), "project-intro")
+    outro_html = prose_block(PROJECT_DEMO_OUTRO.get(slug, []), "project-outro")
 
     gallery_block = ""
     if images_html.strip() or gallery_extra_html.strip():
@@ -741,18 +829,19 @@ def build_project(p: dict) -> str:
   <section class="{gallery_cls}">{images_html}{gallery_extra_html}
   </section>"""
 
-    if demo_html:
-        body = f"""
-  <div class="project-demo-layout">
-    <div class="project-demo-copy">
-{header_and_copy}
-    </div>
-    <div class="project-demo-panel" aria-label="Interactive previews">
-{demo_html}
-    </div>
-  </div>{gallery_block}"""
+    if demo_flow_html:
+        body = f"""{header_html}
+  {intro_html}
+  <div class="project-demo-flow">{demo_flow_html}
+  </div>
+  {outro_html}
+  {related_html}
+  {live_html}{gallery_block}"""
     else:
-        body = f"""{header_and_copy}{gallery_block}"""
+        body = f"""{header_html}
+  {text_html}
+  {related_html}
+  {live_html}{gallery_block}"""
     main_class = "main--with-demo" if slug in PROJECT_DEMOS else ""
     if slug == "uniform-inventory-tracking-2":
         main_class = "main--with-demo main--wide-demo"

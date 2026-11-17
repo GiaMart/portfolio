@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=20260312e">
+  <link rel="stylesheet" href="../css/style.css?v=20260312f">
 </head>
 <body>
   <header class="site-header">
@@ -27,36 +27,37 @@
     <button class="nav-toggle" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
   </header>
   <main class="main--with-demo">
-  <div class="project-demo-layout">
-    <div class="project-demo-copy">
-
   <section class="project-header">
     <a href="../systems.html" class="back-link">← Back</a>
     <h1>Employee Portal 2.0</h1>
     <span class="year">2026</span>
   </section>
-  <div class="project-text"><p>Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render</p><p>The challenge: The original Google Sites portal couldn&#x27;t support a dynamic pay calendar, guard-facing incident reporting, structured form routing with file uploads, or an admin review queue tied to company data.</p><p>My approach: I&#x27;m not a traditional developer — I use AI as a build partner. I scoped requirements with HR and ops, designed the UX, and iteratively built Employee Portal 2.0 in Cursor — then deployed it on its own live domain alongside the operations admin.</p><p>What&#x27;s included: Biweekly pay calendar, office map and FAQs, 7 employee request forms (each with production-style fields and file uploads where applicable), guard-facing incident reports, QR stock-room takeout, site-specific QR logs (Wayne Mall and Castle Ridge), and email notifications on every submission — all connected to the same database as SORA, uniforms, and billing.</p><p>Why this matters: This project shows how someone with operations and IT knowledge can ship production software by combining clear problem-solving with AI-assisted development — not by writing every line of code from scratch.</p></div>
+  <div class="project-intro"><p>Skills: Cursor · ChatGPT · Prompt Engineering · Flask · SQLite · Render</p><p>The challenge: The original Google Sites portal couldn&#x27;t support a dynamic pay calendar, guard-facing incident reporting, structured form routing with file uploads, or an admin review queue tied to company data.</p><p>My approach: I&#x27;m not a traditional developer — I use AI as a build partner. I scoped requirements with HR and ops, designed the UX, and iteratively built Employee Portal 2.0 in Cursor — then deployed it on its own live domain alongside the operations admin.</p></div>
+  <div class="project-demo-flow">
+  <article class="project-demo-step">
+    <div class="project-demo-step__text"><p>What&#x27;s included: Biweekly pay calendar, office map and FAQs, 7 employee request forms (each with production-style fields and file uploads where applicable), guard-facing incident reports, QR stock-room takeout, site-specific QR logs (Wayne Mall and Castle Ridge), and email notifications on every submission — all connected to the same database as SORA, uniforms, and billing.</p></div>
+    <section class="project-demo">
+      <h2 class="demo-heading">Try the employee portal</h2>
+      <p class="demo-note">Submissions are simulated. Sample data only.</p>
+      <div class="demo-frame-wrap">
+        <iframe src="../demos/employee-portal-2/index.html" title="Try the employee portal" loading="lazy"></iframe>
+      </div>
+    </section>
+  </article>
+  <article class="project-demo-step">
+    <div class="project-demo-step__text"><p>Guards submit uniform requests from the employee portal — site picker, armed/unarmed, reason, item sizes with out-of-stock labels, and a sweater field for eligible sites only. Essex Green is a regular site; Newark Academy is sweater-eligible in this demo.</p></div>
+    <section class="project-demo">
+      <h2 class="demo-heading">Uniform request form</h2>
+      <p class="demo-note">Select Newark Academy in the site picker to reveal the sweater size field.</p>
+      <div class="demo-frame-wrap">
+        <iframe src="../demos/employee-portal-2/index.html?view=uniform-form" title="Uniform request form" loading="eager"></iframe>
+      </div>
+    </section>
+  </article>
+  </div>
+  <div class="project-outro"><p>Why this matters: This project shows how someone with operations and IT knowledge can ship production software by combining clear problem-solving with AI-assisted development — not by writing every line of code from scratch.</p></div>
   <p class="project-related">Related: <a href="operations-portal.html">Operations Portal — admin dashboard &amp; submission queue</a></p>
-  
-    </div>
-    <div class="project-demo-panel" aria-label="Interactive previews">
-
-  <section class="project-demo">
-    <h2 class="demo-heading">Try the employee portal</h2>
-    <p class="demo-note">Interactive preview — pay calendar, incident report, all 7 production-style request forms, stock-room QR takeout, and FAQs. Submissions are simulated.</p>
-    <div class="demo-frame-wrap">
-      <iframe src="../demos/employee-portal-2/index.html" title="Try the employee portal" loading="lazy"></iframe>
-    </div>
-  </section>
-  <section class="project-demo">
-    <h2 class="demo-heading">Uniform request form</h2>
-    <p class="demo-note">Site picker includes Essex Green (regular) and Newark Academy (sweater-eligible). Select Newark Academy to reveal the sweater size field.</p>
-    <div class="demo-frame-wrap">
-      <iframe src="../demos/employee-portal-2/index.html?view=uniform-form" title="Uniform request form" loading="eager"></iframe>
-    </div>
-  </section>
-    </div>
-  </div></main>
+  </main>
   <footer class="site-footer">
     <p>&copy; Gia Martini</p>
   </footer>

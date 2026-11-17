@@ -647,20 +647,20 @@ body.lightbox-open {
 }
 
 main.main--with-demo {
-  max-width: min(1680px, 96vw);
+  max-width: min(1760px, 98vw);
   padding-left: clamp(1rem, 2.5vw, 2rem);
   padding-right: clamp(1rem, 2.5vw, 2rem);
 }
 
 main.main--wide-demo {
-  max-width: min(1720px, 98vw);
+  max-width: min(1840px, 99vw);
 }
 
-/* Side-by-side copy + live demos */
+/* Side-by-side copy + live demos — narrow copy, wide interactive panel */
 .project-demo-layout {
   display: grid;
-  grid-template-columns: minmax(400px, 1.22fr) minmax(400px, 1fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
+  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
   align-items: start;
   margin-bottom: 2.5rem;
   width: 100%;
@@ -672,10 +672,10 @@ main.main--wide-demo {
   align-self: start;
   max-height: calc(100vh - 6.5rem);
   overflow-y: auto;
-  padding-right: clamp(0.5rem, 1.5vw, 1.25rem);
+  padding-right: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
-  max-width: 50rem;
+  max-width: 360px;
 }
 
 .project-demo-copy .project-text {
@@ -699,9 +699,9 @@ main.main--wide-demo {
 
 .project-demo-panel {
   min-width: 0;
-  justify-self: end;
-  width: min(100%, 900px);
-  margin-left: auto;
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
 }
 
 /* Embedded project demo */

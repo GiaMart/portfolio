@@ -659,10 +659,11 @@ main.main--wide-demo {
 /* Side-by-side copy + live demos */
 .project-demo-layout {
   display: grid;
-  grid-template-columns: minmax(240px, 34%) minmax(0, 1fr);
-  gap: clamp(1.25rem, 3vw, 2.75rem);
+  grid-template-columns: clamp(280px, 32vw, 400px) minmax(0, 1fr);
+  gap: clamp(1rem, 2vw, 2rem);
   align-items: start;
   margin-bottom: 2.5rem;
+  width: 100%;
 }
 
 .project-demo-copy {
@@ -741,7 +742,8 @@ main.main--wide-demo .project-demo--inventory .demo-frame-wrap iframe {
   min-height: 520px;
 }
 
-@media (max-width: 960px) {
+/* Stack only on phones — keep side-by-side in Cursor preview & typical laptop windows */
+@media (max-width: 640px) {
   .project-demo-layout {
     grid-template-columns: 1fr;
     gap: 2rem;

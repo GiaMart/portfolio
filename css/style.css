@@ -659,8 +659,8 @@ main.main--wide-demo {
 /* Side-by-side copy + live demos */
 .project-demo-layout {
   display: grid;
-  grid-template-columns: clamp(280px, 32vw, 400px) minmax(0, 1fr);
-  gap: clamp(1rem, 2vw, 2rem);
+  grid-template-columns: minmax(380px, 1fr) minmax(300px, 0.88fr);
+  gap: clamp(1.75rem, 4vw, 3.25rem);
   align-items: start;
   margin-bottom: 2.5rem;
   width: 100%;
@@ -672,9 +672,10 @@ main.main--wide-demo {
   align-self: start;
   max-height: calc(100vh - 6.5rem);
   overflow-y: auto;
-  padding-right: 0.35rem;
+  padding-right: clamp(0.5rem, 1.5vw, 1.25rem);
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
+  max-width: 42rem;
 }
 
 .project-demo-copy .project-text {
@@ -683,7 +684,8 @@ main.main--wide-demo {
 }
 
 .project-demo-copy .project-text p {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
 }
 
 .project-demo-copy .project-header h1 {
@@ -697,6 +699,9 @@ main.main--wide-demo {
 
 .project-demo-panel {
   min-width: 0;
+  justify-self: end;
+  width: min(100%, 640px);
+  margin-left: auto;
 }
 
 /* Embedded project demo */
@@ -726,20 +731,20 @@ main.main--wide-demo {
 
 .demo-frame-wrap iframe {
   width: 100%;
-  height: min(78vh, 720px);
-  min-height: 480px;
+  height: min(58vh, 580px);
+  min-height: 400px;
   border: none;
   display: block;
 }
 
 main.main--wide-demo .project-demo--dashboard .demo-frame-wrap iframe {
-  height: min(88vh, 920px);
-  min-height: 560px;
+  height: min(64vh, 640px);
+  min-height: 440px;
 }
 
 main.main--wide-demo .project-demo--inventory .demo-frame-wrap iframe {
-  height: min(84vh, 860px);
-  min-height: 520px;
+  height: min(62vh, 620px);
+  min-height: 420px;
 }
 
 /* Stack only on phones — keep side-by-side in Cursor preview & typical laptop windows */
@@ -754,6 +759,13 @@ main.main--wide-demo .project-demo--inventory .demo-frame-wrap iframe {
     max-height: none;
     overflow: visible;
     padding-right: 0;
+    max-width: none;
+  }
+
+  .project-demo-panel {
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
   }
 
   .project-demo {
